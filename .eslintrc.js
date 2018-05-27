@@ -1,12 +1,8 @@
-export default {
+module.exports = {
   parser: 'babel-eslint',
-  'plugins': [
-    'flowtype'
-  ],
   extends: [
     'standard',
-    'standard-jsx',
-    'plugin:flowtype/recommended'
+    'standard-jsx'
   ],
   env: {
     browser: true,
@@ -22,4 +18,4 @@ export default {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'jsx-quotes': ['error', 'prefer-double']
   }
-};
+}
