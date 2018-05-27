@@ -1,23 +1,66 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import { Ionicons } from '@expo/vector-icons'
+import { THEME_COLOR } from './src/styles/common'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    )
+import HomeScreen from './src/views/HomeScreen'
+import MyScreen from './src/views/MyScreen'
+
+const HomeStack = createStackNavigator({
+  Home: { screen: HomeScreen }
+})
+
+const MyStack = createStackNavigator({
+  My: { screen: MyScreen }
+})
+
+export default createBottomTabNavigator(
+  {
+    Home: { screen: HomeStack },
+    My: { screen: MyStack }
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state
+        let iconName
+        if (routeName === 'Home') {
+          iconName = `ios-home${focused ? '' : '-outline'}`
+        } else if (routeName === 'My') {
+          iconName = `ios-options${focused ? '' : '-outline'}`
+        }
+
+        // You can return any component that you like here! We usually use an
+        // icon component from react-native-vector-icons
+        return <Ionicons name={iconName} size={25} color={tintColor} />
+      },
+      tabBarLabel: ({ tintColor }) => {
+        const { routeName } = navigation.state
+        let label
+        if (routeName === 'Home') {
+          label = '首页'
+        } else if (routeName === 'My') {
+          label = '我的'
+        }
+        return <Text style={[{ color: tintColor }, styles.tabLabel]}>{label}</Text>
+      }
+    }),
+    // tabBarComponent: TabBarBottom,
+    initialRouteName: 'Home',
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#999'
+    },
+    animationEnabled: false,
+    swipeEnabled: false
   }
-}
+)
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+  tabLabel: {
+    textAlign: 'center',
+    marginBottom: 3
   }
 })
