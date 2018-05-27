@@ -1,12 +1,8 @@
 export default {
   parser: 'babel-eslint',
-  'plugins': [
-    'flowtype'
-  ],
   extends: [
     'standard',
-    'standard-jsx',
-    'plugin:flowtype/recommended'
+    'standard-jsx'
   ],
   env: {
     browser: true,
