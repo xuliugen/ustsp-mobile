@@ -1,10 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, ImageBackground, View, ScrollView, PixelRatio } from 'react-native'
+import { StyleSheet, Text, ImageBackground, View, ScrollView } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import { THEME_COLOR } from '../../styles/common'
-
-const DP = PixelRatio.get()
+import { DP } from '../../utils/device'
 
 export default class App extends React.Component {
   static navigationOptions = {
@@ -41,9 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ebf0f5'
   },
 
-  swiper: {
-    // height: 44
-  },
+  swiper: {},
   slide: {
     flex: 1
   },
