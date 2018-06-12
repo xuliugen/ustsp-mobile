@@ -1,9 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, ImageBackground, View, ScrollView } from 'react-native'
+import { StyleSheet, ImageBackground, View, ScrollView } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import { THEME_COLOR } from '../../styles/common'
 import { DP } from '../../utils/device'
+
+import Search from './components/Search'
 
 export default class App extends React.Component {
   static navigationOptions = {
@@ -26,9 +28,7 @@ export default class App extends React.Component {
             <ImageBackground source={require('../../img/banner3.jpg')} style={styles.banner} />
           </View>
         </Swiper>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Search />
       </ScrollView>
     )
   }
