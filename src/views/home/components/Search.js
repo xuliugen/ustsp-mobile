@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, Text, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
+import TextInput from '../../../components/common/TextInput'
 import { EvilIcons } from '@expo/vector-icons'
 
 import { DP } from '../../../utils/device'
@@ -8,13 +9,6 @@ export default class Search extends React.Component {
   state = {
     selectedType: 'project',
     searchIptVal: ''
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.searchIptVal !== nextState.searchIptVal) {
-      return false
-    }
-    return true
   }
 
   getTabStyle(type) {
@@ -66,7 +60,8 @@ export default class Search extends React.Component {
           </View>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput value={this.state.searchIptVal} onChangeText={(text) => this.setState({ searchIptVal: text })}
+          <TextInput
+            value={this.state.searchIptVal} onChangeText={(text) => this.setState({ searchIptVal: text })}
             onSubmitEditing={this.handleSearch}
             {...textIptProps} style={styles.input} />
           <EvilIcons name="search" size={25} color="#999" onPress={this.handleSearch} />
