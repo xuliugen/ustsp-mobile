@@ -28,7 +28,9 @@ export default class App extends React.Component {
             <ImageBackground source={require('../../img/banner3.jpg')} style={styles.banner} />
           </View>
         </Swiper>
-        <Search />
+        <View style={styles.searchContainer}>
+          <Search />
+        </View>
       </ScrollView>
     )
   }
@@ -46,5 +48,11 @@ const styles = StyleSheet.create({
   },
   banner: {
     flex: 1
+  },
+  searchContainer: {
+    position: 'relative',
+    top: -80 / DP,
+    marginLeft: 20 / DP,
+    marginRight: 20 / DP
   }
 })
