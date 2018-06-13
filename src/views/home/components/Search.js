@@ -6,33 +6,20 @@ import { EvilIcons } from '@expo/vector-icons'
 import { DP } from '../../../utils/device'
 
 export default class Search extends React.Component {
-  state = {
-    selectedType: 'project',
-    searchIptVal: ''
-  }
-
-  getTabStyle(type) {
-    if (type === this.state.selectedType) {
-      return StyleSheet.flatten([styles.tab, styles.tabSelected])
-    } else {
-      return styles.tab
-    }
-  }
-  getTabTextStyle(type) {
-    if (type === this.state.selectedType) {
-      return StyleSheet.flatten([styles.tabText, styles.tabTextSelected])
-    } else {
-      return styles.tabText
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedType: 'project',
+      searchIptVal: ''
     }
   }
 
-  handleTabPress = (type) => {
-    if (type !== this.state.selectedType) {
-      this.setState({
-        selectedType: type
-      })
-    }
+  setSelectedType(type) {
+    this.setState({
+      selectedType: type
+    })
   }
+
   handleSearch = () => {
     const search = this.state.searchIptVal.trim()
     if (search) {
@@ -45,19 +32,23 @@ export default class Search extends React.Component {
       underlineColorAndroid: 'transparent',
       placeholder: '搜索'
     }
+    const tabConfig = [{
+      type: 'project',
+      title: '搜项目'
+    }, {
+      type: 'talent',
+      title: '搜人才'
+    }, {
+      type: 'patent',
+      title: '搜专利'
+    }]
     return (
       <View style={styles.container}>
         <View style={styles.tabContainer}>
-          <View style={this.getTabStyle('project')}>
-            <TouchableOpacity onPress={this.handleTabPress.bind(this, 'project')} style={styles.tabTouchable}>
-              <Text style={this.getTabTextStyle('project')}>搜项目</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={this.getTabStyle('talent')}>
-            <TouchableOpacity onPress={this.handleTabPress.bind(this, 'talent')} style={styles.tabTouchable}>
-              <Text style={this.getTabTextStyle('talent')}>搜人才</Text>
-            </TouchableOpacity>
-          </View>
+          {tabConfig.map(({ type, title }) => {
+            return <Tab key={type} type={type} title={title}
+              setSelectedType={this.setSelectedType.bind(this)} curType={this.state.selectedType} />
+          })}
         </View>
         <View style={styles.inputContainer}>
           <TextInput
@@ -66,6 +57,41 @@ export default class Search extends React.Component {
             {...textIptProps} style={styles.input} />
           <EvilIcons name="search" size={25} color="#999" onPress={this.handleSearch} />
         </View>
+      </View>
+    )
+  }
+}
+
+class Tab extends React.Component {
+  handleTabPress = (type, curType) => {
+    if (type !== curType) {
+      this.props.setSelectedType(type)
+    }
+  }
+
+  getTabStyle(type) {
+    if (type === this.props.curType) {
+      return StyleSheet.flatten([styles.tab, styles.tabSelected])
+    } else {
+      return styles.tab
+    }
+  }
+
+  getTabTextStyle(type) {
+    if (type === this.props.curType) {
+      return StyleSheet.flatten([styles.tabText, styles.tabTextSelected])
+    } else {
+      return styles.tabText
+    }
+  }
+
+  render() {
+    const { type, title, curType } = this.props
+    return (
+      <View style={this.getTabStyle(type)}>
+        <TouchableOpacity onPress={this.handleTabPress.bind(this, type, curType)} style={styles.tabTouchable}>
+          <Text style={this.getTabTextStyle(type)}>{title}</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -85,6 +111,8 @@ const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
+    // borderLeftWidth: 1 / DP,
+    // borderLeftColor: '#fff',
     height: 80 / DP,
     backgroundColor: '#8f9ba7'
   },
