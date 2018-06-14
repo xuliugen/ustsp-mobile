@@ -3,7 +3,7 @@ import { StyleSheet, ImageBackground, View, ScrollView } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import { THEME_COLOR } from '../../styles/common'
-import { DP } from '../../utils/device'
+import { px2dp } from '../../utils/device'
 
 import Search from './components/Search'
 
@@ -16,7 +16,7 @@ export default class App extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Swiper style={styles.swiper} height={400 / DP} dotColor="#ddd" activeDotColor={THEME_COLOR}
+        <Swiper style={styles.swiper} height={px2dp(400)} dotColor="#ddd" activeDotColor={THEME_COLOR}
           autoplay autoplayTimeout={2}>
           <View style={styles.slide}>
             <ImageBackground source={require('../../img/banner1.png')} style={styles.banner} />
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     position: 'relative',
-    top: -80 / DP,
-    marginLeft: 20 / DP,
-    marginRight: 20 / DP
+    top: px2dp(-80),
+    marginLeft: px2dp(20),
+    marginRight: px2dp(20)
   }
 })

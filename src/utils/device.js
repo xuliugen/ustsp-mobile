@@ -1,10 +1,20 @@
 import { PixelRatio, Dimensions } from 'react-native'
 
-const DP = PixelRatio.get()
-const { SCREEN_WIDTH, SCREEN_HEIGHT } = Dimensions.get('window')
+const PIXEL_DENSITY = PixelRatio.get()
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')
+
+function px2dp(px) {
+  return px / 2
+}
+
+function px2sp(px) {
+  return px / 2
+}
 
 export {
-  DP,
+  PIXEL_DENSITY,
   SCREEN_WIDTH,
-  SCREEN_HEIGHT
+  SCREEN_HEIGHT,
+  px2dp,
+  px2sp
 }
