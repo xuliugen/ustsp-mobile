@@ -18,7 +18,7 @@ export default class ProjectCard extends React.Component {
             <Text style={styles.title}>推荐的项目标题1</Text>
             <Text style={styles.organization}>电子科技大学 / IT计算机类</Text>
             <View style={styles.locationContainer}>
-              <Entypo name="location-pin" size={20} color="#8f9ba7" />
+              <Entypo name="location-pin" size={13} color="#8f9ba7" />
               <Text style={styles.location}>四川 成都</Text>
             </View>
           </View>
@@ -64,19 +64,21 @@ const styles = StyleSheet.create({
   info: {
   },
   title: {
-    fontSize: px2sp(32),
-    marginBottom: px2dp(20)
+    marginBottom: px2dp(20),
+    fontSize: px2sp(32)
   },
   organization: {
     marginBottom: px2dp(20),
-    color: '#999'
+    color: '#999',
+    fontSize: px2sp(28)
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center'
   },
   location: {
-    color: '#8f9ba7'
+    color: '#8f9ba7',
+    fontSize: px2sp(26)
   },
   priceContainer: {
   },
