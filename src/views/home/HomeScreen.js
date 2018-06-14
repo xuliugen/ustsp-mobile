@@ -6,6 +6,7 @@ import { THEME_COLOR } from '../../styles/common'
 import { px2dp } from '../../utils/device'
 
 import Search from './components/Search'
+import ProjectCard from './components/ProjectCard'
 
 export default class App extends React.Component {
   static navigationOptions = {
@@ -31,6 +32,9 @@ export default class App extends React.Component {
         <View style={styles.searchContainer}>
           <Search />
         </View>
+        <View>
+          <ProjectCard />
+        </View>
       </ScrollView>
     )
   }
@@ -53,6 +57,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: px2dp(-80),
     marginLeft: px2dp(20),
-    marginRight: px2dp(20)
+    marginRight: px2dp(20),
+    marginBottom: px2dp(-80)
   }
 })
