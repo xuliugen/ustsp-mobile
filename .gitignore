@@ -3,6 +3,9 @@
 # expo
 .expo/
 
+# Jetbrains
+.idea/
+
 # dependencies
 /node_modules
 

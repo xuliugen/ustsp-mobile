@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 
 import { px2dp, px2sp } from '../../../utils/device'
+import { Entypo } from '@expo/vector-icons'
 
 export default class ProjectCard extends React.Component {
   constructor(props) {
@@ -16,7 +17,10 @@ export default class ProjectCard extends React.Component {
           <View style={styles.info}>
             <Text style={styles.title}>推荐的项目标题1</Text>
             <Text style={styles.organization}>电子科技大学 / IT计算机类</Text>
-            <Text style={styles.location}>四川 成都</Text>
+            <View style={styles.locationContainer}>
+              <Entypo name="location-pin" size={20} color="#8f9ba7" />
+              <Text style={styles.location}>四川 成都</Text>
+            </View>
           </View>
           <View style={styles.priceContainer}>
             <Text style={styles.price}>9k</Text>
@@ -66,6 +70,10 @@ const styles = StyleSheet.create({
   organization: {
     marginBottom: px2dp(20),
     color: '#999'
+  },
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   location: {
     color: '#8f9ba7'
