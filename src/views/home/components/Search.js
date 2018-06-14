@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
 import TextInput from '../../../components/common/TextInput'
 import { EvilIcons } from '@expo/vector-icons'
 
-import { DP } from '../../../utils/device'
+import { px2dp, px2sp } from '../../../utils/device'
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // borderLeftWidth: 1 / DP,
     // borderLeftColor: '#fff',
-    height: 80 / DP,
+    height: px2dp(80),
     backgroundColor: '#8f9ba7'
   },
   tabSelected: {
@@ -135,16 +135,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingLeft: 40 / DP,
-    paddingRight: 30 / DP,
-    paddingTop: 35 / DP,
-    paddingBottom: 35 / DP,
-    height: 100 / DP,
+    paddingLeft: px2dp(40),
+    paddingRight: px2dp(30),
+    paddingTop: px2dp(35),
+    paddingBottom: px2dp(35),
+    height: px2dp(100),
     backgroundColor: '#fff'
   },
   input: {
     flexGrow: 1,
-    fontSize: 28 / DP,
+    fontSize: px2sp(28),
     color: '#999'
   }
 })
