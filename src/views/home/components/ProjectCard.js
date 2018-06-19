@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
     paddingLeft: px2dp(30),
     paddingRight: px2dp(30),
     borderTopWidth: 1,
-    borderTopColor: '#eeedee',
+    borderTopColor: '#ddd',
     borderBottomWidth: 1,
-    borderBottomColor: '#eeedee',
+    borderBottomColor: '#ddd',
     backgroundColor: '#fff'
   },
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     paddingBottom: px2dp(40),
     paddingTop: px2dp(40),
     borderBottomWidth: 1,
-    borderBottomColor: '#eeedee'
+    borderBottomColor: '#ddd'
   },
   info: {
   },

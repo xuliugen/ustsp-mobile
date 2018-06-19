@@ -11,7 +11,11 @@ export default class Talents extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} horizontal={true}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer} horizontal={true}>
+        <Talent />
+        <Talent />
+        <Talent />
+        <Talent />
         <Talent />
       </ScrollView>
     )
@@ -33,19 +37,23 @@ function Talent(props) {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: px2dp(15),
+    marginBottom: px2dp(15),
     borderTopWidth: 1,
     borderTopColor: '#ddd',
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
-    paddingLeft: px2dp(60),
     backgroundColor: '#fff'
+  },
+  contentontainer: {
+    paddingLeft: px2dp(60)
   },
 
   talentContainer: {
     flexDirection: 'column',
     paddingTop: px2dp(40),
     paddingBottom: px2dp(40),
-    paddingRight: px2dp(60),
+    marginRight: px2dp(60),
     alignItems: 'center'
   },
   avatarContainer: {
