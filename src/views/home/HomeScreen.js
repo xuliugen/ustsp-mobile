@@ -34,7 +34,7 @@ export default class App extends React.Component {
           <Search />
         </View>
         <View style={styles.menuContainer}>
-          <Menu navigation={this.props.navigation} />
+          <Menu />
         </View>
         <View>
           <ProjectCard />
