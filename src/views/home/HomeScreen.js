@@ -7,6 +7,7 @@ import { px2dp } from '../../utils/device'
 
 import Search from './components/Search'
 import ProjectCard from './components/ProjectCard'
+import Menu from './components/Menu'
 
 export default class App extends React.Component {
   static navigationOptions = {
@@ -31,6 +32,9 @@ export default class App extends React.Component {
         </Swiper>
         <View style={styles.searchContainer}>
           <Search />
+        </View>
+        <View style={styles.menuContainer}>
+          <Menu />
         </View>
         <View>
           <ProjectCard />
@@ -59,5 +63,8 @@ const styles = StyleSheet.create({
     marginLeft: px2dp(20),
     marginRight: px2dp(20),
     marginBottom: px2dp(-80)
+  },
+  menuContainer: {
+    margin: px2dp(20)
   }
 })
