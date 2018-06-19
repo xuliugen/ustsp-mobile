@@ -24,6 +24,23 @@ const styles = StyleSheet.create({
     fontSize: px2sp(28),
     color: '#333'
   },
+  deleteIconContainer: {
+    position: 'absolute',
+    top: px2dp(15),
+    right: px2dp(20),
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: px2dp(30),
+    height: px2dp(30),
+    borderRadius: px2dp(30 / 2),
+    backgroundColor: '#8d9caa'
+  },
+  deleteIcon: {
+    flex: 1,
+    textAlign: 'center',
+    lineHeight: px2dp(30),
+    color: '#fff'
+  },
   headerRightText: {
     // marginLeft: px2dp(16),
     // marginRight: px2dp(32),
@@ -33,23 +50,26 @@ const styles = StyleSheet.create({
   }
 })
 
-class HeaderSearch extends React.Component {
-  render() {
-    const searchIptProps = {
-      underlineColorAndroid: 'transparent',
-      placeholder: '搜索'
-    }
-    return (
-      <View style={styles.search}>
-        <TextInput {...searchIptProps} style={styles.searchInput} />
-      </View>
-    )
+const HeaderTitleSearch = props => {
+  const searchIptProps = {
+    underlineColorAndroid: 'transparent',
+    placeholder: '搜索'
   }
+  return (
+    <View style={styles.search}>
+      <TextInput {...searchIptProps} style={styles.searchInput} />
+      <View style={styles.deleteIconContainer}><Text style={styles.deleteIcon}>×</Text></View>
+    </View>
+  )
 }
 
 export default class ProjectSearch extends React.Component {
+  state = {
+    searchIptVal: ''
+  }
+
   static navigationOptions = {
-    headerTitle: <HeaderSearch />,
+    headerTitle: <HeaderTitleSearch />,
     headerRight: (
       <View style={{ flex: 1, alignItems: 'center', width: 56 }}>
         <TouchableOpacity onPress={() => alert('This is a button!')}>

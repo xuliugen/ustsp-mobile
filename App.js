@@ -4,7 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from './src/styles/common'
 
-import { HomeScreen, ProjectSearchScreen } from './src/views/home'
+import HomeScreen from './src/views/home/HomeScreen'
+import ProjectSearchScreen from './src/views/search/ProjectSearchScreen'
 import MyScreen from './src/views/MyScreen'
 
 const HomeStack = createStackNavigator({
