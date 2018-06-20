@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity, Alert } from 'react-native'
 import TextInput from '../../components/common/TextInput'
 import { Feather } from '@expo/vector-icons'
 
@@ -50,17 +50,61 @@ const styles = StyleSheet.create({
   }
 })
 
-const HeaderTitleSearch = props => {
-  const searchIptProps = {
-    underlineColorAndroid: 'transparent',
-    placeholder: '搜索'
+class HeaderTitleSearch extends React.Component {
+  state = {
+    searchIptVal: '',
+    showDeleteIcon: false
   }
-  return (
-    <View style={styles.search}>
-      <TextInput {...searchIptProps} style={styles.searchInput} />
-      <View style={styles.deleteIconContainer}><Text style={styles.deleteIcon}>×</Text></View>
-    </View>
-  )
+  textInput = React.createRef()
+
+  searchProjects() {
+    const search = this.state.searchIptVal.trim()
+    if (search) {
+      Alert.alert(this.state.searchIptVal)
+    }
+  }
+
+  setSearchIptVal(val) {
+    this.setState({ searchIptVal: val })
+  }
+  setShowDeleteIcon(isShow) {
+    this.setState({ showDeleteIcon: isShow })
+  }
+
+  handleSubmit = () => {
+    this.searchProjects()
+  }
+  handleIptFocus = () => {
+    this.setShowDeleteIcon(true)
+  }
+  handleIptBlur = () => {
+    this.setShowDeleteIcon(false)
+  }
+  handleDeletePress = () => {
+    this.textInput.current.clear()
+    this.setSearchIptVal('')
+  }
+
+  render() {
+    const searchIptProps = {
+      underlineColorAndroid: 'transparent',
+      placeholder: '搜索'
+    }
+    return (
+      <View style={styles.search}>
+        <TextInput inputRef={this.textInput} {...searchIptProps} style={styles.searchInput}
+          onSubmitEditing={this.handleSubmit}
+          value={this.state.searchIptVal} onChangeText={(text) => this.setSearchIptVal(text)}
+          onFocus={this.handleIptFocus} onBlur={this.handleIptBlur} />
+        {this.state.showDeleteIcon &&
+          <View style={styles.deleteIconContainer}>
+            <TouchableOpacity onPress={this.handleDeletePress}>
+              <Text style={styles.deleteIcon}>×</Text>
+            </TouchableOpacity>
+          </View>}
+      </View>
+    )
+  }
 }
 
 export default class ProjectSearch extends React.Component {
