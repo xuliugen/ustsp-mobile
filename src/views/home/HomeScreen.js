@@ -7,6 +7,7 @@ import { px2dp } from '../../utils/device'
 
 import Search from './components/Search'
 import ProjectCard from './components/ProjectCard'
+import Talents from './components/Talents'
 import Menu from './components/Menu'
 
 export default class App extends React.Component {
@@ -35,6 +36,9 @@ export default class App extends React.Component {
         </View>
         <View style={styles.menuContainer}>
           <Menu />
+        </View>
+        <View>
+          <Talents />
         </View>
         <View>
           <ProjectCard />
