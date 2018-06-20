@@ -6,6 +6,8 @@ import { Feather } from '@expo/vector-icons'
 import { APP_BACKGROUD_COLOR } from '../../styles/common'
 import { px2dp, px2sp } from '../../utils/device'
 
+import ProjectItem from './components/ProjectItem'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -47,6 +49,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: '#fff',
     fontSize: px2sp(28)
+  },
+
+  resultTextContainer: {
+    marginTop: px2dp(30),
+    marginBottom: 1,
+    paddingVertical: px2dp(22),
+    paddingLeft: px2dp(30),
+    backgroundColor: '#fff'
+  },
+  resultText: {
+    color: '#8f9ba7',
+    fontSize: px2sp(28)
+  },
+  resultTextHighlight: {
+    color: '#1dbbae',
+    fontSize: px2sp(30)
   }
 })
 
@@ -107,20 +125,27 @@ class HeaderTitleSearch extends React.Component {
   }
 }
 
-export default class ProjectSearch extends React.Component {
-  state = {
-    searchIptVal: ''
-  }
-
-  static navigationOptions = {
-    headerTitle: <HeaderTitleSearch />,
-    headerRight: (
+class HeaderRightBtn extends React.Component {
+  render() {
+    return (
       <View style={{ flex: 1, alignItems: 'center', width: 56 }}>
         <TouchableOpacity onPress={() => alert('This is a button!')}>
           <Text style={styles.headerRightText}><Feather name="filter" />&nbsp;筛选</Text>
         </TouchableOpacity>
       </View>
-    ),
+    )
+  }
+}
+
+export default class ProjectSearch extends React.Component {
+  state = {
+    searchIptVal: '',
+    projects: [{}, {}]
+  }
+
+  static navigationOptions = {
+    headerTitle: <HeaderTitleSearch />,
+    headerRight: <HeaderRightBtn />,
     headerStyle: {
       backgroundColor: '#8d9caa'
     },
@@ -131,7 +156,14 @@ export default class ProjectSearch extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text>1243</Text>
+          <View style={styles.resultTextContainer}>
+            <Text style={styles.resultText}>共为您找到 <Text style={styles.resultTextHighlight}>{this.state.projects.length}</Text> 个项目</Text>
+          </View>
+          <View>
+            {this.state.projects.map((project, idx) => (
+              <ProjectItem key={idx} project={project} />
+            ))}
+          </View>
         </ScrollView>
       </View>
     )
