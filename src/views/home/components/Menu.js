@@ -1,0 +1,61 @@
+import React from 'react'
+import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native'
+import { px2dp, px2sp } from '../../../utils/device'
+import { withNavigation } from 'react-navigation'
+
+const iconTalent = require('../../../img/talent.png')
+const iconProject = require('../../../img/project.png')
+const iconPatent = require('../../../img/patent.png')
+const iconNews = require('../../../img/news.png')
+
+@withNavigation
+export default class Menu extends React.Component {
+  onPress = () => {
+    this.props.navigation.navigate('My')
+  }
+
+  render() {
+    const menuItems = [
+      { type: 'talent', title: '人才库', img: iconTalent },
+      { type: 'project', title: '项目库', img: iconProject },
+      { type: 'patent', title: '专利库', img: iconPatent },
+      { type: 'news', title: '动态', img: iconNews }
+    ]
+    return (
+      <View style={styles.container}>
+        {menuItems.map(item => {
+          return (
+            <TouchableOpacity key={item.type} onPress={this.onPress} style={styles.buttons}>
+              <Image style={styles.icons} source={item.img} />
+              <Text style={styles.title}>{item.title}</Text>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: '#eeedee',
+    paddingVertical: px2dp(30),
+    paddingHorizontal: px2dp(40),
+    backgroundColor: '#fff'
+  },
+  buttons: {
+    alignItems: 'center'
+  },
+  icons: {
+    width: px2dp(80),
+    height: px2dp(80)
+  },
+  title: {
+    marginTop: px2dp(12),
+    fontSize: px2sp(24),
+    color: '#666'
+  }
+})
