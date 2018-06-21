@@ -3,10 +3,13 @@ import { StyleSheet, View, ScrollView, Text } from 'react-native'
 
 import { APP_BACKGROUD_COLOR } from '../../styles/common'
 import { px2dp, px2sp } from '../../utils/device'
+import projectNavDecorator from '../../components/common/projectNavDecorator'
 
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import HeaderRightFilter from './components/HeaderRightFilter'
 import ProjectItem from './components/ProjectItem'
+
+const ProjectItemWithNav = projectNavDecorator(ProjectItem)
 
 export default class ProjectSearch extends React.Component {
   static navigationOptions = {
@@ -31,8 +34,9 @@ export default class ProjectSearch extends React.Component {
             <Text style={styles.resultText}>共为您找到 <Text style={styles.resultTextHighlight}>{this.state.projects.length}</Text> 个项目</Text>
           </View>
           <View>
+            {/* todo: idx to project.id */}
             {this.state.projects.map((project, idx) => (
-              <ProjectItem key={idx} project={project} />
+              <ProjectItemWithNav key={idx} project={project} />
             ))}
           </View>
         </ScrollView>
