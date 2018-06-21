@@ -11,7 +11,8 @@ export default class Talents extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer} horizontal={true}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer}
+        horizontal showsHorizontalScrollIndicator={false}>
         <Talent />
         <Talent />
         <Talent />
@@ -29,7 +30,7 @@ function Talent(props) {
         <Image source={require('../../../img/banner3.jpg')} style={styles.avatar} />
       </View>
       <Text style={styles.name}>贾志国</Text>
-      <Text style={styles.university}>四川大学</Text>
+      <Text style={styles.university}>川大</Text>
       <Text style={styles.title}>副教授</Text>
     </View>
   )
@@ -37,8 +38,6 @@ function Talent(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: px2dp(15),
-    marginBottom: px2dp(15),
     borderTopWidth: 1,
     borderTopColor: '#ddd',
     borderBottomWidth: 1,
