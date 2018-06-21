@@ -5,11 +5,6 @@ import { px2dp, px2sp } from '../../../utils/device'
 import { Entypo } from '@expo/vector-icons'
 
 export default class ProjectCard extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
   render() {
     return (
       <View style={styles.container}>

@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyleSheet, ImageBackground, View, ScrollView,Text } from 'react-native'
+import { StyleSheet, ImageBackground, View, ScrollView, Text } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import { THEME_COLOR } from '../../styles/common'
 import {px2dp, px2sp} from '../../utils/device'
 
 import Search from './components/Search'
-import ProjectCard from './components/ProjectCard'
+import Projects from './components/Projects'
 import Talents from './components/Talents'
 import Menu from './components/Menu'
 
@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Swiper style={styles.swiper} height={px2dp(400)} dotColor="#ddd" activeDotColor={THEME_COLOR}
           autoplay autoplayTimeout={2}>
           <View style={styles.slide}>
@@ -49,7 +49,7 @@ export default class App extends React.Component {
           <Text style={[styles.titleText, styles.more]}>更多 ></Text>
         </View>
         <View style={styles.projectContainer}>
-          <ProjectCard />
+          <Projects />
         </View>
       </ScrollView>
     )

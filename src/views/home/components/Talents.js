@@ -11,7 +11,8 @@ export default class Talents extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer} horizontal={true}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer}
+        horizontal showsHorizontalScrollIndicator={false}>
         <Talent />
         <Talent />
         <Talent />
