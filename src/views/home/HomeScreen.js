@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: 'row',
+    position: 'relative',
     justifyContent: 'center',
     marginTop: px2dp(10),
     marginHorizontal: px2dp(20),
