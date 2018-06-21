@@ -7,6 +7,7 @@ import { THEME_COLOR } from './src/styles/common'
 import HomeScreen from './src/views/home/HomeScreen'
 import ProjectSearchScreen from './src/views/search/ProjectSearchScreen'
 import MyScreen from './src/views/MyScreen'
+import LoginScreen from './src/views/login/Login'
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -28,7 +29,11 @@ const MyStack = createStackNavigator({
   My: { screen: MyScreen }
 })
 
-export default createBottomTabNavigator(
+const LoginStack = createStackNavigator({
+  Login: { screen: LoginScreen }
+})
+
+const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeStack },
     My: { screen: MyStack }
@@ -42,6 +47,8 @@ export default createBottomTabNavigator(
           iconName = `ios-home${focused ? '' : '-outline'}`
         } else if (routeName === 'My') {
           iconName = `ios-options${focused ? '' : '-outline'}`
+        } else {
+          return null
         }
 
         // You can return any component that you like here! We usually use an
@@ -55,6 +62,8 @@ export default createBottomTabNavigator(
           label = '首页'
         } else if (routeName === 'My') {
           label = '我的'
+        } else {
+          return null
         }
         return <Text style={[{ color: tintColor }, styles.tabLabel]}>{label}</Text>
       }
@@ -68,6 +77,19 @@ export default createBottomTabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false
+  }
+)
+
+export default createStackNavigator(
+  {
+    App: AppStack,
+    Login: LoginStack
+  },
+  {
+    initialRouteName: 'App',
+    navigationOptions: {
+      header: null
+    }
   }
 )
 
