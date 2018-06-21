@@ -1,10 +1,13 @@
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import TextInput from '../../../components/common/TextInput'
 import { EvilIcons } from '@expo/vector-icons'
+import { withNavigation } from 'react-navigation'
 
+import { toSearchPageByType } from '../../../utils/nav'
 import { px2dp, px2sp } from '../../../utils/device'
 
+@withNavigation
 export default class Search extends React.Component {
   constructor(props) {
     super(props)
@@ -20,11 +23,8 @@ export default class Search extends React.Component {
     })
   }
 
-  handleSearch = () => {
-    const search = this.state.searchIptVal.trim()
-    if (search) {
-      Alert.alert(this.state.searchIptVal)
-    }
+  handleSubmit = () => {
+    toSearchPageByType(this.state.selectedType, this.props.navigation)
   }
 
   render() {
@@ -53,9 +53,9 @@ export default class Search extends React.Component {
         <View style={styles.inputContainer}>
           <TextInput
             value={this.state.searchIptVal} onChangeText={(text) => this.setState({ searchIptVal: text })}
-            onSubmitEditing={this.handleSearch}
+            onSubmitEditing={this.handleSubmit}
             {...textIptProps} style={styles.input} />
-          <EvilIcons name="search" size={25} color="#999" onPress={this.handleSearch} />
+          <EvilIcons name="search" size={25} color="#999" onPress={this.handleSubmit} />
         </View>
       </View>
     )

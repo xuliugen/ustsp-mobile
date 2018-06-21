@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, ImageBackground, View, ScrollView } from 'react-native'
+import { StyleSheet, ImageBackground, View, ScrollView, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 
-import { THEME_COLOR } from '../../styles/common'
+import { THEME_COLOR, APP_BACKGROUD_COLOR } from '../../styles/common'
 import { px2dp } from '../../utils/device'
 
 import Search from './components/Search'
@@ -10,10 +10,15 @@ import ProjectCard from './components/ProjectCard'
 import Talents from './components/Talents'
 import Menu from './components/Menu'
 
-export default class App extends React.Component {
+export default class Home extends React.Component {
   static navigationOptions = {
     title: '首页',
-    header: null
+    header: null,
+    headerBackTitle: null
+  }
+
+  handleProjectCardPress = () => {
+    this.props.navigation.navigate('ProjectSearch')
   }
 
   render() {
@@ -41,7 +46,9 @@ export default class App extends React.Component {
           <Talents />
         </View>
         <View>
-          <ProjectCard />
+          <TouchableOpacity onPress={this.handleProjectCardPress} activeOpacity={1} style={styles.tabTouchable}>
+            <ProjectCard />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     )
@@ -51,7 +58,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    backgroundColor: '#ebf0f5'
+    backgroundColor: APP_BACKGROUD_COLOR
   },
 
   swiper: {},
