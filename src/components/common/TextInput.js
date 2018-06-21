@@ -6,6 +6,7 @@ export default class ResolvedTextInput extends Component {
     return Platform.OS !== 'ios' || this.props.value === nextProps.value
   }
   render() {
-    return <TextInput {...this.props} />
+    const { inputRef, ...props } = this.props
+    return <TextInput ref={inputRef} {...props} />
   }
 }

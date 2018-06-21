@@ -4,12 +4,25 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from './src/styles/common'
 
-import { HomeScreen } from './src/views/home'
+import HomeScreen from './src/views/home/HomeScreen'
+import ProjectSearchScreen from './src/views/search/ProjectSearchScreen'
 import MyScreen from './src/views/MyScreen'
 
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen }
+  Home: { screen: HomeScreen },
+  ProjectSearch: { screen: ProjectSearchScreen }
 })
+
+HomeStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true
+  if (navigation.state.index > 0) {
+    tabBarVisible = false
+  }
+
+  return {
+    tabBarVisible
+  }
+}
 
 const MyStack = createStackNavigator({
   My: { screen: MyScreen }

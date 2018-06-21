@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, ImageBackground, View, ScrollView, Text } from 'react-native'
 import Swiper from 'react-native-swiper'
 
-import { THEME_COLOR } from '../../styles/common'
+import { THEME_COLOR, APP_BACKGROUD_COLOR } from '../../styles/common'
 import {px2dp, px2sp} from '../../utils/device'
 
 import Search from './components/Search'
@@ -10,10 +10,15 @@ import Projects from './components/Projects'
 import Talents from './components/Talents'
 import Menu from './components/Menu'
 
-export default class App extends React.Component {
+export default class Home extends React.Component {
   static navigationOptions = {
     title: '首页',
-    header: null
+    header: null,
+    headerBackTitle: null
+  }
+
+  handleProjectCardPress = () => {
+    this.props.navigation.navigate('ProjectSearch')
   }
 
   render() {
@@ -59,7 +64,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    backgroundColor: '#ebf0f5'
+    backgroundColor: APP_BACKGROUD_COLOR
   },
 
   swiper: {},

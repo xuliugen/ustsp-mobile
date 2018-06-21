@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native'
-import { px2dp, px2sp } from '../../../utils/device'
 import { withNavigation } from 'react-navigation'
+import { toSearchPageByType } from '../../../utils/nav'
+import { px2dp, px2sp } from '../../../utils/device'
 
 const iconTalent = require('../../../img/talent.png')
 const iconProject = require('../../../img/project.png')
@@ -10,8 +11,8 @@ const iconNews = require('../../../img/news.png')
 
 @withNavigation
 export default class Menu extends React.Component {
-  onPress = () => {
-    this.props.navigation.navigate('My')
+  onPress = (type) => {
+    toSearchPageByType(type, this.props.navigation)
   }
 
   render() {
@@ -25,7 +26,7 @@ export default class Menu extends React.Component {
       <View style={styles.container}>
         {menuItems.map(item => {
           return (
-            <TouchableOpacity key={item.type} onPress={this.onPress} style={styles.buttons}>
+            <TouchableOpacity key={item.type} onPress={this.onPress.bind(this, item.type)} style={styles.buttons}>
               <Image style={styles.icons} source={item.img} />
               <Text style={styles.title}>{item.title}</Text>
             </TouchableOpacity>
