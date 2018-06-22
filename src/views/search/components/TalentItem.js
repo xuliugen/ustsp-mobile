@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import { px2dp, px2sp } from '../../../utils/device'
+import { px2dp, px2sp } from 'src/utils/device'
 
 export default class TalentItem extends React.Component {
   render() {
     return (
       <View style={styles.itemContainer}>
         <View>
-          <Image source={require('../../../img/banner1.png')} style={styles.avatar} />
+          <Image source={require('src/img/banner1.png')} style={styles.avatar} />
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.infoTop}>
@@ -15,9 +15,9 @@ export default class TalentItem extends React.Component {
             <View style={styles.titleContainer}>
               <Text style={styles.title}>教授</Text>
             </View>
-            <Image source={require('../../../img/certificate.png')} style={styles.certificate} />
+            <Image source={require('src/img/certificate.png')} style={styles.certificate} />
           </View>
-          <View>
+          <View style={styles.schoolContainer}>
             <Text style={styles.school}>四川大学 / 新闻学院</Text>
           </View>
         </View>
@@ -40,12 +40,14 @@ const styles = StyleSheet.create({
     borderRadius: px2dp(100 / 2)
   },
   infoContainer: {
+    justifyContent: 'center',
     paddingLeft: px2dp(30)
   },
   infoTop: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: px2dp(10)
+    // marginBottom: px2dp(10)
+    marginBottom: px2dp(16)
   },
   name: {
     marginRight: px2dp(15),
@@ -66,6 +68,9 @@ const styles = StyleSheet.create({
   certificate: {
     height: px2dp(28),
     width: px2dp(30)
+  },
+  schoolContainer: {
+    // marginTop: px2dp(20)
   },
   school: {
     fontSize: px2sp(28),

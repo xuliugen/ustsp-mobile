@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
 
-import { APP_BACKGROUD_COLOR } from '../../styles/common'
-import { px2dp, px2sp } from '../../utils/device'
-import talentNavDecorator from '../../components/common/talentNavDecorator'
+import { APP_BACKGROUD_COLOR } from 'src/styles/common'
+import { px2dp, px2sp } from 'src/utils/device'
+import talentNavDecorator from 'src/components/common/talentNavDecorator'
 
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
@@ -31,10 +31,11 @@ export default class TalentSearchScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.resultTitleContainer}>
-            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位同名人才</Text>
+            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位人才</Text>
           </View>
           <View>
             {this.state.talents.map((talent, idx) => (
+              // todo: idx to talent id
               <TalentItemWithNav key={idx} talent={talent} />
             ))}
           </View>
@@ -64,5 +65,4 @@ const styles = StyleSheet.create({
     color: '#1dbbae',
     fontSize: px2sp(30)
   }
-
 })
