@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
 
-import { APP_BACKGROUD_COLOR } from '../../styles/common'
-import { px2dp, px2sp } from '../../utils/device'
-import projectNavDecorator from '../../components/common/projectNavDecorator'
+import { APP_BACKGROUD_COLOR } from 'src/styles/common'
+import { px2dp, px2sp } from 'src/utils/device'
+import projectNavDecorator from 'src/components/common/projectNavDecorator'
 
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import HeaderRightFilter from './components/HeaderRightFilter'

@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import TextInput from '../../../components/common/TextInput'
+import TextInput from 'src/components/common/TextInput'
 import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
 
-import { toSearchPageByType } from '../../../utils/nav'
-import { px2dp, px2sp } from '../../../utils/device'
+import { toSearchPageByType } from 'src/utils/nav'
+import { px2dp, px2sp } from 'src/utils/device'
 
 @withNavigation
 export default class Search extends React.Component {

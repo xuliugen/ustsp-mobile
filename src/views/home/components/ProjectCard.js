@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 
-import { px2dp, px2sp } from '../../../utils/device'
+import { px2dp, px2sp } from 'src/utils/device'
 import { Entypo } from '@expo/vector-icons'
 
 export default class ProjectCard extends React.Component {
