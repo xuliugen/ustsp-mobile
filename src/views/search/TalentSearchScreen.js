@@ -3,11 +3,11 @@ import { StyleSheet, View, ScrollView, Text } from 'react-native'
 
 import { APP_BACKGROUD_COLOR } from '../../styles/common'
 import { px2dp, px2sp } from '../../utils/device'
-import { talentNavDecorator } from '../../components/common/talentNavDecorator'
+import talentNavDecorator from '../../components/common/talentNavDecorator'
 
-import { HeaderRightFilter } from './components/HeaderRightFilter'
-import { HeaderTitleSearch } from './components/HeaderTitleSearch'
-import { TalentItem } from './components/TalentItem'
+import HeaderRightFilter from './components/HeaderRightFilter'
+import HeaderTitleSearch from './components/HeaderTitleSearch'
+import TalentItem from './components/TalentItem'
 
 const TalentItemWithNav = talentNavDecorator(TalentItem)
 
@@ -28,11 +28,41 @@ export default class TalentSearchScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}></View>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.resultTitleContainer}>
+            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位同名人才</Text>
+          </View>
+          <View>
+            {this.state.talents.map((talent, idx) => (
+              <TalentItemWithNav key={idx} talent={talent} />
+            ))}
+          </View>
+        </ScrollView>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: APP_BACKGROUD_COLOR
+  },
+  resultTitleContainer: {
+    marginTop: px2dp(30),
+    marginBottom: 1,
+    paddingVertical: px2dp(22),
+    paddingLeft: px2dp(30),
+    backgroundColor: '#fff'
+  },
+  titleText: {
+    color: '#8f9ba7',
+    fontSize: px2sp(28)
+  },
+  titleTextHighlight: {
+    color: '#1dbbae',
+    fontSize: px2sp(30)
+  }
 
 })
