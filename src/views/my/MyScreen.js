@@ -9,10 +9,14 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>我的</Text>
         <Button onPress={this.handleLogin} title="login" />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {}
+})

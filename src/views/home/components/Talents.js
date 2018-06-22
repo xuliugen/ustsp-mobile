@@ -1,23 +1,22 @@
 import React from 'react'
 import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 
-import { px2dp, px2sp } from '../../../utils/device'
+import talentNavDecorator from 'src/components/common/talentNavDecorator'
+import { px2dp, px2sp } from 'src/utils/device'
+
+const TalentWithNav = talentNavDecorator(Talent)
 
 export default class Talents extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
+  state = {
+    talents: new Array(5).fill({}, 0, 5)
   }
 
   render() {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer}
         horizontal showsHorizontalScrollIndicator={false}>
-        <Talent />
-        <Talent />
-        <Talent />
-        <Talent />
-        <Talent />
+        {/* todo: idx to project.id */}
+        {this.state.talents.map((talent, idx) => <TalentWithNav key={idx} talent={talent} />)}
       </ScrollView>
     )
   }

@@ -1,13 +1,13 @@
 import React from 'react'
 import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import { toSearchPageByType } from '../../../utils/nav'
-import { px2dp, px2sp } from '../../../utils/device'
+import { toSearchPageByType } from 'src/utils/nav'
+import { px2dp, px2sp } from 'src/utils/device'
 
-const iconTalent = require('../../../img/talent.png')
-const iconProject = require('../../../img/project.png')
-const iconPatent = require('../../../img/patent.png')
-const iconNews = require('../../../img/news.png')
+const iconTalent = require('src/img/talent.png')
+const iconProject = require('src/img/project.png')
+const iconPatent = require('src/img/patent.png')
+const iconNews = require('src/img/news.png')
 
 @withNavigation
 export default class Menu extends React.Component {

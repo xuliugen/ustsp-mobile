@@ -3,15 +3,15 @@ import { StyleSheet, View, ScrollView, Text } from 'react-native'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
-import projectNavDecorator from 'src/components/common/projectNavDecorator'
+import talentNavDecorator from 'src/components/common/talentNavDecorator'
 
-import HeaderTitleSearch from './components/HeaderTitleSearch'
 import HeaderRightFilter from './components/HeaderRightFilter'
-import ProjectItem from './components/ProjectItem'
+import HeaderTitleSearch from './components/HeaderTitleSearch'
+import TalentItem from './components/TalentItem'
 
-const ProjectItemWithNav = projectNavDecorator(ProjectItem)
+const TalentItemWithNav = talentNavDecorator(TalentItem)
 
-export default class ProjectSearch extends React.Component {
+export default class TalentSearchScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitleSearch />,
     headerRight: <HeaderRightFilter />,
@@ -23,20 +23,20 @@ export default class ProjectSearch extends React.Component {
 
   state = {
     searchIptVal: '',
-    projects: [{}, {}]
+    talents: [{}, {}]
   }
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.resultTextContainer}>
-            <Text style={styles.resultText}>共为您找到 <Text style={styles.resultTextHighlight}>{this.state.projects.length}</Text> 个项目</Text>
+          <View style={styles.resultTitleContainer}>
+            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位人才</Text>
           </View>
           <View>
-            {/* todo: idx to project.id */}
-            {this.state.projects.map((project, idx) => (
-              <ProjectItemWithNav key={idx} project={project} />
+            {this.state.talents.map((talent, idx) => (
+              // todo: idx to talent id
+              <TalentItemWithNav key={idx} talent={talent} />
             ))}
           </View>
         </ScrollView>
@@ -50,19 +50,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: APP_BACKGROUD_COLOR
   },
-
-  resultTextContainer: {
+  resultTitleContainer: {
     marginTop: px2dp(30),
     marginBottom: 1,
     paddingVertical: px2dp(22),
     paddingLeft: px2dp(30),
     backgroundColor: '#fff'
   },
-  resultText: {
+  titleText: {
     color: '#8f9ba7',
     fontSize: px2sp(28)
   },
-  resultTextHighlight: {
+  titleTextHighlight: {
     color: '#1dbbae',
     fontSize: px2sp(30)
   }

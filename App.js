@@ -4,14 +4,27 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from './src/styles/common'
 
+// home
 import HomeScreen from './src/views/home/HomeScreen'
 import ProjectSearchScreen from './src/views/search/ProjectSearchScreen'
-import MyScreen from './src/views/MyScreen'
-import LoginScreen from './src/views/login/Login'
+import TalentSearchScreen from './src/views/search/TalentSearchScreen'
+// talent
+import TalentDetailScreen from './src/views/talent/TalentDetailScreen'
+// project
+import ProjectDetailScreen from './src/views/project/ProjectDetailScreen'
+// patent
+// import PatentDetailScreen from './src/views/patent/PatentDetailScreen'
+// news
+// import NewsDetailScreen from './src/views/news/NewsDetailScreen'
+// my
+import MyScreen from './src/views/my/MyScreen'
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
-  ProjectSearch: { screen: ProjectSearchScreen }
+  ProjectSearch: { screen: ProjectSearchScreen },
+  TalentSearch: {screen: TalentSearchScreen},
+  TalentDetail: { screen: TalentDetailScreen },
+  ProjectDetail: { screen: ProjectDetailScreen }
 })
 
 HomeStack.navigationOptions = ({ navigation }) => {

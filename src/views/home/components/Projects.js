@@ -1,8 +1,12 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { px2dp } from '../../../utils/device'
+
+import { px2dp } from 'src/utils/device'
+import projectNavDecorator from 'src/components/common/projectNavDecorator'
 
 import ProjectCard from './ProjectCard'
+
+const ProjectWithNav = projectNavDecorator(ProjectCard)
 
 export default class Projects extends React.Component {
   state = {
@@ -16,7 +20,7 @@ export default class Projects extends React.Component {
         {this.state.projects.map((project, idx) => (
           <View key={idx}
             style={(idx !== this.state.projects.length - 1) ? styles.projectContainer : {}}>
-            <ProjectCard project={project} />
+            <ProjectWithNav project={project} />
           </View>
         ))}
       </View>
