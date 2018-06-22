@@ -3,12 +3,24 @@ import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 
 import talentNavDecorator from '../../../components/common/talentNavDecorator'
 import { px2dp, px2sp } from '../../../utils/device'
+import { fetchHomeTalents } from '../../../ajax/talent'
 
 const TalentWithNav = talentNavDecorator(Talent)
 
 export default class Talents extends React.Component {
   state = {
-    talents: new Array(5).fill({}, 0, 5)
+    talents: []
+  }
+
+  componentDidMount() {
+    this.fetchTalents()
+  }
+
+  async fetchTalents() {
+    const { data } = await fetchHomeTalents()
+    this.setState({
+      talents: data
+    })
   }
 
   render() {
@@ -23,14 +35,15 @@ export default class Talents extends React.Component {
 }
 
 function Talent(props) {
+  const { talent } = props
   return (
     <View style={styles.talentContainer}>
       <View style={styles.avatarContainer}>
-        <Image source={require('../../../img/banner3.jpg')} style={styles.avatar} />
+        <Image source={{ uri: talent.photo }} style={styles.avatar} />
       </View>
-      <Text style={styles.name}>贾志国</Text>
-      <Text style={styles.university}>川大</Text>
-      <Text style={styles.title}>副教授</Text>
+      <Text style={styles.name}>{talent.realName}</Text>
+      <Text style={styles.university}>{talent.school}</Text>
+      <Text style={styles.title}>{talent.title}</Text>
     </View>
   )
 }

@@ -8,6 +8,9 @@ module.exports = {
     browser: true,
     node: true
   },
+  globals: {
+    __DEV__: true
+  },
   rules: {
     'space-before-function-paren': ['error', {
       anonymous: 'never',
@@ -15,7 +18,7 @@ module.exports = {
       asyncArrow: 'always'
     }],
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-debugger': !__DEV__? 2 : 0,
     'jsx-quotes': ['error', 'prefer-double']
   }
 }

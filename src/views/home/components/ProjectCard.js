@@ -1,33 +1,49 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
-
-import { px2dp, px2sp } from '../../../utils/device'
 import { Entypo } from '@expo/vector-icons'
 
+import { px2dp, px2sp } from '../../../utils/device'
+import { parseMoney, parseTime } from '../../../utils/format'
+
 export default class ProjectCard extends React.Component {
+  parseProjectName(name) {
+    if (name.length > 15) {
+      name = name.substr(0, 15) + '...'
+    }
+    return name
+  }
+  parseLocation(province, city) {
+    if (province !== city) {
+      return `${province} ${city}`
+    } else {
+      return province
+    }
+  }
+
   render() {
+    const { project } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.infoContainer}>
           <View style={styles.info}>
-            <Text style={styles.title}>推荐的项目标题1</Text>
-            <Text style={styles.organization}>电子科技大学 / IT计算机类</Text>
+            <Text style={styles.title}>{this.parseProjectName(project.projectName)}</Text>
+            <Text style={styles.organization}>{project.subject}</Text>
             <View style={styles.locationContainer}>
               <Entypo name="location-pin" size={13} color="#8f9ba7" />
-              <Text style={styles.location}>四川 成都</Text>
+              <Text style={styles.location}>{this.parseLocation(project.province, project.city)}</Text>
             </View>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>9k</Text>
+            <Text style={styles.price}>{parseMoney(project.money)}</Text>
           </View>
         </View>
         <View style={styles.userContainer}>
           <View style={styles.userInfo}>
-            <Image source={require('../../../img/banner3.jpg')} style={styles.avatar} />
-            <Text style={styles.name}>贾志国</Text>
+            <Image source={{ uri: project.ownerAvatar }} style={styles.avatar} />
+            <Text style={styles.name}>{project.ownerName}</Text>
           </View>
           <View style={styles.timeContainer}>
-            <Text style={styles.time}>2018-1-30</Text>
+            <Text style={styles.time}>{parseTime(project.releaseTime)}</Text>
           </View>
         </View>
       </View>
