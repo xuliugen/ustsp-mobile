@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { px2dp } from '../../../utils/device'
-import projectNavDecorator from '../../../components/common/projectNavDecorator'
+import { px2dp } from 'src/utils/device'
+import projectNavDecorator from 'src/components/common/projectNavDecorator'
 
 import ProjectCard from './ProjectCard'
 

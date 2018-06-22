@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-import { px2dp, px2sp } from '../../../utils/device'
+import { px2dp, px2sp } from 'src/utils/device'
 
 export default class ProjectItem extends React.Component {
   render() {
