@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-import { px2sp } from '../../../utils/device'
+import { px2sp } from 'src/utils/device'
 
 export default class HeaderRightFilter extends React.Component {
   render() {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
-import TextInput from '../../../components/common/TextInput'
+import TextInput from 'src/components/common/TextInput'
 
-import { px2dp, px2sp } from '../../../utils/device'
+import { px2dp, px2sp } from 'src/utils/device'
 
 export default class HeaderTitleSearch extends React.Component {
   state = {
