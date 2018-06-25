@@ -2,8 +2,8 @@ import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
-import { px2dp, px2sp } from '../../../utils/device'
-import { parseMoney, parseTime } from '../../../utils/format'
+import { px2dp, px2sp } from 'src/utils/device'
+import { parseMoney, parseTime } from 'src/utils/format'
 
 export default class ProjectCard extends React.Component {
   parseProjectName(name) {

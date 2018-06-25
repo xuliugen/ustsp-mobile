@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 
-import talentNavDecorator from '../../../components/common/talentNavDecorator'
-import { px2dp, px2sp } from '../../../utils/device'
-import { fetchHomeTalents } from '../../../ajax/talent'
+import talentNavDecorator from 'src/components/common/talentNavDecorator'
+import { px2dp, px2sp } from 'src/utils/device'
+import { fetchHomeTalents } from 'src/ajax/talent'
 
 const TalentWithNav = talentNavDecorator(Talent)
 

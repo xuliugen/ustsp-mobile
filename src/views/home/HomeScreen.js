@@ -2,8 +2,8 @@ import React from 'react'
 import { StyleSheet, ImageBackground, View, ScrollView, Text } from 'react-native'
 import Swiper from 'react-native-swiper'
 
-import { THEME_COLOR, APP_BACKGROUD_COLOR } from '../../styles/common'
-import {px2dp, px2sp} from '../../utils/device'
+import { THEME_COLOR, APP_BACKGROUD_COLOR } from 'src/styles/common'
+import {px2dp, px2sp} from 'src/utils/device'
 
 import Search from './components/Search'
 import Projects from './components/Projects'

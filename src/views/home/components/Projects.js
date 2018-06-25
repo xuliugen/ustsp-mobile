@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { px2dp } from '../../../utils/device'
-import projectNavDecorator from '../../../components/common/projectNavDecorator'
-import { fetchHomeScreenProjects } from '../../../ajax/project'
+import { px2dp } from 'src/utils/device'
+import projectNavDecorator from 'src/components/common/projectNavDecorator'
+import { fetchHomeScreenProjects } from 'src/ajax/project'
 
 import ProjectCard from './ProjectCard'
 
