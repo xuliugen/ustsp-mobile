@@ -7,7 +7,7 @@ import TextInput from 'src/components/common/TextInput'
 import { Feather } from '@expo/vector-icons'
 
 @withNavigation
-export default class Login extends React.Component {
+export default class LoginScreen extends React.Component {
   static navigationOptions = {
     header: null
   }
@@ -48,12 +48,13 @@ export default class Login extends React.Component {
           </ImageBackground>
         </View>
         <View style={styles.container}>
-          <View style={styles.loginTab}></View>
+          {/* <View style={styles.loginTab}></View> */}
           <View style={styles.loginForm}>
             <TextInput
               underlineColorAndroid="transparent"
               placeholder="输入账号"
               style={styles.input}
+              returnKeyType="next"
               value={this.state.username}
               onChangeText={(text) => this.setState({ username: text })} />
             <View style={styles.pswContainer}>
@@ -61,6 +62,7 @@ export default class Login extends React.Component {
                 underlineColorAndroid="transparent"
                 placeholder="输入密码"
                 style={styles.input}
+                returnKeyType="done"
                 value={this.state.password}
                 onChangeText={(text) => this.setState({ password: text })} />
               <TouchableOpacity onPress={this.handleForgetPwd} style={styles.forgetPwd}>

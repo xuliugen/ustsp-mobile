@@ -18,6 +18,7 @@ import ProjectDetailScreen from './src/views/project/ProjectDetailScreen'
 // import NewsDetailScreen from './src/views/news/NewsDetailScreen'
 // my
 import MyScreen from './src/views/my/MyScreen'
+import LoginScreen from './src/views/login/LoginScreen'
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
