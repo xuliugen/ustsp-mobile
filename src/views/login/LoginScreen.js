@@ -36,14 +36,16 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.backgroundContainer}>
         <View>
-          <ImageBackground source={require('../../img/ellipse.png')} style={styles.bgImg} resizeMode="stretch">
+          <ImageBackground source={require('src/img/ellipse.png')} style={styles.bgImg} resizeMode="stretch">
             <View style={styles.titleText}>
               <Feather name="arrow-left" size={28} style={styles.goback} onPress={this.handleGoBack} />
-              <Text style={styles.titleTextLineOne}>欢迎使用UppFind{'\n'}</Text>
-              <Text style={styles.titleTextLineTwo}>请先登陆</Text>
+              <Text style={styles.titleTextLineOne}>欢迎使用UppFind</Text>
+              <View>
+                <Text style={styles.titleTextLineTwo}>请先登陆</Text>
+              </View>
             </View>
             <View style={styles.brand}>
-              <Image style={styles.brandImage} source={require('../../img/uppfind.png')} />
+              <Image style={styles.brandImage} source={require('src/img/uppfind.png')} />
             </View>
           </ImageBackground>
         </View>

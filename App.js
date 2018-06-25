@@ -61,8 +61,6 @@ const AppStack = createBottomTabNavigator(
           iconName = `ios-home${focused ? '' : '-outline'}`
         } else if (routeName === 'My') {
           iconName = `ios-options${focused ? '' : '-outline'}`
-        } else {
-          return null
         }
 
         // You can return any component that you like here! We usually use an
@@ -76,8 +74,6 @@ const AppStack = createBottomTabNavigator(
           label = '首页'
         } else if (routeName === 'My') {
           label = '我的'
-        } else {
-          return null
         }
         return <Text style={[{ color: tintColor }, styles.tabLabel]}>{label}</Text>
       }

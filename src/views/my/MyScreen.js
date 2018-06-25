@@ -4,14 +4,15 @@ import { withNavigation } from 'react-navigation'
 
 @withNavigation
 export default class App extends React.Component {
-  handleLogin = () => {
+  handleLoginPress = () => {
     this.props.navigation.navigate('Login')
   }
+
   render() {
     return (
       <View style={styles.container}>
         <Text>我的</Text>
-        <Button onPress={this.handleLogin} title="login" />
+        <Button onPress={this.handleLoginPress} title="login" />
       </View>
     )
   }
