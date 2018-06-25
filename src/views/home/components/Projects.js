@@ -28,14 +28,13 @@ export default class Projects extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* todo: idx to project.id */}
         {this.state.projects.map((project, idx) => {
           let projectInfo = Object.assign({}, project.projectResearchInfo, {
             ownerAvatar: project.ownerAvatar,
             ownerName: project.ownerName
           })
           return (
-            <View key={idx}
+            <View key={project.projectResearchInfo.id}
               style={(idx !== this.state.projects.length - 1) ? styles.projectContainer : {}}>
               <ProjectWithNav project={projectInfo} />
             </View>
