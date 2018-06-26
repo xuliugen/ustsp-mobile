@@ -8,6 +8,7 @@ import { THEME_COLOR } from './src/styles/common'
 import HomeScreen from './src/views/home/HomeScreen'
 import ProjectSearchScreen from './src/views/search/ProjectSearchScreen'
 import TalentSearchScreen from './src/views/search/TalentSearchScreen'
+import PatentSearchScreen from 'src/views/search/PatentSearchScreen'
 // talent
 import TalentDetailScreen from './src/views/talent/TalentDetailScreen'
 // project
@@ -24,6 +25,7 @@ const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
   ProjectSearch: { screen: ProjectSearchScreen },
   TalentSearch: {screen: TalentSearchScreen},
+  PatentSearch: { screen: PatentSearchScreen },
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen }
 })
