@@ -18,6 +18,7 @@ import ProjectDetailScreen from './src/views/project/ProjectDetailScreen'
 // import NewsDetailScreen from './src/views/news/NewsDetailScreen'
 // my
 import MyScreen from './src/views/my/MyScreen'
+import LoginScreen from './src/views/login/LoginScreen'
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -42,7 +43,11 @@ const MyStack = createStackNavigator({
   My: { screen: MyScreen }
 })
 
-export default createBottomTabNavigator(
+const LoginStack = createStackNavigator({
+  Login: { screen: LoginScreen }
+})
+
+const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeStack },
     My: { screen: MyStack }
@@ -82,6 +87,19 @@ export default createBottomTabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false
+  }
+)
+
+export default createStackNavigator(
+  {
+    App: AppStack,
+    Login: LoginStack
+  },
+  {
+    initialRouteName: 'App',
+    navigationOptions: {
+      header: null
+    }
   }
 )
 
