@@ -4,16 +4,50 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import defaultAvatar from 'src/img/defaultAvatar.png'
+import { fetchProjectDetail } from 'src/ajax/project'
+import { parseTime, parseUserType } from 'src/utils/format'
 
 import ProjectDetailHeader from './components/ProjectDetailHeader'
 
+/**
+ * @todo Use Redux to pass state to detail content and detail header
+ * @todo download file, hint: https://stackoverflow.com/questions/44546199/how-to-download-a-file-with-react-native
+ */
 export default class ProjectDetailScreen extends React.Component {
   static navigationOptions = {
     header: <ProjectDetailHeader />
   }
 
+  state = {
+    project: {
+      skills: []
+    }
+  }
+
+  componentDidMount() {
+    this.fetchDetail()
+  }
+
+  async fetchDetail() {
+    const { navigation } = this.props
+    const projectId = navigation.getParam('projectId')
+    const { data } = await fetchProjectDetail(projectId)
+    let { projectInfoVo, ...baseData } = data
+    let projectData = Object.assign({}, baseData, projectInfoVo.projectResearchInfo, {
+      skills: projectInfoVo.projectSkillList || []
+    })
+    this.setState({
+      project: projectData
+    })
+    ProjectDetailScreen.headerData = {
+      name: projectData.projectName,
+      money: projectData.money,
+      deadline: projectData.deadline
+    }
+  }
+
   render() {
+    const { project } = this.state
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -21,61 +55,48 @@ export default class ProjectDetailScreen extends React.Component {
             <View style={styles.detailLine}>
               <View style={[styles.detailBox, styles.detailBoxLeft]}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>需求类型</Text>
-                <Text style={styles.text}>123</Text>
+                <Text style={styles.text}>{project.type}</Text>
               </View>
               <View style={styles.detailBox}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>需求学科</Text>
-                <Text style={styles.text}>123</Text>
+                <Text style={styles.text}>{project.subject}</Text>
               </View>
             </View>
             <View style={styles.detailLine}>
               <View style={[styles.detailBox, styles.detailBoxLeft]}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>对接倾向</Text>
-                <Text style={styles.text}>123</Text>
+                <Text style={styles.text}>{project.toOriented}}</Text>
               </View>
               <View style={styles.detailBox}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>预设金额</Text>
-                <Text style={styles.text}>123</Text>
+                <Text style={styles.text}>{project.money}</Text>
               </View>
             </View>
             <View style={styles.detailLine}>
               <View style={[styles.detailBox, styles.detailBoxLeft]}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>开始时间</Text>
-                <Text style={styles.text}>123</Text>
+                <Text style={styles.text}>{parseTime(project.startTime)}</Text>
               </View>
               <View style={styles.detailBox}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>结束时间</Text>
-                <Text style={styles.text}>123</Text>
+                <Text style={styles.text}>{parseTime(project.endTime)}</Text>
               </View>
             </View>
           </View>
 
           <View style={[styles.descBlock, styles.block]}>
             <Text style={[styles.label, styles.descBlockLabel]}>需求描述</Text>
-            <Text style={styles.descBlockText}>刚刚查了下我的高考成绩，看到自己考了488分，别人考了690分的时候，我狠狠的锤了一下自己的兰博基尼的方向盘，不小心把手上的鸽子蛋戒指锤松......</Text>
+            <Text style={styles.descBlockText}>{project.projectIntroduction}</Text>
           </View>
 
           <View style={[styles.skillBlock, styles.block]}>
-            <Text style={[styles.label, styles.skillBlockLabel]}>需求描述</Text>
+            <Text style={[styles.label, styles.skillBlockLabel]}>技能要求</Text>
             <View style={styles.skillContainer}>
-              <View style={styles.skillItem}>
-                <Text style={styles.skillText}>前端123</Text>
-              </View>
-              <View style={styles.skillItem}>
-                <Text style={styles.skillText}>后端123</Text>
-              </View>
-              <View style={styles.skillItem}>
-                <Text style={styles.skillText}>后端123</Text>
-              </View>
-              <View style={styles.skillItem}>
-                <Text style={styles.skillText}>后端123</Text>
-              </View>
-              <View style={styles.skillItem}>
-                <Text style={styles.skillText}>后端123</Text>
-              </View>
-              <View style={styles.skillItem}>
-                <Text style={styles.skillText}>后端123</Text>
-              </View>
+              {project.skills.map(({ skill }, idx) => (
+                <View key={idx} style={styles.skillItem}>
+                  <Text style={styles.skillText}>{skill}</Text>
+                </View>
+              ))}
             </View>
           </View>
 
@@ -84,12 +105,8 @@ export default class ProjectDetailScreen extends React.Component {
               <Text style={styles.label}>附件</Text>
             </View>
             <View style={styles.fileItemContainer}>
-              <View style={[styles.fileItem, styles.fileItemNotLast]}>
-                <Text style={styles.fileText}>附件1.docx</Text>
-                <MaterialIcons name="keyboard-arrow-right" size={px2sp(30)} style={styles.fileGoIcon} />
-              </View>
               <View style={styles.fileItem}>
-                <Text style={styles.fileText}>附件2.docx</Text>
+                <Text style={styles.fileText}>需求附件.docx</Text>
                 <MaterialIcons name="keyboard-arrow-right" size={px2sp(30)} style={styles.fileGoIcon} />
               </View>
             </View>
@@ -98,15 +115,15 @@ export default class ProjectDetailScreen extends React.Component {
           <View style={[styles.publisherBlock, styles.block]}>
             <View style={{ flexDirection: 'row' }}>
               <View>
-                <Image source={defaultAvatar} style={styles.publisherAvatar} />
+                <Image source={{ uri: project.ownerAvatarUrl }} style={styles.publisherAvatar} />
               </View>
               <View style={styles.publisherInfo}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.publisherName}>乌鸦坐飞机</Text>
-                  <Text style={styles.publisherTitle}>电子科技大学 / 外语系 / 教授</Text>
+                  <Text style={styles.publisherName}>{project.ownerName}</Text>
+                  <Text style={styles.publisherTitle}>{project.ownerLocation} / {parseUserType(project.ownerType)}</Text>
                 </View>
                 <View>
-                  <Text style={styles.publisherDate}>发布于 2018-2-29</Text>
+                  <Text style={styles.publisherDate}>发布于 {parseTime(project.createTime)}</Text>
                 </View>
               </View>
             </View>

@@ -4,36 +4,64 @@ import { Feather, Entypo } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
 
 import { STATUS_BAR_HEIGHT, px2dp, px2sp } from 'src/utils/device'
+import { parseTime } from 'src/utils/format'
+import { fetchProjectDetail } from 'src/ajax/project'
 
-const ProjectDetailHeader = withNavigation((props) => {
-  function handleGoBackPress() {
-    props.navigation.goBack(null)
+/**
+ * @todo Use Redux to pass state to detail content and detail header
+ */
+@withNavigation
+export default class ProjectDetailHeader extends React.Component {
+  state = {
+    project: {}
   }
-  function handleSharePress() {
+
+  handleGoBackPress = () => {
+    this.props.navigation.goBack(null)
+  }
+  handleSharePress = () => {
     alert('hi')
   }
-  return (
-    <ImageBackground source={require('./header_bg.png')} style={styles.container}>
-      <View style={styles.wrapper}>
-        <View style={styles.pageHeader}>
-          <Feather name="arrow-left" size={18} style={styles.goback} onPress={handleGoBackPress} />
-          <Text style={styles.headerTitle}>项目详情</Text>
-          <Entypo name="share" size={18} style={styles.share} onPress={handleSharePress} />
-        </View>
-        <View style={styles.projectHeader}>
-          <View>
-            <Text style={styles.projectTitle}>标题</Text>
-          </View>
-          <View style={styles.projectAbstract}>
-            <Text style={styles.projectMoney}>¥12000</Text>
-            <Text style={styles.projectDeadline}>报名截止于 1月22日</Text>
-          </View>
-        </View>
-      </View>
-    </ImageBackground>
 
-  )
-})
+  componentDidMount() {
+    this.fetchDetail()
+  }
+
+  async fetchDetail() {
+    const { navigation } = this.props
+    const projectId = navigation.getParam('projectId')
+    const { data } = await fetchProjectDetail(projectId)
+    let { projectInfoVo, ...baseData } = data
+    let projectData = Object.assign({}, baseData, projectInfoVo.projectResearchInfo)
+    this.setState({
+      project: projectData
+    })
+  }
+
+  render() {
+    const { project } = this.state
+    return (
+      <ImageBackground source={require('./header_bg.png')} style={styles.container}>
+        <View style={styles.wrapper}>
+          <View style={styles.pageHeader}>
+            <Feather name="arrow-left" size={18} style={styles.goback} onPress={this.handleGoBackPress} />
+            <Text style={styles.headerTitle}>项目详情</Text>
+            <Entypo name="share" size={18} style={styles.share} onPress={this.handleSharePress} />
+          </View>
+          <View style={styles.projectHeader}>
+            <View>
+              <Text style={styles.projectTitle}>{project.projectName}</Text>
+            </View>
+            <View style={styles.projectAbstract}>
+              <Text style={styles.projectMoney}>¥{project.money}</Text>
+              <Text style={styles.projectDeadline}>报名截止于 {parseTime(project.deadline, 'YYYY年MM月DD日')}</Text>
+            </View>
+          </View>
+        </View>
+      </ImageBackground>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -85,5 +113,3 @@ const styles = StyleSheet.create({
     color: '#ddd'
   }
 })
-
-export default ProjectDetailHeader

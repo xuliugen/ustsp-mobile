@@ -5,7 +5,9 @@ import { withNavigation } from 'react-navigation'
 const talentNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
     handlePress = () => {
-      this.props.navigation.navigate('ProjectDetail')
+      this.props.navigation.navigate('ProjectDetail', {
+        projectId: this.props.project.id
+      })
     }
 
     render() {
