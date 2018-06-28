@@ -6,6 +6,9 @@ function toSearchPageByType(type, navigation) {
     case 'talent':
       navigation.navigate('TalentSearch')
       break
+    case 'patent':
+      navigation.navigate('PatentSearch')
+      break
     default:
       navigation.navigate('My')
       break
