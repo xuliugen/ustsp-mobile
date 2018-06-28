@@ -1,11 +1,17 @@
 import React from 'react'
 import { withNavigation } from 'react-navigation'
 import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native'
-import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
-import { px2dp, px2sp } from 'src/utils/device'
-import TextInput from 'src/components/common/TextInput'
 import { Feather } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import { userLogin } from 'src/actions'
 
+import TextInput from 'src/components/common/TextInput'
+import { px2dp, px2sp } from 'src/utils/device'
+import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
+
+const mapStateToProps = () => ({})
+
+@connect()
 @withNavigation
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -24,8 +30,8 @@ export default class LoginScreen extends React.Component {
     Alert.alert('forget password')
   }
 
-  handleLogin = () => {
-    this.props.navigation.navigate('Home')
+  handleLoginPress = () => {
+    this.props.dispatch(userLogin(this.state))
   }
 
   handleGoBack = () => {
@@ -72,7 +78,7 @@ export default class LoginScreen extends React.Component {
               </TouchableOpacity>
             </View>
             <View>
-              <TouchableOpacity onPress={this.handleLogin} style={[styles.loginBtn, styles.btns]}>
+              <TouchableOpacity onPress={this.handleLoginPress} style={[styles.loginBtn, styles.btns]}>
                 <Text style={[styles.loginText, styles.btnsText]}>登陆UppFind</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.handleForgetPwd} style={[styles.regBtn, styles.btns]}>
