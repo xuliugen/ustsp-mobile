@@ -11,11 +11,11 @@ export default class TalentItem extends React.Component {
             <Text style={styles.patentTitle}>上传的推荐专利标题一上传的推荐专利标题一</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>产权id：23423423</Text>
+            <Text style={styles.infoText}>专利类型：发明</Text>
           </View>
         </View>
         <View style={styles.rightContainer}>
-          <Text style={styles.typeText}>实用新型</Text>
+          <Text style={styles.statusText}>法律状态</Text>
         </View>
       </View>
     )
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: px2dp(30),
     backgroundColor: '#f7b35a',
   },
-  typeText: {
+  statusText: {
     fontSize: px2sp(26),
     color: '#fff'
   }

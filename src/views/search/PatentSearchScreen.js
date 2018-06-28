@@ -27,9 +27,10 @@ export default class PatentSearchScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.resultTitleContainer}>
-            <Text style={styles.titleText}>搜索到：<Text style={styles.titleTextHighlight}>3 </Text>个相关知识产权</Text>
+            <Text style={styles.titleText}>共为您找到：<Text style={styles.titleTextHighlight}>3 </Text>个相关知识产权</Text>
           </View>
           <View>
+            {/* todo: the value of key is patent.id, not idx */}
             {this.state.patents.map((patents, idx) => (
               <PatentItem key={idx} patents={patents} />
             ))}
