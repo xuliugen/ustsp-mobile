@@ -5,10 +5,10 @@ const initialState = {
   user: {}
 }
 
-export default function auth(state = initialState, action = {}) {
-  switch(action.type) {
+export default function auth(state = initialState, action) {
+  switch (action.type) {
     case LOGGED_IN:
-      const { token, user } = action.data
+      const { token, user } = action
       return {
         ...state,
         token,

@@ -1,11 +1,35 @@
 import { login } from 'src/ajax/auth'
-import { LOGGED_IN } from '../constants/actionTypes'
+import { LOGGED_IN, LOGGED_ERROR, LOGGED_OUT } from '../constants/actionTypes'
 
-export async function userLogin(req) {
-  const { data } = await login(req)
+export function dispatchAuthData(token, user) {
   return {
     type: LOGGED_IN,
-    token: data.token,
-    user: data.user
+    token,
+    user
+  }
+}
+
+export function userLogin(req) {
+  return async (dispatch) => {
+    try {
+      const { data } = await login(req)
+      dispatch({
+        type: LOGGED_IN,
+        token: data.token,
+        user: data.user
+      })
+      return data
+    } catch (error) {
+      return {
+        type: LOGGED_ERROR,
+        error
+      }
+    }
+  }
+}
+
+export function userLogout() {
+  return {
+    type: LOGGED_OUT
   }
 }

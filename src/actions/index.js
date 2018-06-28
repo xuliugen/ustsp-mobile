@@ -1,5 +1,3 @@
 import * as authAction from './auth'
 
-export {
-  ...authAction
-}
+module.exports = { ...authAction }
