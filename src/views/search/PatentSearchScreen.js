@@ -3,9 +3,12 @@ import { StyleSheet, ScrollView, View, Text, } from 'react-native'
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import PatentItem from './components/PatentItem'
+import patentNavDecorator from 'src/components/common/patentNavDecorator'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
+
+const PatentItemWithNav = patentNavDecorator(PatentItem)
 
 export default class PatentSearchScreen extends React.Component {
   static navigationOptions = {
@@ -32,7 +35,7 @@ export default class PatentSearchScreen extends React.Component {
           <View>
             {/* todo: the value of key is patent.id, not idx */}
             {this.state.patents.map((patents, idx) => (
-              <PatentItem key={idx} patents={patents} />
+              <PatentItemWithNav key={idx} patents={patents} />
             ))}
           </View>
         </ScrollView>
