@@ -62,7 +62,7 @@ export default class PatentDetailScreen extends React.Component {
                   <Text style={styles.ownerName}>uppfind管理员</Text>
                   <Text style={styles.ownerTitle}>电子科技大学 / 管理人员</Text>
                 </View>
-                <View style={{ marginLeft: px2dp(50) }}>
+                <View>
                   <Text style={styles.contact}>联系方式</Text>
                   <Text style={styles.contact}>18482212054</Text>
                 </View>
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: px2dp(100 / 2)
   },
   ownerInfo: {
+    flex: 1,
     flexDirection: 'row',
     marginLeft: px2dp(22),
     paddingVertical: px2dp(12),
