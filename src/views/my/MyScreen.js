@@ -1,10 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Image, ImageBackground } from 'react-native'
+import { StyleSheet, Text, View, Button, Image, ImageBackground, AsyncStorage } from 'react-native'
 import { px2dp, px2sp } from 'src/utils/device'
 import { Ionicons } from '@expo/vector-icons'
 
 import { withNavigation } from 'react-navigation'
+import { userLogout } from 'src/actions'
+import { connect } from 'react-redux'
 
+@connect()
 @withNavigation
 export default class App extends React.Component {
   static navigationOptions = {
@@ -13,6 +16,10 @@ export default class App extends React.Component {
 
   handleLoginPress = () => {
     this.props.navigation.navigate('Login')
+  }
+  handleLogoutPress = () => {
+    this.props.dispatch(userLogout())
+    AsyncStorage.multiRemove(['token', 'user'])
   }
 
   render() {
@@ -35,6 +42,8 @@ export default class App extends React.Component {
           </View>
           {/* <Button onPress={this.handleLoginPress} title="login" /> */}
         </ImageBackground>
+        {/* <Button onPress={this.handleLoginPress} title="login" />
+        <Button onPress={this.handleLogoutPress} title="logout" /> */}
       </View>
     )
   }

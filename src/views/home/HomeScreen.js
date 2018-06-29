@@ -1,20 +1,36 @@
 import React from 'react'
-import { StyleSheet, ImageBackground, View, ScrollView, Text } from 'react-native'
+import { StyleSheet, ImageBackground, View, ScrollView, Text, AsyncStorage } from 'react-native'
 import Swiper from 'react-native-swiper'
+import { connect } from 'react-redux'
 
 import { THEME_COLOR, APP_BACKGROUD_COLOR } from 'src/styles/common'
 import {px2dp, px2sp} from 'src/utils/device'
+import { dispatchAuthData } from 'src/actions'
 
 import Search from './components/Search'
 import Projects from './components/Projects'
 import Talents from './components/Talents'
 import Menu from './components/Menu'
 
+@connect()
 export default class Home extends React.Component {
   static navigationOptions = {
     title: '首页',
     header: null,
     headerBackTitle: null
+  }
+
+  componentWillMount() {
+    this.getAuthData()
+  }
+
+  async getAuthData() {
+    // 写完了发现可以用 multiGet()，但是不算改了，略略
+    const [token, user] = await Promise.all([AsyncStorage.getItem('token'), AsyncStorage.getItem('user')])
+    if (token && user) {
+      const userObj = JSON.parse(user)
+      this.props.dispatch(dispatchAuthData(token, userObj))
+    }
   }
 
   handleProjectCardPress = () => {
