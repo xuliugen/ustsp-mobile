@@ -2,10 +2,12 @@ import React from 'React'
 import { TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation'
 
-const talentNavDecorator = (WrappedComponent) => {
+const projectNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
     handlePress = () => {
-      this.props.navigation.navigate('ProjectDetail')
+      this.props.navigation.navigate('ProjectDetail', {
+        projectId: this.props.project.id
+      })
     }
 
     render() {
@@ -18,4 +20,4 @@ const talentNavDecorator = (WrappedComponent) => {
   })
 }
 
-export default talentNavDecorator
+export default projectNavDecorator
