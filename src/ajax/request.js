@@ -18,10 +18,10 @@ const instance = axios.create({
 })
 
 // Add a request interceptor
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use(function(config) {
   // Do something before request is sent
   return config
-}, function (error) {
+}, function(error) {
   // Do something with request error
   return Promise.reject(error)
 })
@@ -42,9 +42,10 @@ instance.interceptors.response.use((res) => {
     const { status } = error.response
     switch (status) {
       case 500:
-        Alert.alert('oops, 服务器出了点问题...')
+        Alert.alert('500哭哭')
         break
       default:
+        Alert.alert('status code:' + status)
         break
     }
     throw error
