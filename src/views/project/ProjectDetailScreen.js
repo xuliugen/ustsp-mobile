@@ -15,7 +15,7 @@ import ProjectDetailHeader from './components/ProjectDetailHeader'
  */
 export default class ProjectDetailScreen extends React.Component {
   static navigationOptions = {
-    header: <ProjectDetailHeader />
+    header: <ProjectDetailHeader project={{}} />
   }
 
   state = {
@@ -39,10 +39,13 @@ export default class ProjectDetailScreen extends React.Component {
     this.setState({
       project: projectData
     })
-    ProjectDetailScreen.headerData = {
-      name: projectData.projectName,
+    const headerData = {
+      projectName: projectData.projectName,
       money: projectData.money,
       deadline: projectData.deadline
+    }
+    this.constructor.navigationOptions = {
+      header: <ProjectDetailHeader project={headerData} />
     }
   }
 
@@ -65,7 +68,7 @@ export default class ProjectDetailScreen extends React.Component {
             <View style={styles.detailLine}>
               <View style={[styles.detailBox, styles.detailBoxLeft]}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>对接倾向</Text>
-                <Text style={styles.text}>{project.toOriented}}</Text>
+                <Text style={styles.text}>{project.toOriented}</Text>
               </View>
               <View style={styles.detailBox}>
                 <Text style={[styles.detailBoxLabel, styles.label]}>预设金额</Text>

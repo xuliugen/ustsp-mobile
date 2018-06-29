@@ -23,23 +23,8 @@ export default class ProjectDetailHeader extends React.Component {
     alert('hi')
   }
 
-  componentDidMount() {
-    this.fetchDetail()
-  }
-
-  async fetchDetail() {
-    const { navigation } = this.props
-    const projectId = navigation.getParam('projectId')
-    const { data } = await fetchProjectDetail(projectId)
-    let { projectInfoVo, ...baseData } = data
-    let projectData = Object.assign({}, baseData, projectInfoVo.projectResearchInfo)
-    this.setState({
-      project: projectData
-    })
-  }
-
   render() {
-    const { project } = this.state
+    const { project } = this.props
     return (
       <ImageBackground source={require('./header_bg.png')} style={styles.container}>
         <View style={styles.wrapper}>
