@@ -8,6 +8,7 @@ import { userLogin } from 'src/actions'
 import TextInput from 'src/components/common/TextInput'
 import { px2dp, px2sp } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
+import MessageBar from 'src/components/common/MessageBar'
 
 @connect()
 @withNavigation
@@ -24,7 +25,7 @@ export default class LoginScreen extends React.Component {
     }
   }
 
-  handleLogin() {
+  async handleLogin() {
     if (!this.state.userName) {
       Alert.alert('请输入手机号或邮箱')
       return
@@ -33,11 +34,22 @@ export default class LoginScreen extends React.Component {
       Alert.alert('请输入密码')
       return
     }
-    this.props.dispatch(userLogin(this.state)).then(async ({ token, user }) => {
+    try {
+      const { token, user } = await this.props.dispatch(userLogin(this.state))
       this.props.navigation.navigate('Home')
       AsyncStorage.setItem('token', token)
       AsyncStorage.setItem('user', JSON.stringify(user))
-    })
+    } catch (error) {
+      if (error && error.response) {
+        const { status } = error.response
+        if (status === 401 || status === 404) {
+          MessageBar.show({
+            type: 'warning',
+            message: '用户名或密码错误'
+          })
+        }
+      }
+    }
   }
 
   handleForgetPwdPress() {

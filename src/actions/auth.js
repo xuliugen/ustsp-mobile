@@ -1,5 +1,5 @@
 import { login } from 'src/ajax/auth'
-import { LOGGED_IN, LOGGED_ERROR, LOGGED_OUT } from '../constants/actionTypes'
+import { LOGGED_IN, LOGGED_OUT } from '../constants/actionTypes'
 
 export function dispatchAuthData(token, user) {
   return {
@@ -20,10 +20,7 @@ export function userLogin(req) {
       })
       return data
     } catch (error) {
-      return {
-        type: LOGGED_ERROR,
-        error
-      }
+      throw error
     }
   }
 }

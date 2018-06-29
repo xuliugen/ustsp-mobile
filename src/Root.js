@@ -1,8 +1,11 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, View, AsyncStorage } from 'react-native'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from 'src/styles/common'
+import { MessageBarManager, MessageBar } from 'react-native-message-bar'
+import { dispatchAuthData } from 'src/actions'
+import { connect } from 'react-redux'
 
 // home
 import HomeScreen from 'src/views/home/HomeScreen'
@@ -93,7 +96,7 @@ const AppStack = createBottomTabNavigator(
   }
 )
 
-export default createStackNavigator(
+const AppNavigator = createStackNavigator(
   {
     App: AppStack,
     Login: LoginStack
@@ -105,6 +108,37 @@ export default createStackNavigator(
     }
   }
 )
+
+@connect()
+export default class AppRoot extends React.Component {
+  componentWillMount() {
+    this.getAuthData()
+  }
+  componentDidMount() {
+    MessageBarManager.registerMessageBar(this.refs.alert)
+  }
+  componentWillUnmount() {
+    MessageBarManager.unregisterMessageBar()
+  }
+
+  async getAuthData() {
+    // 写完了发现可以用 multiGet()，但是不算改了，略略
+    const [token, user] = await Promise.all([AsyncStorage.getItem('token'), AsyncStorage.getItem('user')])
+    if (token && user) {
+      const userObj = JSON.parse(user)
+      this.props.dispatch(dispatchAuthData(token, userObj))
+    }
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <AppNavigator />
+        <MessageBar ref="alert" />
+      </View>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   tabLabel: {
