@@ -1,5 +1,5 @@
 import { PixelRatio, Dimensions } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 const PIXEL_DENSITY = PixelRatio.get()
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window')

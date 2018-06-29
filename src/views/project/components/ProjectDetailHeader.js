@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, ImageBackground } from 'react-native'
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { Feather, Entypo } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
 
@@ -44,9 +44,13 @@ export default class ProjectDetailHeader extends React.Component {
       <ImageBackground source={require('./header_bg.png')} style={styles.container}>
         <View style={styles.wrapper}>
           <View style={styles.pageHeader}>
-            <Feather name="arrow-left" size={18} style={styles.goback} onPress={this.handleGoBackPress} />
+            <TouchableOpacity style={styles.headerIconContainer} onPress={this.handleGoBackPress}>
+              <Feather name="arrow-left" size={18} style={styles.goback} />
+            </TouchableOpacity>
             <Text style={styles.headerTitle}>项目详情</Text>
-            <Entypo name="share" size={18} style={styles.share} onPress={this.handleSharePress} />
+            <TouchableOpacity style={styles.headerIconContainer} onPress={this.handleSharePress}>
+              <Entypo name="share" size={18} style={styles.share} />
+            </TouchableOpacity>
           </View>
           <View style={styles.projectHeader}>
             <View>
@@ -75,8 +79,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: px2dp(40),
-    paddingHorizontal: px2dp(30)
+    // paddingTop: px2dp(40),
+    // paddingHorizontal: px2dp(30)
+  },
+  headerIconContainer: {
+    width: 45,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   goback: {
     color: '#fff'
