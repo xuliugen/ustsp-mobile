@@ -2,20 +2,18 @@ import React from 'react'
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { Feather, Entypo } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import { STATUS_BAR_HEIGHT, px2dp, px2sp } from 'src/utils/device'
 import { parseTime } from 'src/utils/format'
-import { fetchProjectDetail } from 'src/ajax/project'
 
-/**
- * @todo Use Redux to pass state to detail content and detail header
- */
+const mapStateToProps = state => ({
+  project: state.project.detail
+})
+
+@connect(mapStateToProps)
 @withNavigation
 export default class ProjectDetailHeader extends React.Component {
-  state = {
-    project: {}
-  }
-
   handleGoBackPress = () => {
     this.props.navigation.goBack(null)
   }
@@ -57,13 +55,13 @@ const styles = StyleSheet.create({
     // height: px2dp(326)
   },
   wrapper: {
-    paddingTop: STATUS_BAR_HEIGHT,
+    paddingTop: STATUS_BAR_HEIGHT
   },
 
   pageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
     // paddingTop: px2dp(40),
     // paddingHorizontal: px2dp(30)
   },
