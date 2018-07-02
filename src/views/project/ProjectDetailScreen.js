@@ -1,56 +1,40 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Text, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { connect } from 'react-redux'
 
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import { fetchProjectDetail } from 'src/ajax/project'
 import { parseTime, parseUserType } from 'src/utils/format'
+import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
 
 import ProjectDetailHeader from './components/ProjectDetailHeader'
 
+const mapStateToProps = state => ({
+  project: state.project.detail
+})
+
 /**
- * @todo Use Redux to pass state to detail content and detail header
  * @todo download file, hint: https://stackoverflow.com/questions/44546199/how-to-download-a-file-with-react-native
  */
+@connect(mapStateToProps)
 export default class ProjectDetailScreen extends React.Component {
   static navigationOptions = {
-    header: <ProjectDetailHeader project={{}} />
-  }
-
-  state = {
-    project: {
-      skills: []
-    }
+    header: <ProjectDetailHeader />
   }
 
   componentDidMount() {
-    this.fetchDetail()
+    const { dispatch, navigation } = this.props
+    dispatch(fetchProjectDetail(navigation.getParam('projectId')))
   }
 
-  async fetchDetail() {
-    const { navigation } = this.props
-    const projectId = navigation.getParam('projectId')
-    const { data } = await fetchProjectDetail(projectId)
-    let { projectInfoVo, ...baseData } = data
-    let projectData = Object.assign({}, baseData, projectInfoVo.projectResearchInfo, {
-      skills: projectInfoVo.projectSkillList || []
-    })
-    this.setState({
-      project: projectData
-    })
-    const headerData = {
-      projectName: projectData.projectName,
-      money: projectData.money,
-      deadline: projectData.deadline
-    }
-    this.constructor.navigationOptions = {
-      header: <ProjectDetailHeader project={headerData} />
-    }
+  componentWillUnmount() {
+    const { dispatch } = this.props
+    dispatch(clearProjectDetail())
   }
 
   render() {
-    const { project } = this.state
+    const { project } = this.props
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -141,12 +125,11 @@ export default class ProjectDetailScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => alert('apply')} style={[styles.bottomBtn, styles.bottomBtnApply]} activeOpacity={1}>
             <Text style={styles.bottomBtnApplyText}>
-              <MaterialIcons name="group-add"/> 报名
+              <MaterialIcons name="group-add" /> 报名
             </Text>
           </TouchableOpacity>
         </View>
       </View>
-
     )
   }
 }
@@ -161,7 +144,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'row',
     width: SCREEN_WIDTH,
-    height: px2dp(88),
+    height: px2dp(88)
     // borderTopWidth: 1,
     // borderTopColor: '#ddd',
   },
@@ -180,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#8f9ba7'
   },
   bottomBtnApply: {
-    backgroundColor: '#3091e6',
+    backgroundColor: '#3091e6'
   },
   bottomBtnApplyText: {
     fontSize: px2sp(30),

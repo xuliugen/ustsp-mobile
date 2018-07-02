@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Alert } from 'react-native'
+import MessageBar from 'src/components/common/MessageBar'
 
 let API_ORIGIN = ''
 
@@ -42,10 +42,13 @@ instance.interceptors.response.use((res) => {
     const { status } = error.response
     switch (status) {
       case 500:
-        Alert.alert('500哭哭')
+        MessageBar.show({
+          type: 'warning',
+          message: '500哭哭'
+        })
         break
       default:
-        Alert.alert('status code:' + status)
+        // Alert.alert('status code:' + status)
         break
     }
     throw error
@@ -53,7 +56,10 @@ instance.interceptors.response.use((res) => {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
-    Alert.alert('网络异常')
+    MessageBar.show({
+      type: 'warning',
+      message: '网络连接异常QAQ'
+    })
     // console.warn('Network error', error.request)
   } else {
     // Something happened in setting up the request that triggered an Error

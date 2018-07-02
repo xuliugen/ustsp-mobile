@@ -8,9 +8,9 @@ module.exports = {
     browser: true,
     node: true
   },
-  // globals: {
-  //   __DEV__: true
-  // },
+  globals: {
+    __DEV__: true
+  },
   rules: {
     'space-before-function-paren': ['error', {
       anonymous: 'never',

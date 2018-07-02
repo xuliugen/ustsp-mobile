@@ -8,6 +8,7 @@ import { userLogin } from 'src/actions'
 import TextInput from 'src/components/common/TextInput'
 import { px2dp, px2sp } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
+import MessageBar from 'src/components/common/MessageBar'
 
 @connect()
 @withNavigation
@@ -22,26 +23,51 @@ export default class LoginScreen extends React.Component {
       userName: '13402877726',
       password: '123456'
     }
+    this.pwdIptRef = React.createRef()
   }
 
-  handleLogin() {
+  async handleLogin() {
     if (!this.state.userName) {
-      Alert.alert('请输入手机号或邮箱')
+      MessageBar.show({
+        type: 'warning',
+        message: '请输入手机号或邮箱'
+      })
       return
     }
     if (!this.state.password) {
-      Alert.alert('请输入密码')
+      MessageBar.show({
+        type: 'warning',
+        message: '请输入密码'
+      })
       return
     }
-    this.props.dispatch(userLogin(this.state)).then(async ({ token, user }) => {
+    try {
+      const { token, user } = await this.props.dispatch(userLogin(this.state))
       this.props.navigation.navigate('Home')
       AsyncStorage.setItem('token', token)
       AsyncStorage.setItem('user', JSON.stringify(user))
-    })
+      MessageBar.show({
+        message: '登录成功'
+      })
+    } catch (error) {
+      if (error && error.response) {
+        const { status } = error.response
+        if (status === 401 || status === 404) {
+          MessageBar.show({
+            type: 'warning',
+            message: '用户名或密码错误'
+          })
+        }
+        this.pwdIptRef.current.clear()
+      }
+    }
   }
 
   handleForgetPwdPress() {
     Alert.alert('forget password')
+  }
+  handleLoginSubmit = () => {
+    this.handleLogin()
   }
   handleLoginPress = () => {
     this.handleLogin()
@@ -79,16 +105,19 @@ export default class LoginScreen extends React.Component {
               returnKeyType="next"
               style={styles.input}
               value={this.state.userName}
-              onChangeText={(text) => this.setState({ userName: text })} />
+              onChangeText={(text) => this.setState({ userName: text })}
+              onSubmitEditing={() => this.pwdIptRef.current.focus()} />
             <View style={styles.pswContainer}>
               <TextInput
+                inputRef={this.pwdIptRef}
                 underlineColorAndroid="transparent"
                 placeholder="密码"
                 secureTextEntry
                 returnKeyType="done"
                 style={styles.input}
                 value={this.state.password}
-                onChangeText={(text) => this.setState({ password: text })} />
+                onChangeText={(text) => this.setState({ password: text })}
+                onSubmitEditing={this.handleLoginSubmit} />
               <TouchableOpacity onPress={this.handleForgetPwdPress} style={styles.forgetPwd}>
                 <Text style={styles.forgetPwdText}>忘记密码？</Text>
               </TouchableOpacity>
