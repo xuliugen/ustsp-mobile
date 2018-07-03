@@ -2,9 +2,11 @@ import React from 'react'
 import { StyleSheet, View, ScrollView, Text, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
-import PatentDetailHeader from './components/PatentDetailHeader'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
+
+import PatentDetailHeader from './components/PatentDetailHeader'
+import DetailLine from 'src/components/common/DetailLine'
 
 export default class PatentDetailScreen extends React.Component {
   static navigationOptions = {
@@ -16,66 +18,12 @@ export default class PatentDetailScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.detailBlock}>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>申请号</Text>
-                <Text style={styles.text}>201110045064X</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>申请日</Text>
-                <Text style={styles.text}>2016-06-24</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>公开号</Text>
-                <Text style={styles.text}>201110045064X</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>公开日</Text>
-                <Text style={styles.text}>2016-06-25</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>专利权人</Text>
-                <Text style={styles.text}>电子科技大学</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>发明人</Text>
-                <Text style={styles.text}>高伟</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>主分类号</Text>
-                <Text style={styles.text}>123</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>分类号</Text>
-                <Text style={styles.text}>123</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>地址</Text>
-                <Text style={styles.text}>123</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>国省代码</Text>
-                <Text style={styles.text}>123</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>法律状态</Text>
-                <Text style={styles.text}>123</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]} />
-                <Text style={styles.text} />
-              </View>
-            </View>
+            <DetailLine leftLabel={'申请号'} leftText={123} rightLabel={'申请日'} rightText={123} />
+            <DetailLine leftLabel={'公开号'} leftText={123} rightLabel={'公开日'} rightText={123} />
+            <DetailLine leftLabel={'专利权人'} leftText={123} rightLabel={'发明人'} rightText={123} />
+            <DetailLine leftLabel={'主分类号'} leftText={123} rightLabel={'分类号'} rightText={123} />
+            <DetailLine leftLabel={'地址'} leftText={123} rightLabel={'国省代码'} rightText={123} />
+            <DetailLine leftLabel={'法律状态'} leftText={123} />
           </View>
 
           <View style={styles.block}>
@@ -144,26 +92,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: px2sp(32),
     color: '#333'
-  },
-
-  detailLine: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd'
-  },
-  detailBox: {
-    flex: 1,
-    paddingTop: px2dp(26),
-    paddingBottom: px2dp(36),
-    paddingLeft: px2dp(30),
-    backgroundColor: '#fff'
-  },
-  detailBoxLeft: {
-    borderRightWidth: 1,
-    borderRightColor: '#ddd'
-  },
-  detailBoxLabel: {
-    marginBottom: px2dp(20)
   },
 
   block: {

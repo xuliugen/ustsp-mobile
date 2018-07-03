@@ -9,6 +9,7 @@ import { parseTime, parseUserType } from 'src/utils/format'
 import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
 
 import ProjectDetailHeader from './components/ProjectDetailHeader'
+import DetailLine from 'src/components/common/DetailLine'
 
 const mapStateToProps = state => ({
   project: state.project.detail
@@ -39,36 +40,9 @@ export default class ProjectDetailScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.detailBlock}>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>需求类型</Text>
-                <Text style={styles.text}>{project.type}</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>需求学科</Text>
-                <Text style={styles.text}>{project.subject}</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>对接倾向</Text>
-                <Text style={styles.text}>{project.toOriented}</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>预设金额</Text>
-                <Text style={styles.text}>{project.money}</Text>
-              </View>
-            </View>
-            <View style={styles.detailLine}>
-              <View style={[styles.detailBox, styles.detailBoxLeft]}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>开始时间</Text>
-                <Text style={styles.text}>{parseTime(project.startTime)}</Text>
-              </View>
-              <View style={styles.detailBox}>
-                <Text style={[styles.detailBoxLabel, styles.label]}>结束时间</Text>
-                <Text style={styles.text}>{parseTime(project.endTime)}</Text>
-              </View>
-            </View>
+            <DetailLine leftLabel={'需求类型'} leftText={project.type} rightLabel={'需求学科'} rightText={project.subject} />
+            <DetailLine leftLabel={'对接倾向'} leftText={project.toOriented} rightLabel={'预设金额'} rightText={project.money} />
+            <DetailLine leftLabel={'开始时间'} leftText={parseTime(project.startTime)} rightLabel={'结束时间'} rightText={parseTime(project.endTime)} />
           </View>
 
           <View style={[styles.descBlock, styles.block]}>
