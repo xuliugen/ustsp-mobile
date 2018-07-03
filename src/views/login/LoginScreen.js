@@ -1,11 +1,16 @@
 import React from 'react'
 import { withNavigation } from 'react-navigation'
-import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native'
-import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
-import { px2dp, px2sp } from 'src/utils/device'
-import TextInput from 'src/components/common/TextInput'
+import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, Alert, AsyncStorage } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import { userLogin } from 'src/actions'
 
+import TextInput from 'src/components/common/TextInput'
+import { px2dp, px2sp } from 'src/utils/device'
+import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
+import MessageBar from 'src/components/common/MessageBar'
+
+@connect()
 @withNavigation
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -15,19 +20,61 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      password: ''
+      userName: '13402877726',
+      password: '123456'
+    }
+    this.pwdIptRef = React.createRef()
+  }
+
+  async handleLogin() {
+    if (!this.state.userName) {
+      MessageBar.show({
+        type: 'warning',
+        message: '请输入手机号或邮箱'
+      })
+      return
+    }
+    if (!this.state.password) {
+      MessageBar.show({
+        type: 'warning',
+        message: '请输入密码'
+      })
+      return
+    }
+    try {
+      const { token, user } = await this.props.dispatch(userLogin(this.state))
+      this.props.navigation.navigate('Home')
+      AsyncStorage.setItem('token', token)
+      AsyncStorage.setItem('user', JSON.stringify(user))
+      MessageBar.show({
+        message: '登录成功'
+      })
+    } catch (error) {
+      if (error && error.response) {
+        const { status } = error.response
+        if (status === 401 || status === 404) {
+          MessageBar.show({
+            type: 'warning',
+            message: '用户名或密码错误'
+          })
+        }
+        this.pwdIptRef.current.clear()
+      }
     }
   }
 
-  handleForgetPwd() {
+  handleForgetPwdPress() {
     Alert.alert('forget password')
   }
-
-  handleLogin = () => {
-    this.props.navigation.navigate('Home')
+  handleLoginSubmit = () => {
+    this.handleLogin()
   }
-
+  handleLoginPress = () => {
+    this.handleLogin()
+  }
+  handleRegisterPress = () => {
+    alert('reg')
+  }
   handleGoBack = () => {
     this.props.navigation.goBack(null)
   }
@@ -54,28 +101,32 @@ export default class LoginScreen extends React.Component {
           <View style={styles.loginForm}>
             <TextInput
               underlineColorAndroid="transparent"
-              placeholder="输入账号"
-              style={styles.input}
+              placeholder="手机号或邮箱"
               returnKeyType="next"
-              value={this.state.username}
-              onChangeText={(text) => this.setState({ username: text })} />
+              style={styles.input}
+              value={this.state.userName}
+              onChangeText={(text) => this.setState({ userName: text })}
+              onSubmitEditing={() => this.pwdIptRef.current.focus()} />
             <View style={styles.pswContainer}>
               <TextInput
+                inputRef={this.pwdIptRef}
                 underlineColorAndroid="transparent"
-                placeholder="输入密码"
-                style={styles.input}
+                placeholder="密码"
+                secureTextEntry
                 returnKeyType="done"
+                style={styles.input}
                 value={this.state.password}
-                onChangeText={(text) => this.setState({ password: text })} />
-              <TouchableOpacity onPress={this.handleForgetPwd} style={styles.forgetPwd}>
+                onChangeText={(text) => this.setState({ password: text })}
+                onSubmitEditing={this.handleLoginSubmit} />
+              <TouchableOpacity onPress={this.handleForgetPwdPress} style={styles.forgetPwd}>
                 <Text style={styles.forgetPwdText}>忘记密码？</Text>
               </TouchableOpacity>
             </View>
             <View>
-              <TouchableOpacity onPress={this.handleLogin} style={[styles.loginBtn, styles.btns]}>
+              <TouchableOpacity onPress={this.handleLoginPress} style={[styles.loginBtn, styles.btns]}>
                 <Text style={[styles.loginText, styles.btnsText]}>登陆UppFind</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.handleForgetPwd} style={[styles.regBtn, styles.btns]}>
+              <TouchableOpacity onPress={this.handleRegisterPress} style={[styles.regBtn, styles.btns]}>
                 <Text style={[styles.regText, styles.btnsText]}>注册新用户</Text>
               </TouchableOpacity>
             </View>

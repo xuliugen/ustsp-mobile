@@ -6,7 +6,7 @@ function fetchHomeScreenProjects(showNum = 5) {
   })
 }
 
-function fetchProjectDetail(projectId, userId = '') {
+function fetchProjectDetailApi(projectId, userId = '') {
   return axios.get('project/query/application-detail', {
     params: {
       projectId,
@@ -17,5 +17,5 @@ function fetchProjectDetail(projectId, userId = '') {
 
 export {
   fetchHomeScreenProjects,
-  fetchProjectDetail
+  fetchProjectDetailApi
 }

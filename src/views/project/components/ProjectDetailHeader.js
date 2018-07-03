@@ -1,21 +1,19 @@
 import React from 'react'
-import { StyleSheet, View, Text, ImageBackground } from 'react-native'
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { Feather, Entypo } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import { STATUS_BAR_HEIGHT, px2dp, px2sp } from 'src/utils/device'
 import { parseTime } from 'src/utils/format'
-import { fetchProjectDetail } from 'src/ajax/project'
 
-/**
- * @todo Use Redux to pass state to detail content and detail header
- */
+const mapStateToProps = state => ({
+  project: state.project.detail
+})
+
+@connect(mapStateToProps)
 @withNavigation
 export default class ProjectDetailHeader extends React.Component {
-  state = {
-    project: {}
-  }
-
   handleGoBackPress = () => {
     this.props.navigation.goBack(null)
   }
@@ -23,30 +21,19 @@ export default class ProjectDetailHeader extends React.Component {
     alert('hi')
   }
 
-  componentDidMount() {
-    this.fetchDetail()
-  }
-
-  async fetchDetail() {
-    const { navigation } = this.props
-    const projectId = navigation.getParam('projectId')
-    const { data } = await fetchProjectDetail(projectId)
-    let { projectInfoVo, ...baseData } = data
-    let projectData = Object.assign({}, baseData, projectInfoVo.projectResearchInfo)
-    this.setState({
-      project: projectData
-    })
-  }
-
   render() {
-    const { project } = this.state
+    const { project } = this.props
     return (
       <ImageBackground source={require('./header_bg.png')} style={styles.container}>
         <View style={styles.wrapper}>
           <View style={styles.pageHeader}>
-            <Feather name="arrow-left" size={18} style={styles.goback} onPress={this.handleGoBackPress} />
+            <TouchableOpacity style={styles.headerIconContainer} onPress={this.handleGoBackPress}>
+              <Feather name="arrow-left" size={18} style={styles.goback} />
+            </TouchableOpacity>
             <Text style={styles.headerTitle}>项目详情</Text>
-            <Entypo name="share" size={18} style={styles.share} onPress={this.handleSharePress} />
+            <TouchableOpacity style={styles.headerIconContainer} onPress={this.handleSharePress}>
+              <Entypo name="share" size={18} style={styles.share} />
+            </TouchableOpacity>
           </View>
           <View style={styles.projectHeader}>
             <View>
@@ -68,15 +55,21 @@ const styles = StyleSheet.create({
     // height: px2dp(326)
   },
   wrapper: {
-    paddingTop: STATUS_BAR_HEIGHT,
+    paddingTop: STATUS_BAR_HEIGHT
   },
 
   pageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: px2dp(40),
-    paddingHorizontal: px2dp(30)
+    alignItems: 'center'
+    // paddingTop: px2dp(40),
+    // paddingHorizontal: px2dp(30)
+  },
+  headerIconContainer: {
+    width: 45,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   goback: {
     color: '#fff'

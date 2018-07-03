@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, ScrollView, View, Text, } from 'react-native'
+import { StyleSheet, ScrollView, View, Text } from 'react-native'
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import PatentItem from './components/PatentItem'

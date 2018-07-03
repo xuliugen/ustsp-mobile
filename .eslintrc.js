@@ -18,7 +18,7 @@ module.exports = {
       asyncArrow: 'always'
     }],
     // allow debugger during development
-    'no-debugger': !__DEV__? 2 : 0,
+    // 'no-debugger': !__DEV__? 2 : 0,
     'jsx-quotes': ['error', 'prefer-double']
   }
 }
