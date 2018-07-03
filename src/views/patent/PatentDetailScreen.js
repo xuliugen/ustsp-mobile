@@ -3,8 +3,8 @@ import { StyleSheet, View, ScrollView, Text, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import PatentDetailHeader from './components/PatentDetailHeader'
-import {APP_BACKGROUD_COLOR} from "../../styles/common";
-import {px2dp, px2sp} from "../../utils/device";
+import { APP_BACKGROUD_COLOR } from 'src/styles/common'
+import { px2dp, px2sp } from 'src/utils/device'
 
 export default class PatentDetailScreen extends React.Component {
   static navigationOptions = {
@@ -46,11 +46,43 @@ export default class PatentDetailScreen extends React.Component {
                 <Text style={styles.text}>高伟</Text>
               </View>
             </View>
+            <View style={styles.detailLine}>
+              <View style={[styles.detailBox, styles.detailBoxLeft]}>
+                <Text style={[styles.detailBoxLabel, styles.label]}>主分类号</Text>
+                <Text style={styles.text}>123</Text>
+              </View>
+              <View style={styles.detailBox}>
+                <Text style={[styles.detailBoxLabel, styles.label]}>分类号</Text>
+                <Text style={styles.text}>123</Text>
+              </View>
+            </View>
+            <View style={styles.detailLine}>
+              <View style={[styles.detailBox, styles.detailBoxLeft]}>
+                <Text style={[styles.detailBoxLabel, styles.label]}>地址</Text>
+                <Text style={styles.text}>123</Text>
+              </View>
+              <View style={styles.detailBox}>
+                <Text style={[styles.detailBoxLabel, styles.label]}>国省代码</Text>
+                <Text style={styles.text}>123</Text>
+              </View>
+            </View>
+            <View style={styles.detailLine}>
+              <View style={[styles.detailBox, styles.detailBoxLeft]}>
+                <Text style={[styles.detailBoxLabel, styles.label]}>法律状态</Text>
+                <Text style={styles.text}>123</Text>
+              </View>
+              <View style={styles.detailBox}>
+                <Text style={[styles.detailBoxLabel, styles.label]} />
+                <Text style={styles.text} />
+              </View>
+            </View>
           </View>
+
           <View style={styles.block}>
             <Text style={[styles.label, styles.abstBlockLabel]}>摘要</Text>
             <Text style={styles.abstBlockText}>本发明公开了一种并网运行模式下的微电网实时能量优化调度方法。</Text>
           </View>
+
           <View style={styles.block}>
             <Text style={[styles.label, styles.abstBlockLabel]}>转让者信息</Text>
             <View style={{ flexDirection: 'row' }}>
@@ -69,6 +101,7 @@ export default class PatentDetailScreen extends React.Component {
               </View>
             </View>
           </View>
+
           <View style={styles.fileBlock}>
             <View style={styles.fileBlockHeader}>
               <Text style={styles.label}>相关下载</Text>
@@ -80,10 +113,12 @@ export default class PatentDetailScreen extends React.Component {
               </View>
             </View>
           </View>
+
           <View style={styles.block}>
             <Text style={[styles.label, styles.abstBlockLabel]}>转让公示</Text>
             <Text style={styles.transferText}>转让尚未完成</Text>
           </View>
+
           <View style={styles.block}>
             <Text style={[styles.label, styles.abstBlockLabel]}>受让方信息</Text>
             <Text style={styles.transferText}>转让尚未完成</Text>
@@ -110,9 +145,7 @@ const styles = StyleSheet.create({
     fontSize: px2sp(32),
     color: '#333'
   },
-  detailBlock: {
-    marginBottom: px2dp(30)
-  },
+
   detailLine: {
     flexDirection: 'row',
     borderBottomWidth: 1,
@@ -202,6 +235,6 @@ const styles = StyleSheet.create({
   },
   transferText: {
     fontSize: px2dp(30),
-    fontWeight: 'bold'
+    color: '#333'
   }
 })

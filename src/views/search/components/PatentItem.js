@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: px2dp(12),
     borderTopLeftRadius: px2dp(30),
     borderBottomLeftRadius: px2dp(30),
-    backgroundColor: '#f7b35a',
+    backgroundColor: '#f7b35a'
   },
   statusText: {
     fontSize: px2sp(26),

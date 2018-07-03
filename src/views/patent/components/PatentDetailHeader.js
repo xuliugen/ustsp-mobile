@@ -8,7 +8,6 @@ import { STATUS_BAR_HEIGHT, px2dp, px2sp } from 'src/utils/device'
 
 @withNavigation
 export default class PatentDetailHeader extends React.Component {
-
   handleGoBackPress = () => {
     this.props.navigation.goBack(null)
   }
@@ -77,10 +76,11 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: px2sp(36),
-    color: "#fff"
+    color: '#fff'
   },
   category: {
-    paddingHorizontal: px2dp(15),
+    paddingHorizontal: px2dp(20),
+    paddingVertical: px2dp(10),
     borderRadius: px2dp(10),
     backgroundColor: '#1dbbae'
   },
