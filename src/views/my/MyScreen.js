@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, ImageBackground, AsyncStorage, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, AsyncStorage, TouchableOpacity, Alert } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import { connect } from 'react-redux'
 
@@ -39,7 +39,7 @@ export default class App extends React.Component {
       { title: 'patent', text: '管理专利', img: iconPatent },
       { title: 'resume', text: '我的履历', img: iconIntro },
       { title: 'job-market', text: '职场入口（未开通）', img: iconJobMarket },
-      { title: 'company-profile', text: '公司资料', img: iconIntro },
+      { title: 'company-profile', text: '个人资料', img: iconIntro }
     ]
     switch (type) {
       case 1:

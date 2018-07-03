@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native'
 import { px2dp, px2sp } from 'src/utils/device'
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import { withNavigation } from 'react-navigation'
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   settingContainer: {
     position: 'absolute',
     top: px2dp(64),
-    right: px2dp(42),
+    right: px2dp(42)
   },
   settingIcon: {
     width: px2dp(38),
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: px2dp(140),
-    height: px2dp(140),
+    height: px2dp(140)
   },
 
   loginPrompt: {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     width: px2dp(30),
     height: px2dp(30),
     marginTop: px2dp(4),
-    marginRight: px2dp(11),
+    marginRight: px2dp(11)
   },
   confirm: {
     fontSize: px2sp(26),
