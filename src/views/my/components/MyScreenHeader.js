@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native'
-import { px2dp, px2sp } from 'src/utils/device'
+import { px2dp, px2sp, STATUS_BAR_HEIGHT } from 'src/utils/device'
 import { MaterialIcons } from '@expo/vector-icons'
 
 import { withNavigation } from 'react-navigation'
@@ -24,18 +24,18 @@ export default class MyScreenHeader extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground source={require('./img/background.png')} style={styles.bgImg}>
-          <TouchableOpacity onPress={this.handleSettingPress} style={styles.settingContainer} >
-            <Image source={require('./img/ico_setting.png')} style={styles.settingIcon} />
-          </TouchableOpacity>
-          <View style={styles.infoContainer} >
-            <View style={styles.avatarContainer} >
-              <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
-            </View>
-            <TouchableOpacity onPress={this.handleLoginPress} style={styles.loginPrompt}>
-              <Text style={styles.infoText}>请先登录</Text>
-              <MaterialIcons name="keyboard-arrow-right" style={styles.infoText} />
+          <View style={styles.wrapper}>
+            <TouchableOpacity onPress={this.handleSettingPress} style={styles.settingContainer} >
+              <Image source={require('./img/ico_setting.png')} style={styles.settingIcon} />
             </TouchableOpacity>
-            {/* <View style={styles.infoLineOne} >
+            <View style={styles.infoContainer} >
+              <View style={styles.avatarContainer} >
+                <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
+              </View>
+              <TouchableOpacity onPress={this.handleLoginPress} style={styles.loginPrompt}>
+                <Text style={styles.infoText}>请先登录<MaterialIcons name="keyboard-arrow-right" /></Text>
+              </TouchableOpacity>
+              {/* <View style={styles.infoLineOne} >
               <Text style={styles.infoText}>贾玲美</Text>
               <Ionicons name="ios-female" size={16} color="#f63771" style={styles.sexIcon} />
             </View>
@@ -44,6 +44,7 @@ export default class MyScreenHeader extends React.Component {
               <Image source={require('src/img/certificate.png')} style={styles.confirmIcon} />
               <Text style={styles.confirm}>已认证</Text>
             </View> */}
+            </View>
           </View>
         </ImageBackground>
       </View>
@@ -53,13 +54,14 @@ export default class MyScreenHeader extends React.Component {
 
 const styles = StyleSheet.create({
   container: {},
-  bgImg: {
-    position: 'relative'
-    // width: px2dp(750),
+  bgImg: {},
+  wrapper: {
+    position: 'relative',
+    paddingTop: STATUS_BAR_HEIGHT
   },
   settingContainer: {
     position: 'absolute',
-    top: px2dp(64),
+    top: px2dp(33) + STATUS_BAR_HEIGHT,
     right: px2dp(42)
   },
   settingIcon: {
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     // position: 'relative',
-    marginTop: px2dp(83),
+    marginTop: px2dp(55),
     borderRadius: px2dp(70),
     overflow: 'hidden'
   },
