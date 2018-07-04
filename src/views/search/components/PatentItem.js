@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
     color: '#999'
   },
   rightContainer: {
-    width: px2dp(150),
+    justifyContent: 'center',
     height: px2dp(60),
-    paddingLeft: px2dp(37),
-    paddingTop: px2dp(12),
+    paddingLeft: px2dp(33),
+    paddingRight: px2dp(10),
     borderTopLeftRadius: px2dp(30),
     borderBottomLeftRadius: px2dp(30),
     backgroundColor: '#f7b35a'

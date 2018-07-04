@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
-import { fetchPatentDetail } from 'src/actions'
+import { fetchPatentDetail, clearPatentDetail } from 'src/actions'
 import { parseTime } from 'src/utils/format'
 
 import PatentDetailHeader from './components/PatentDetailHeader'
@@ -29,6 +29,10 @@ export default class PatentDetailScreen extends React.Component {
   componentDidMount() {
     const { dispatch, navigation } = this.props
     dispatch(fetchPatentDetail(navigation.getParam('patentId')))
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(clearPatentDetail())
   }
 
   render() {
