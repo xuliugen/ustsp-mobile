@@ -5,7 +5,10 @@ import { withNavigation } from 'react-navigation'
 const talentNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
     handlePress = () => {
-      this.props.navigation.navigate('TalentDetail')
+      this.props.navigation.navigate('TalentDetail', {
+        userId: this.props.talent.id,
+        userType: Number(this.props.talent.type)
+      })
     }
 
     render() {

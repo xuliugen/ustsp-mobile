@@ -7,7 +7,7 @@ const initialState = {
   }
 }
 
-export default function auth(state = initialState, action) {
+export default function patent(state = initialState, action) {
   switch (action.type) {
     case SET_PATENT_DETAIL:
       const { patent } = action
