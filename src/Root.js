@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from 'src/styles/common'
 import { MessageBarManager, MessageBar } from 'react-native-message-bar'
-import { dispatchAuthData } from 'src/actions'
+import { dispatchAuthData, getUserInfo } from 'src/actions'
 import { connect } from 'react-redux'
 
 // home
@@ -128,6 +128,7 @@ export default class AppRoot extends React.Component {
     if (token && user) {
       const userObj = JSON.parse(user)
       this.props.dispatch(dispatchAuthData(token, userObj))
+      this.props.dispatch(getUserInfo())
     }
   }
 
