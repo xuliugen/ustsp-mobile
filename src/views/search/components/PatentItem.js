@@ -4,18 +4,19 @@ import { px2dp, px2sp } from 'src/utils/device'
 
 export default class TalentItem extends React.Component {
   render() {
+    const { patent } = this.props
     return (
       <View style={styles.itemContainer}>
         <View style={styles.leftContainer}>
           <View>
-            <Text style={styles.patentTitle}>上传的推荐专利标题一上传的推荐专利标题一</Text>
+            <Text style={styles.patentTitle}>{patent.patentName}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>专利类型：发明</Text>
+            <Text style={styles.infoText}>专利类型：{patent.patentType}</Text>
           </View>
         </View>
         <View style={styles.rightContainer}>
-          <Text style={styles.statusText}>法律状态</Text>
+          <Text style={styles.statusText}>{patent.legalStatus}</Text>
         </View>
       </View>
     )

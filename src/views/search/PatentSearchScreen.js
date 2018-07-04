@@ -7,9 +7,13 @@ import patentNavDecorator from 'src/components/common/patentNavDecorator'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
+import { searchPatents } from 'src/ajax/patent'
 
 const PatentItemWithNav = patentNavDecorator(PatentItem)
 
+/**
+ * @todo: dispath search action with filter
+ */
 export default class PatentSearchScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitleSearch />,
@@ -22,7 +26,14 @@ export default class PatentSearchScreen extends React.Component {
 
   state = {
     searchIptVal: '',
-    patents: [{}, {}]
+    patents: []
+  }
+
+  async componentDidMount() {
+    const { data } = await searchPatents({ 'industryCategory': '', 'patentType': '', 'legalStatus': '', 'condition': '', 'pageSize': 10, 'currentPage': 1 })
+    this.setState({
+      patents: data.data
+    })
   }
 
   render() {
@@ -33,9 +44,8 @@ export default class PatentSearchScreen extends React.Component {
             <Text style={styles.titleText}>共为您找到：<Text style={styles.titleTextHighlight}>3 </Text>个相关知识产权</Text>
           </View>
           <View>
-            {/* todo: the value of key is patent.id, not idx */}
-            {this.state.patents.map((patents, idx) => (
-              <PatentItemWithNav key={idx} patents={patents} />
+            {this.state.patents.map((patent) => (
+              <PatentItemWithNav key={patent.id} patent={patent} />
             ))}
           </View>
         </ScrollView>

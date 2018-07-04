@@ -2,10 +2,15 @@ import React from 'react'
 import { StyleSheet, View, Text, ImageBackground } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import { Feather, Entypo } from '@expo/vector-icons'
+import { connect } from 'react-redux'
 
 import { STATUS_BAR_HEIGHT, px2dp, px2sp } from 'src/utils/device'
-// import { parseTime } from 'src/utils/format'
 
+const mapStateToProps = state => ({
+  patent: state.patent.detail
+})
+
+@connect(mapStateToProps)
 @withNavigation
 export default class PatentDetailHeader extends React.Component {
   handleGoBackPress = () => {
@@ -16,6 +21,7 @@ export default class PatentDetailHeader extends React.Component {
   }
 
   render() {
+    const { patent } = this.props
     return (
       <ImageBackground source={require('./patentHeader.png')} style={styles.container}>
         <View style={styles.wrapper}>
@@ -26,11 +32,11 @@ export default class PatentDetailHeader extends React.Component {
           </View>
           <View style={styles.titleWrapper}>
             <View style={styles.title}>
-              <Text style={styles.titleText}>专一种并网运行模式下的微电网实时能量优化调度方法</Text>
+              <Text style={styles.titleText}>{patent.patentName}</Text>
             </View>
             <View>
               <View style={styles.category}>
-                <Text style={styles.categoryText}>外观专利</Text>
+                <Text style={styles.categoryText}>{patent.patentType}</Text>
               </View>
             </View>
           </View>

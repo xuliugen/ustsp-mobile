@@ -1,50 +1,69 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Text, Image } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
+import { fetchPatentDetail } from 'src/actions'
+import { parseTime } from 'src/utils/format'
 
 import PatentDetailHeader from './components/PatentDetailHeader'
 import DetailLine from 'src/components/common/DetailLine'
 
+const mapStateToProps = state => ({
+  patent: state.patent.detail
+})
+
+/**
+ * @todo: file download
+ * @todo: 转让公示, 受让方信息
+ * @todo: 询价
+ */
+@connect(mapStateToProps)
 export default class PatentDetailScreen extends React.Component {
   static navigationOptions = {
     header: <PatentDetailHeader />
   }
 
+  componentDidMount() {
+    const { dispatch, navigation } = this.props
+    dispatch(fetchPatentDetail(navigation.getParam('patentId')))
+  }
+
   render() {
+    const { patent } = this.props
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.detailBlock}>
-            <DetailLine leftLabel={'申请号'} leftText={123} rightLabel={'申请日'} rightText={123} />
-            <DetailLine leftLabel={'公开号'} leftText={123} rightLabel={'公开日'} rightText={123} />
-            <DetailLine leftLabel={'专利权人'} leftText={123} rightLabel={'发明人'} rightText={123} />
-            <DetailLine leftLabel={'主分类号'} leftText={123} rightLabel={'分类号'} rightText={123} />
-            <DetailLine leftLabel={'地址'} leftText={123} rightLabel={'国省代码'} rightText={123} />
-            <DetailLine leftLabel={'法律状态'} leftText={123} />
+            <DetailLine leftLabel={'申请号'} leftText={patent.applicationNumber} rightLabel={'申请日'} rightText={parseTime(patent.applicationDate)} />
+            <DetailLine leftLabel={'公开号'} leftText={patent.publicationNumber} rightLabel={'公开日'} rightText={parseTime(patent.publicationDate)} />
+            <DetailLine leftLabel={'专利权人'} leftText={patent.applicant} rightLabel={'发明人'} rightText={patent.inventor} />
+            <DetailLine leftLabel={'主分类号'} leftText={patent.classificationNumber} rightLabel={'分类号'} rightText={patent.classNumber} />
+            <DetailLine leftLabel={'地址'} leftText={patent.address} rightLabel={'国省代码'} rightText={patent.provinceCode} />
+            <DetailLine leftLabel={'法律状态'} leftText={patent.legalStatus} />
           </View>
 
           <View style={styles.block}>
             <Text style={[styles.label, styles.abstBlockLabel]}>摘要</Text>
-            <Text style={styles.abstBlockText}>本发明公开了一种并网运行模式下的微电网实时能量优化调度方法。</Text>
+            <Text style={styles.abstBlockText}>{patent.abstracts}</Text>
           </View>
 
           <View style={styles.block}>
             <Text style={[styles.label, styles.abstBlockLabel]}>转让者信息</Text>
             <View style={{ flexDirection: 'row' }}>
               <View>
-                <Image source={require('../../img/banner1.png')} style={styles.ownerAvatar} />
+                <Image source={{ uri: patent.assignor.avatar }} style={styles.ownerAvatar} />
               </View>
               <View style={styles.ownerInfo}>
                 <View>
-                  <Text style={styles.ownerName}>uppfind管理员</Text>
-                  <Text style={styles.ownerTitle}>电子科技大学 / 管理人员</Text>
+                  <Text style={styles.ownerName}>{patent.assignor.username}</Text>
+                  <Text style={styles.ownerTitle}>{patent.assignor.location} / 科研管理人员</Text>
                 </View>
                 <View>
                   <Text style={styles.contact}>联系方式</Text>
-                  <Text style={styles.contact}>18482212054</Text>
+                  <Text style={styles.contact}>{patent.assignor.phone}</Text>
                 </View>
               </View>
             </View>
@@ -56,7 +75,7 @@ export default class PatentDetailScreen extends React.Component {
             </View>
             <View style={styles.fileItemContainer}>
               <View style={styles.fileItem}>
-                <Text style={styles.fileText}>需求附件.docx</Text>
+                <Text style={styles.fileText}>专利.pdf</Text>
                 <MaterialIcons name="keyboard-arrow-right" size={px2sp(30)} style={styles.fileGoIcon} />
               </View>
             </View>
