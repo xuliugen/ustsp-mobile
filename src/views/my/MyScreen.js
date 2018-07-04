@@ -1,11 +1,22 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, AsyncStorage, TouchableOpacity, Alert } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  AsyncStorage,
+  TouchableOpacity,
+  Alert,
+  ScrollView
+} from 'react-native'
 import { withNavigation } from 'react-navigation'
 import { connect } from 'react-redux'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
 import { userLogout } from 'src/actions'
+import { checkIfLogin } from 'src/selectors'
+
 import MyScreenHeader from './components/MyScreenHeader'
 import MenuListItem from './components/MenuListItem'
 
@@ -14,13 +25,15 @@ const iconProject = require('./components/img/project_mgt.png')
 const iconPatent = require('./components/img/patent_mgt.png')
 // const iconJobMarket = require('./components/img/job_market.png')
 
-/**
- * @todo add param pressFunc to menu list
- * @todo lists for every user role
- */
-@connect()
+const mapStateToProps = state => {
+  return {
+    isLogin: checkIfLogin(state)
+  }
+}
+
+@connect(mapStateToProps)
 @withNavigation
-export default class App extends React.Component {
+export default class MyScreen extends React.Component {
   static navigationOptions = {
     header: <MyScreenHeader />
   }
@@ -72,27 +85,29 @@ export default class App extends React.Component {
 
   render() {
     const type = 2
+    const { isLogin } = this.props
     return (
       <View style={styles.container}>
-        {/* 未登录隐藏 */}
-        <View style={styles.menuContainer} >
-          {this.renderTopMenu(type)}
-        </View>
-        <View style={styles.menuListContainer}>
-          <MenuListItem item={{ iconName: 'md-megaphone', text: '我的动态', num: 134 }} />
-        </View>
-        <View style={styles.menuListContainer}>
-          <MenuListItem item={{ iconName: 'md-help-circle', text: '常见问题' }} />
-          <MenuListItem item={{ iconName: 'md-information-circle', text: '关于UppFind' }} />
-          <MenuListItem item={{ iconName: 'md-thumbs-up', text: '去打分' }} />
-        </View>
-        <View style={styles.menuListContainer}>
-          <TouchableOpacity onPress={this.handleLogoutPress} >
-            <View style={styles.logoutContainer} >
-              <Text style={styles.logoutText}>退出登录</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <ScrollView>
+          {isLogin && <View style={styles.menuContainer}>
+            {this.renderTopMenu(type)}
+          </View>}
+          <View style={styles.menuListContainer}>
+            <MenuListItem item={{ iconName: 'md-megaphone', text: '我的动态', num: 134 }} />
+          </View>
+          <View style={styles.menuListContainer}>
+            <MenuListItem item={{ iconName: 'md-help-circle', text: '常见问题' }} />
+            <MenuListItem item={{ iconName: 'md-information-circle', text: '关于UppFind' }} />
+            <MenuListItem item={{ iconName: 'md-thumbs-up', text: '去打分' }} />
+          </View>
+          {isLogin && <View style={styles.menuListContainer}>
+            <TouchableOpacity onPress={this.handleLogoutPress} >
+              <View style={styles.logoutContainer} >
+                <Text style={styles.logoutText}>退出登录</Text>
+              </View>
+            </TouchableOpacity>
+          </View>}
+        </ScrollView>
       </View>
     )
   }

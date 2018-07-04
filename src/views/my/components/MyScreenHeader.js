@@ -1,26 +1,81 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native'
+import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
+
 import { px2dp, px2sp, STATUS_BAR_HEIGHT } from 'src/utils/device'
 import { MaterialIcons } from '@expo/vector-icons'
+import { checkIfLogin } from 'src/selectors'
 
-import { withNavigation } from 'react-navigation'
+const mapStateToProps = state => {
+  return {
+    isLogin: checkIfLogin(state),
+    user: state.auth.user,
+    userInfo: state.auth.userInfo
+  }
+}
 
-/**
- * @todo isLogin
- * @todo Icon female & male
- * @todo isValid && infoLineThree
- */
+@connect(mapStateToProps)
 @withNavigation
 export default class MyScreenHeader extends React.Component {
   handleLoginPress = () => {
     this.props.navigation.navigate('Login')
   }
-
   handleSettingPress = () => {
     Alert.alert('settings！')
   }
 
+  renderAvatar(isLogin) {
+    if (isLogin) {
+      return <Image source={{ uri: this.props.user.avatar }} style={styles.avatar} />
+    } else {
+      return <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
+    }
+  }
+  renderUserInfo() {
+    const { user, userInfo } = this.props
+    switch (user.userType) {
+      case 1:
+        return (
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.infoLineOne} >
+              <Text style={styles.infoText}>{userInfo.realName}</Text>
+              {/* <Ionicons name="ios-female" size={16} color="#f63771" style={styles.genderIcon} /> */}
+            </View>
+            <Text style={[styles.infoText, styles.infoLineTwo]}>{userInfo.school} | {userInfo.college} | {userInfo.stuLevel}</Text>
+          </View>
+        )
+      case 2:
+        return (
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.infoLineOne} >
+              <Text style={styles.infoText}>{userInfo.realName}</Text>
+            </View>
+            <Text style={[styles.infoText, styles.infoLineTwo]}>{userInfo.school} | {userInfo.college} | {userInfo.title}</Text>
+            {userInfo.isClaim === 1 && <View style={styles.infoLineThree} >
+              <Image source={require('src/img/certificate.png')} style={styles.confirmIcon} />
+              <Text style={styles.confirm}>已认证</Text>
+            </View>}
+          </View>
+        )
+      case 3:
+        return (
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.infoLineOne} >
+              <Text style={styles.infoText}>{userInfo.realName}</Text>
+            </View>
+            <Text style={[styles.infoText, styles.infoLineTwo]}>{userInfo.industry} | {userInfo.nature} | {userInfo.scale}</Text>
+            {userInfo.isClaim === 1 && <View style={styles.infoLineThree} >
+              <Image source={require('src/img/certificate.png')} style={styles.confirmIcon} />
+              <Text style={styles.confirm}>已认证</Text>
+            </View>}
+          </View>
+        )
+    }
+  }
+
   render() {
+    const { isLogin } = this.props
     return (
       <View style={styles.container}>
         <ImageBackground source={require('./img/background.png')} style={styles.bgImg}>
@@ -30,20 +85,14 @@ export default class MyScreenHeader extends React.Component {
             </TouchableOpacity>
             <View style={styles.infoContainer} >
               <View style={styles.avatarContainer} >
-                <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
+                {this.renderAvatar(isLogin)}
               </View>
-              <TouchableOpacity onPress={this.handleLoginPress} style={styles.loginPrompt}>
-                <Text style={styles.infoText}>请先登录<MaterialIcons name="keyboard-arrow-right" /></Text>
-              </TouchableOpacity>
-              {/* <View style={styles.infoLineOne} >
-              <Text style={styles.infoText}>贾玲美</Text>
-              <Ionicons name="ios-female" size={16} color="#f63771" style={styles.sexIcon} />
-            </View>
-            <Text style={[styles.infoText, styles.infoLineTwo]}>电子科技大学 | 美术学院 | 教授</Text>
-            <View style={styles.infoLineThree} >
-              <Image source={require('src/img/certificate.png')} style={styles.confirmIcon} />
-              <Text style={styles.confirm}>已认证</Text>
-            </View> */}
+              {!isLogin
+                ? <TouchableOpacity onPress={this.handleLoginPress} style={styles.loginPrompt}>
+                  <Text style={styles.infoText}>请先登录<MaterialIcons name="keyboard-arrow-right" /></Text>
+                </TouchableOpacity>
+                : this.renderUserInfo()
+              }
             </View>
           </View>
         </ImageBackground>
@@ -97,7 +146,7 @@ const styles = StyleSheet.create({
     fontSize: px2sp(28),
     color: '#fff'
   },
-  sexIcon: {
+  genderIcon: {
     position: 'absolute',
     top: px2dp(4),
     right: -px2dp(42)

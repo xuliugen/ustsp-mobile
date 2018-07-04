@@ -33,11 +33,11 @@ export default class Search extends React.Component {
       placeholder: '搜索'
     }
     const tabConfig = [{
-      type: 'project',
-      title: '搜项目'
-    }, {
       type: 'talent',
       title: '搜人才'
+    }, {
+      type: 'project',
+      title: '搜项目'
     }, {
       type: 'patent',
       title: '搜专利'
