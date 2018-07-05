@@ -8,9 +8,13 @@ import talentNavDecorator from 'src/components/common/talentNavDecorator'
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import TalentItem from './components/TalentItem'
+import { searchTalents } from 'src/ajax/talent'
 
 const TalentItemWithNav = talentNavDecorator(TalentItem)
 
+/**
+ * @todo: dispath search action with filter
+ */
 export default class TalentSearchScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitleSearch />,
@@ -23,7 +27,14 @@ export default class TalentSearchScreen extends React.Component {
 
   state = {
     searchIptVal: '',
-    talents: [{}, {}]
+    talents: []
+  }
+
+  async componentDidMount() {
+    const { data } = await searchTalents({ 'major': '', 'school': '', 'title': '', 'type': '', 'condition': '', 'pageSize': 10, 'currentPage': 1 })
+    this.setState({
+      talents: data.data
+    })
   }
 
   render() {
@@ -34,9 +45,8 @@ export default class TalentSearchScreen extends React.Component {
             <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位人才</Text>
           </View>
           <View>
-            {this.state.talents.map((talent, idx) => (
-              // todo: idx to talent id
-              <TalentItemWithNav key={idx} talent={talent} />
+            {this.state.talents.map((talent) => (
+              <TalentItemWithNav key={talent.id} talent={talent} />
             ))}
           </View>
         </ScrollView>

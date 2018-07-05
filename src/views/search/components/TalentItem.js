@@ -4,21 +4,22 @@ import { px2dp, px2sp } from 'src/utils/device'
 
 export default class TalentItem extends React.Component {
   render() {
+    const { talent } = this.props
     return (
       <View style={styles.itemContainer}>
         <View>
-          <Image source={require('src/img/banner1.png')} style={styles.avatar} />
+          <Image source={{ uri: talent.photo }} style={styles.avatar} />
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.infoTop}>
-            <Text style={styles.name}>周建华</Text>
+            <Text style={styles.name}>{talent.realName}</Text>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>教授</Text>
+              <Text style={styles.title}>{talent.stuLevel || talent.title}</Text>
             </View>
-            <Image source={require('src/img/certificate.png')} style={styles.certificate} />
+            {talent.isClaim === 1 && <Image source={require('src/img/certificate.png')} style={styles.certificate} />}
           </View>
           <View style={styles.schoolContainer}>
-            <Text style={styles.school}>四川大学 / 新闻学院</Text>
+            <Text style={styles.school}>{talent.school} / {talent.college}</Text>
           </View>
         </View>
       </View>

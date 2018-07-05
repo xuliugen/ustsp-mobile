@@ -2,6 +2,9 @@ import React from 'React'
 import { TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation'
 
+/**
+ * @todo 使用对应props进行传参并导航
+ */
 const talentNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
     handlePress = () => {
