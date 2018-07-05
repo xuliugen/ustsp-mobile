@@ -1,20 +1,27 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
+import { connect } from 'react-redux'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
 import talentNavDecorator from 'src/components/common/talentNavDecorator'
+import { fetchSearchResult, clearSearch } from 'src/actions'
 
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import TalentItem from './components/TalentItem'
-import { searchTalents } from 'src/ajax/talent'
 
 const TalentItemWithNav = talentNavDecorator(TalentItem)
+const mapStateToProps = state => ({
+  talents: state.search.result,
+  talentsCount: state.search.totalNum
+})
 
 /**
+ * @todo: append search result data on page scroll
  * @todo: dispath search action with filter
  */
+@connect(mapStateToProps)
 export default class TalentSearchScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitleSearch />,
@@ -25,16 +32,11 @@ export default class TalentSearchScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
-  state = {
-    searchIptVal: '',
-    talents: []
+  componentDidMount() {
+    this.props.dispatch(fetchSearchResult())
   }
-
-  async componentDidMount() {
-    const { data } = await searchTalents({ 'major': '', 'school': '', 'title': '', 'type': '', 'condition': '', 'pageSize': 10, 'currentPage': 1 })
-    this.setState({
-      talents: data.data
-    })
+  componentWillUnmount() {
+    this.props.dispatch(clearSearch())
   }
 
   render() {
@@ -42,10 +44,10 @@ export default class TalentSearchScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.resultTitleContainer}>
-            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位人才</Text>
+            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.props.talentsCount}</Text> 位人才</Text>
           </View>
           <View>
-            {this.state.talents.map((talent) => (
+            {this.props.talents.map((talent) => (
               <TalentItemWithNav key={talent.id} talent={talent} />
             ))}
           </View>
