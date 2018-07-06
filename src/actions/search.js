@@ -6,7 +6,7 @@ import {
   SET_SEARCH_RESULT_COUNT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
-import { searchTalents } from 'src/ajax/search'
+import { searchTalents, searchProjects } from 'src/ajax/search'
 
 export function setSearchType(searchType) {
   return {
@@ -32,21 +32,31 @@ export function setSearchPage(currentPage) {
 export function fetchSearchResult() {
   return async (dispatch, getState) => {
     try {
+      let res
       switch (getState().search.searchType) {
         case 'talent':
-          const { reqPayload, talentPl } = getState().search
-          const req = {
-            ...reqPayload,
+          const { reqPayload: reqPayloadTalent, talentPl } = getState().search
+          const reqTalent = {
+            ...reqPayloadTalent,
             ...talentPl
           }
-          const { data } = await searchTalents(req)
-          dispatch(setSearchResult(data.data))
-          dispatch(setSearchCount(data.totalNum))
+          res = await searchTalents(reqTalent)
           break
         case 'project':
+          const { reqPayload: reqPayloadProject, projectPl } = getState().search
+          const reqProject = {
+            ...reqPayloadProject,
+            ...projectPl
+          }
+          res = await searchProjects(reqProject)
+          break
         case 'patent':
         case 'news':
           break
+      }
+      if (res.data) {
+        dispatch(setSearchResult(res.data.data))
+        dispatch(setSearchCount(res.data.totalNum))
       }
     } catch (error) {
       console.log(error)

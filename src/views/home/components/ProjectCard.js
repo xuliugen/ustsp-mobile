@@ -3,15 +3,9 @@ import { StyleSheet, View, Text, Image } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
 import { px2dp, px2sp } from 'src/utils/device'
-import { parseMoney, parseTime } from 'src/utils/format'
+import { parseProjectName, parseMoney, parseTime } from 'src/utils/format'
 
 export default class ProjectCard extends React.Component {
-  parseProjectName(name) {
-    if (name.length > 15) {
-      name = name.substr(0, 15) + '...'
-    }
-    return name
-  }
   parseLocation(province, city) {
     if (province !== city) {
       return `${province} ${city}`
@@ -26,7 +20,7 @@ export default class ProjectCard extends React.Component {
       <View style={styles.container}>
         <View style={styles.infoContainer}>
           <View style={styles.info}>
-            <Text style={styles.title}>{this.parseProjectName(project.projectName)}</Text>
+            <Text style={styles.title}>{parseProjectName(project.projectName)}</Text>
             <Text style={styles.organization}>{project.subject}</Text>
             <View style={styles.locationContainer}>
               <Entypo name="location-pin" size={13} color="#8f9ba7" />

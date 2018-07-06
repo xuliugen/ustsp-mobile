@@ -1,17 +1,22 @@
 import React from 'react'
 import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
+
 import { toSearchPageByType } from 'src/utils/nav'
 import { px2dp, px2sp } from 'src/utils/device'
+import { setSearchType } from 'src/actions'
 
 const iconTalent = require('src/img/talent.png')
 const iconProject = require('src/img/project.png')
 const iconPatent = require('src/img/patent.png')
 const iconNews = require('src/img/news.png')
 
+@connect()
 @withNavigation
 export default class Menu extends React.Component {
   onPress = (type) => {
+    this.props.dispatch(setSearchType(type))
     toSearchPageByType(type, this.props.navigation)
   }
 

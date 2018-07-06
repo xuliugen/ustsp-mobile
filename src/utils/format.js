@@ -1,5 +1,12 @@
 import moment from 'moment'
 
+export function parseProjectName(name) {
+  if (name.length > 15) {
+    name = name.substr(0, 15) + '...'
+  }
+  return name
+}
+
 export function parseMoney(number) {
   if (number < 1000) {
     return number

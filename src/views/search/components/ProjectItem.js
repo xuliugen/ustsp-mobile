@@ -2,18 +2,20 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
 import { px2dp, px2sp } from 'src/utils/device'
+import { parseMoney, parseProjectName } from 'src/utils/format'
 
 export default class ProjectItem extends React.Component {
   render() {
+    const { project } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.infoContainer}>
           <View style={styles.info}>
-            <Text style={styles.title}>推荐的项目标题1</Text>
-            <Text style={styles.organization}>电子科技大学 / IT计算机类</Text>
+            <Text style={styles.title}>{parseProjectName(project.projectName)}</Text>
+            <Text style={styles.organization}>{project.province} / {project.subject}</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>9k</Text>
+            <Text style={styles.price}>{parseMoney(project.money)}</Text>
           </View>
         </View>
       </View>
