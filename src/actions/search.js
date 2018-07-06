@@ -1,6 +1,7 @@
 import {
   SET_SEARCH_TYPE,
   SET_SEARCH_CONDITION,
+  SET_SEARCH_PAGE,
   SET_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
   CLEAR_SEARCH
@@ -18,6 +19,13 @@ export function setSearchCondition(condition) {
   return {
     type: SET_SEARCH_CONDITION,
     condition: condition
+  }
+}
+
+export function setSearchPage(currentPage) {
+  return {
+    type: SET_SEARCH_PAGE,
+    currentPage: currentPage
   }
 }
 
