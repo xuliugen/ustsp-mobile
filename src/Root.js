@@ -20,6 +20,7 @@ import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
 // patent
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
+import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 // import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
@@ -30,6 +31,7 @@ const HomeStack = createStackNavigator({
   ProjectSearch: { screen: ProjectSearchScreen },
   TalentSearch: { screen: TalentSearchScreen },
   PatentSearch: { screen: PatentSearchScreen },
+  NewsSearch: { screen: NewsSearchScreen },
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   PatentDetail: { screen: PatentDetailScreen }

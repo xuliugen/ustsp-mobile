@@ -9,6 +9,9 @@ function toSearchPageByType(type, navigation) {
     case 'patent':
       navigation.navigate('PatentSearch')
       break
+    case 'news':
+      navigation.navigate('NewsSearch')
+      break
     default:
       navigation.navigate('My')
       break
