@@ -1,25 +1,35 @@
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import TextInput from 'src/components/common/TextInput'
+import { connect } from 'react-redux'
 
 import { px2dp, px2sp } from 'src/utils/device'
+import { setSearchCondition, fetchSearchResult, setSearchPage } from 'src/actions'
 
+const mapStateToProps = state => ({
+  searchIptVal: state.search.reqPayload.condition
+})
+
+/**
+ * @todo: ios TextInput bug
+ */
+@connect(mapStateToProps)
 export default class HeaderTitleSearch extends React.Component {
   state = {
-    searchIptVal: '',
     showDeleteIcon: false
   }
   textInput = React.createRef()
 
   searchProjects() {
-    const search = this.state.searchIptVal.trim()
+    const search = this.props.searchIptVal.trim()
     if (search) {
-      Alert.alert(this.state.searchIptVal)
+      this.props.dispatch(setSearchPage(1))
+      this.props.dispatch(fetchSearchResult())
     }
   }
 
-  setSearchIptVal(val) {
-    this.setState({ searchIptVal: val })
+  setSearchIptVal(text) {
+    this.props.dispatch(setSearchCondition(text))
   }
   setShowDeleteIcon(isShow) {
     this.setState({ showDeleteIcon: isShow })
@@ -35,7 +45,7 @@ export default class HeaderTitleSearch extends React.Component {
     this.setShowDeleteIcon(false)
   }
   handleDeletePress = () => {
-    this.textInput.current.clear()
+    // this.textInput.current.clear()
     this.setSearchIptVal('')
   }
 
@@ -46,10 +56,16 @@ export default class HeaderTitleSearch extends React.Component {
     }
     return (
       <View style={styles.search}>
-        <TextInput inputRef={this.textInput} {...searchIptProps} style={styles.searchInput}
+        <TextInput
+          inputRef={this.textInput}
+          {...searchIptProps}
+          returnKeyType="search"
+          style={styles.searchInput}
           onSubmitEditing={this.handleSubmit}
-          value={this.state.searchIptVal} onChangeText={(text) => this.setSearchIptVal(text)}
-          onFocus={this.handleIptFocus} onBlur={this.handleIptBlur} />
+          // defaultValue={this.props.searchIptVal}
+          onChangeText={(text) => this.setSearchIptVal(text)}
+          onFocus={this.handleIptFocus}
+          onBlur={this.handleIptBlur} />
         {this.state.showDeleteIcon &&
           <View style={styles.deleteIconContainer}>
             <TouchableOpacity onPress={this.handleDeletePress}>

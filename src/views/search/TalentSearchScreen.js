@@ -82,7 +82,7 @@ export default class TalentSearchScreen extends React.Component {
 
   _loadMoreContentAsync = async () => {
     const { dispatch, page } = this.props
-    await dispatch(fetchSearchResult())
+    await dispatch(fetchSearchResult(true))
     dispatch(setSearchPage(page + 1))
   }
 

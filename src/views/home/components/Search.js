@@ -3,28 +3,29 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import TextInput from 'src/components/common/TextInput'
 import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import { toSearchPageByType } from 'src/utils/nav'
 import { px2dp, px2sp } from 'src/utils/device'
+import { setSearchType, setSearchCondition } from 'src/actions'
 
+const mapStateToProps = state => ({
+  selectedType: state.search.searchType,
+  searchIptVal: state.search.reqPayload.condition
+})
+
+/**
+ * @todo: ios TextInput bug
+ */
+@connect(mapStateToProps)
 @withNavigation
 export default class Search extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedType: 'project',
-      searchIptVal: ''
-    }
-  }
-
   setSelectedType(type) {
-    this.setState({
-      selectedType: type
-    })
+    this.props.dispatch(setSearchType(type))
   }
 
   handleSubmit = () => {
-    toSearchPageByType(this.state.selectedType, this.props.navigation)
+    toSearchPageByType(this.props.selectedType, this.props.navigation)
   }
 
   render() {
@@ -47,14 +48,18 @@ export default class Search extends React.Component {
         <View style={styles.tabContainer}>
           {tabConfig.map(({ type, title }) => {
             return <Tab key={type} type={type} title={title}
-              setSelectedType={this.setSelectedType.bind(this)} curType={this.state.selectedType} />
+              setSelectedType={this.setSelectedType.bind(this)} curType={this.props.selectedType} />
           })}
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            value={this.state.searchIptVal} onChangeText={(text) => this.setState({ searchIptVal: text })}
+            returnKeyType="search"
+            // defaultValue={this.props.searchIptVal}
+            onChangeText={(text) => this.props.dispatch(setSearchCondition(text))}
+            // onChangeText={(text) => this.setState({ searchIptVal: text })}
             onSubmitEditing={this.handleSubmit}
-            {...textIptProps} style={styles.input} />
+            {...textIptProps}
+            style={styles.input} />
           <EvilIcons name="search" size={25} color="#999" onPress={this.handleSubmit} />
         </View>
       </View>

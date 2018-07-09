@@ -3,6 +3,7 @@ import {
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
   SET_SEARCH_RESULT,
+  APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
@@ -66,6 +67,11 @@ export default function search(state = initalState, action) {
     case SET_SEARCH_RESULT:
       return {
         ...state,
+        result: action.result
+      }
+    case APPEND_SEARCH_RESULT:
+      return {
+        ...state,
         result: state.result.concat(action.result)
       }
     case SET_SEARCH_RESULT_COUNT:
@@ -74,7 +80,10 @@ export default function search(state = initalState, action) {
         totalNum: action.totalNum
       }
     case CLEAR_SEARCH:
-      return initalState
+      return {
+        ...initalState,
+        searchType: state.searchType
+      }
     default:
       return state
   }

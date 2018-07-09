@@ -31,7 +31,7 @@ export default class ProjectSearch extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchSearchResult())
+    this.props.dispatch(fetchSearchResult(true))
     this.props.dispatch(setSearchPage(this.props.page + 1))
   }
   componentWillUnmount() {
@@ -39,8 +39,8 @@ export default class ProjectSearch extends React.Component {
   }
 
   onEndReached = () => {
-    if (this.props.page <= this.props.pageCount) {
-      this.props.dispatch(fetchSearchResult())
+    if (this.props.page < this.props.pageCount) {
+      this.props.dispatch(fetchSearchResult(true))
       this.props.dispatch(setSearchPage(this.props.page + 1))
     }
   }

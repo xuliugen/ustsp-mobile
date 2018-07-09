@@ -3,6 +3,7 @@ import {
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
   SET_SEARCH_RESULT,
+  APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
@@ -29,7 +30,7 @@ export function setSearchPage(currentPage) {
   }
 }
 
-export function fetchSearchResult() {
+export function fetchSearchResult(ifAppend) {
   return async (dispatch, getState) => {
     try {
       let res
@@ -55,7 +56,11 @@ export function fetchSearchResult() {
           break
       }
       if (res.data) {
-        dispatch(setSearchResult(res.data.data))
+        if (ifAppend) {
+          dispatch(appendSearchResult(res.data.data))
+        } else {
+          dispatch(setSearchResult(res.data.data))
+        }
         dispatch(setSearchCount(res.data.totalNum))
       }
     } catch (error) {
@@ -67,6 +72,13 @@ export function fetchSearchResult() {
 function setSearchResult(result) {
   return {
     type: SET_SEARCH_RESULT,
+    result
+  }
+}
+
+function appendSearchResult(result) {
+  return {
+    type: APPEND_SEARCH_RESULT,
     result
   }
 }
