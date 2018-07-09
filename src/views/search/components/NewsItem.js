@@ -6,15 +6,17 @@ import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 export default class NewsItem extends React.Component {
   render() {
     return (
-      <View style={styles.itemContainer}>
+      <View style={styles.container}>
         <View style={styles.firstContainer}>
           <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
           <Text style={styles.name}>陈素粉</Text>
           <Text style={styles.date}>2018-1-30</Text>
         </View>
         <View style={styles.secondContainer}>
-          <Image source={require('src/img/news.png')} style={styles.image} />
-          <View style={styles.newContainer}>
+          <View>
+            <Image source={require('src/img/news.png')} style={styles.image} />
+          </View>
+          <View style={styles.rightContainer}>
             <View style={styles.topicContainer}>
               <Text style={styles.newsTopic} numberOfLines={1}>动态的标题一</Text>
             </View>
@@ -29,11 +31,11 @@ export default class NewsItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    height: px2dp(260),
+  container: {
     marginTop: px2dp(30),
     backgroundColor: '#fff'
   },
+
   firstContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -49,17 +51,19 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: px2sp(28),
-    color: '#333333',
+    color: '#333',
     marginLeft: px2dp(22)
   },
   date: {
     position: 'absolute',
     right: px2dp(30),
     fontSize: px2sp(26),
-    color: '#999999'
+    color: '#999'
   },
+
   secondContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingRight: px2dp(48)
   },
   image: {
     marginTop: px2dp(30),
@@ -68,22 +72,23 @@ const styles = StyleSheet.create({
     marginHorizontal: px2dp(30),
     marginBottom: px2dp(42)
   },
+  rightContainer: {
+    flex: 1
+  },
   topicContainer: {
-    width: px2dp(510),
     paddingTop: px2dp(30),
-    marginRight: px2dp(50)
+    paddingBottom: px2sp(16)
   },
   newsTopic: {
-    fontSize: px2sp(32)
+    fontSize: px2sp(32),
+    color: '#333'
   },
   textContainer: {
-    width: px2dp(510),
-    paddingBottom: px2dp(30),
-    marginRight: px2dp(50),
-    flexWrap: 'wrap'
+    paddingBottom: px2dp(30)
+    // flexWrap: 'wrap'
   },
   newsText: {
     fontSize: px2sp(28),
-    color: '#999999'
+    color: '#999'
   }
 })

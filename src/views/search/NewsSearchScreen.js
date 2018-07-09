@@ -1,8 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
+
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
 import newsNavDecorator from 'src/components/common/newsNavDecorator'
+
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import NewsItem from './components/NewsItem'
