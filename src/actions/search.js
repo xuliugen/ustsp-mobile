@@ -1,4 +1,5 @@
 import {
+  SET_SEARCH_MENU_OPEN_STATE,
   SET_SEARCH_TYPE,
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
@@ -8,6 +9,13 @@ import {
   CLEAR_SEARCH
 } from '../constants/actionTypes'
 import { searchTalents, searchProjects } from 'src/ajax/search'
+
+export function setSideMenuOpenState(isOpen) {
+  return {
+    type: SET_SEARCH_MENU_OPEN_STATE,
+    isOpen
+  }
+}
 
 export function setSearchType(searchType) {
   return {

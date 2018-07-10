@@ -1,4 +1,5 @@
 import {
+  SET_SEARCH_MENU_OPEN_STATE,
   SET_SEARCH_TYPE,
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
@@ -9,7 +10,7 @@ import {
 } from '../constants/actionTypes'
 
 const initalState = {
-  isFetching: false,
+  isOpen: false,
   searchType: 'talent',
   reqPayload: {
     condition: '',
@@ -43,6 +44,11 @@ const initalState = {
 
 export default function search(state = initalState, action) {
   switch (action.type) {
+    case SET_SEARCH_MENU_OPEN_STATE:
+      return {
+        ...state,
+        isOpen: action.isOpen
+      }
     case SET_SEARCH_TYPE:
       return {
         ...state,
