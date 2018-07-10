@@ -1,20 +1,37 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Text } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  ListView,
+  RefreshControl
+} from 'react-native'
+import { connect } from 'react-redux'
+import InfiniteScrollView from 'react-native-infinite-scroll-view'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
 import talentNavDecorator from 'src/components/common/talentNavDecorator'
+import { fetchSearchResult, clearSearch } from 'src/actions'
+import { canSearchLoadMore } from 'src/selectors'
 
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import TalentItem from './components/TalentItem'
-import { searchTalents } from 'src/ajax/talent'
 
 const TalentItemWithNav = talentNavDecorator(TalentItem)
+const mapStateToProps = state => ({
+  talents: state.search.result,
+  talentsCount: state.search.totalNum,
+  page: state.search.reqPayload.currentPage,
+  canLoadMore: canSearchLoadMore(state)
+})
 
 /**
+ * @deprecated use one of the new list components, such as FlatList or SectionList
  * @todo: dispath search action with filter
  */
+@connect(mapStateToProps)
 export default class TalentSearchScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitleSearch />,
@@ -25,31 +42,67 @@ export default class TalentSearchScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
-  state = {
-    searchIptVal: '',
-    talents: []
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+    }
+    // Update the data store with initial data.
+    this.state.dataSource = this.getUpdatedDataSource(props)
   }
 
-  async componentDidMount() {
-    const { data } = await searchTalents({ 'major': '', 'school': '', 'title': '', 'type': '', 'condition': '', 'pageSize': 10, 'currentPage': 1 })
+  componentWillMount() {
+    this._loadMoreContentAsync()
+  }
+  componentWillReceiveProps(nextProps) {
     this.setState({
-      talents: data.data
+      dataSource: this.getUpdatedDataSource(nextProps)
     })
+  }
+  componentWillUnmount() {
+    this.props.dispatch(clearSearch())
+  }
+
+  getUpdatedDataSource(props) {
+    let rows = props.talents
+    let ids = rows.map((obj, idx) => idx)
+    return this.state.dataSource.cloneWithRows(rows, ids)
+  }
+
+  _renderRowView = (rowData) => {
+    return <TalentItemWithNav talent={rowData} />
+  }
+
+  _renderRefreshControl() {
+    // Reload all data
+    return (
+      <RefreshControl
+        refreshing={this.state.refreshing}
+        onRefresh={this._loadMoreContentAsync.bind(this)}
+      />
+    )
+  }
+
+  _loadMoreContentAsync = async () => {
+    const { dispatch } = this.props
+    await dispatch(fetchSearchResult(true))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <View style={styles.resultTitleContainer}>
-            <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.state.talents.length}</Text> 位人才</Text>
-          </View>
-          <View>
-            {this.state.talents.map((talent) => (
-              <TalentItemWithNav key={talent.id} talent={talent} />
-            ))}
-          </View>
-        </ScrollView>
+        <View style={styles.resultTitleContainer}>
+          <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.props.talentsCount}</Text> 位人才</Text>
+        </View>
+        <ListView
+          renderScrollComponent={props => <InfiniteScrollView {...props} />}
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRowView}
+          // refreshControl={this._renderRefreshControl()}
+          enableEmptySections
+          canLoadMore={this.props.canLoadMore}
+          onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
+        />
       </View>
     )
   }

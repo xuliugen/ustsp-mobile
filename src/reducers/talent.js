@@ -5,7 +5,7 @@ const initialState = {
   talentInfo: {}
 }
 
-export default function auth(state = initialState, action) {
+export default function talent(state = initialState, action) {
   switch (action.type) {
     case SET_TALENT_INFO:
       const { talent, talentInfo } = action

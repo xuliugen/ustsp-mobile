@@ -1,15 +1,21 @@
 import React from 'react'
 import { StyleSheet, ImageBackground, View, ScrollView, Text } from 'react-native'
 import Swiper from 'react-native-swiper'
+import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import { THEME_COLOR, APP_BACKGROUD_COLOR } from 'src/styles/common'
 import {px2dp, px2sp} from 'src/utils/device'
+import { toSearchPageByType } from 'src/utils/nav'
+import { setSearchType } from 'src/actions'
 
 import Search from './components/Search'
 import Projects from './components/Projects'
 import Talents from './components/Talents'
 import Menu from './components/Menu'
 
+@connect()
+@withNavigation
 export default class Home extends React.Component {
   static navigationOptions = {
     title: '首页',
@@ -17,8 +23,9 @@ export default class Home extends React.Component {
     headerBackTitle: null
   }
 
-  handleProjectCardPress = () => {
-    this.props.navigation.navigate('ProjectSearch')
+  handleMorePress = (type) => {
+    this.props.dispatch(setSearchType(type))
+    toSearchPageByType(type, this.props.navigation)
   }
 
   render() {
@@ -44,14 +51,14 @@ export default class Home extends React.Component {
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>- 推荐人才 -</Text>
-          <Text style={[styles.titleText, styles.more]}>更多 ></Text>
+          <Text style={[styles.titleText, styles.more]} onPress={this.handleMorePress.bind(this, 'talent')}>更多 ></Text>
         </View>
         <View style={styles.talentsContainer}>
           <Talents />
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>- 您可能感兴趣的项目 -</Text>
-          <Text style={[styles.titleText, styles.more]}>更多 ></Text>
+          <Text style={[styles.titleText, styles.more]} onPress={this.handleMorePress.bind(this, 'project')}>更多 ></Text>
         </View>
         <View style={styles.projectContainer}>
           <Projects />
