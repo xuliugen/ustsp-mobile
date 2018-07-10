@@ -12,7 +12,8 @@ import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
 import talentNavDecorator from 'src/components/common/talentNavDecorator'
-import { fetchSearchResult, clearSearch, setSearchPage } from 'src/actions'
+import { fetchSearchResult, clearSearch } from 'src/actions'
+import { canSearchLoadMore } from 'src/selectors'
 
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
@@ -22,10 +23,12 @@ const TalentItemWithNav = talentNavDecorator(TalentItem)
 const mapStateToProps = state => ({
   talents: state.search.result,
   talentsCount: state.search.totalNum,
-  page: state.search.reqPayload.currentPage
+  page: state.search.reqPayload.currentPage,
+  canLoadMore: canSearchLoadMore(state)
 })
 
 /**
+ * @deprecated use one of the new list components, such as FlatList or SectionList
  * @todo: dispath search action with filter
  */
 @connect(mapStateToProps)
@@ -81,9 +84,8 @@ export default class TalentSearchScreen extends React.Component {
   }
 
   _loadMoreContentAsync = async () => {
-    const { dispatch, page } = this.props
+    const { dispatch } = this.props
     await dispatch(fetchSearchResult(true))
-    dispatch(setSearchPage(page + 1))
   }
 
   render() {
@@ -92,18 +94,13 @@ export default class TalentSearchScreen extends React.Component {
         <View style={styles.resultTitleContainer}>
           <Text style={styles.titleText}>共为你找到 <Text style={styles.titleTextHighlight}>{this.props.talentsCount}</Text> 位人才</Text>
         </View>
-        {/* <View>
-          {this.props.talents.map((talent) => (
-            <TalentItemWithNav key={talent.id} talent={talent} />
-          ))}
-        </View> */}
         <ListView
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this._renderRowView}
           // refreshControl={this._renderRefreshControl()}
           enableEmptySections
-          canLoadMore
+          canLoadMore={this.props.canLoadMore}
           onLoadMoreAsync={this._loadMoreContentAsync.bind(this)}
         />
       </View>

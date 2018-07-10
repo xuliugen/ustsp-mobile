@@ -5,18 +5,20 @@ import { connect } from 'react-redux'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
 import projectNavDecorator from 'src/components/common/projectNavDecorator'
-import { fetchSearchResult, clearSearch, setSearchPage } from 'src/actions'
+import { fetchSearchResult, clearSearch } from 'src/actions'
+import { canSearchLoadMore } from 'src/selectors'
 
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import HeaderRightFilter from './components/HeaderRightFilter'
 import ProjectItem from './components/ProjectItem'
 
 const ProjectItemWithNav = projectNavDecorator(ProjectItem)
+
 const mapStateToProps = state => ({
   projects: state.search.result,
   projectsCount: state.search.totalNum,
   page: state.search.reqPayload.currentPage,
-  pageCount: Math.ceil(state.search.totalNum / 10)
+  canLoadMore: canSearchLoadMore(state)
 })
 
 @connect(mapStateToProps)
@@ -31,17 +33,19 @@ export default class ProjectSearch extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchSearchResult(true))
-    this.props.dispatch(setSearchPage(this.props.page + 1))
+    this.dispatchSearch()
   }
   componentWillUnmount() {
     this.props.dispatch(clearSearch())
   }
 
+  dispatchSearch() {
+    this.props.dispatch(fetchSearchResult(true))
+  }
+
   onEndReached = () => {
-    if (this.props.page < this.props.pageCount) {
-      this.props.dispatch(fetchSearchResult(true))
-      this.props.dispatch(setSearchPage(this.props.page + 1))
+    if (this.props.canLoadMore) {
+      this.dispatchSearch()
     }
   }
 

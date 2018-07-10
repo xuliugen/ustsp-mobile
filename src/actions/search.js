@@ -30,6 +30,9 @@ export function setSearchPage(currentPage) {
   }
 }
 
+/**
+ * @param {boolean} ifAppend use append mode or set mode
+ */
 export function fetchSearchResult(ifAppend) {
   return async (dispatch, getState) => {
     try {
@@ -58,6 +61,7 @@ export function fetchSearchResult(ifAppend) {
       if (res.data) {
         if (ifAppend) {
           dispatch(appendSearchResult(res.data.data))
+          dispatch(setSearchPage(getState().search.reqPayload.currentPage + 1))
         } else {
           dispatch(setSearchResult(res.data.data))
         }

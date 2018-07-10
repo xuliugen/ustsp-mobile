@@ -56,6 +56,9 @@ export default class HeaderTitleSearch extends React.Component {
     }
     return (
       <View style={styles.search}>
+        {/* 正常情况下 value 搭配 onChange 可以可控地使用 TextInput,  */}
+        {/* 但 IOS 使用可控 TextInput 上输入有 bug */}
+        {/* 所以等 github 的 pr merged 或是 eject 后改 library */}
         <TextInput
           inputRef={this.textInput}
           {...searchIptProps}
