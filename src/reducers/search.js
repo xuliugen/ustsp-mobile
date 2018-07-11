@@ -3,9 +3,11 @@ import {
   SET_SEARCH_TYPE,
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
+  SET_SEARCH_PAYLOAD,
   SET_SEARCH_RESULT,
   APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
+  CLEAR_SEARCH_SCOPE_PAYLOAD,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
 
@@ -19,6 +21,7 @@ const initalState = {
   },
   talentPl: {
     major: '',
+    province: '',
     school: '',
     title: '',
     type: ''
@@ -70,6 +73,23 @@ export default function search(state = initalState, action) {
           currentPage: action.currentPage
         }
       }
+    case SET_SEARCH_PAYLOAD:
+      const { scope, field, value } = action
+      let payloadProp
+      switch (scope) {
+        case 'talent':
+          payloadProp = 'talentPl'
+          break
+        default:
+          return state
+      }
+      return {
+        ...state,
+        [payloadProp]: {
+          ...state[payloadProp],
+          [field]: value
+        }
+      }
     case SET_SEARCH_RESULT:
       return {
         ...state,
@@ -84,6 +104,16 @@ export default function search(state = initalState, action) {
       return {
         ...state,
         totalNum: action.totalNum
+      }
+    case CLEAR_SEARCH_SCOPE_PAYLOAD:
+      switch (action.scope) {
+        case 'talent':
+          return {
+            ...state,
+            talentPl: initalState.talentPl
+          }
+        default:
+          return state
       }
     case CLEAR_SEARCH:
       return {

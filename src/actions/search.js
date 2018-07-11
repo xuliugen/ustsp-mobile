@@ -3,9 +3,11 @@ import {
   SET_SEARCH_TYPE,
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
+  SET_SEARCH_PAYLOAD,
   SET_SEARCH_RESULT,
   APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
+  CLEAR_SEARCH_SCOPE_PAYLOAD,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
 import { searchTalents, searchProjects } from 'src/ajax/search'
@@ -35,6 +37,20 @@ export function setSearchPage(currentPage) {
   return {
     type: SET_SEARCH_PAGE,
     currentPage: currentPage
+  }
+}
+
+/**
+ * @param {string} scope search payload type
+ * @param {string} field certain prop of payload
+ * @param value the value
+ */
+export function setSearchPayload(scope, field, value) {
+  return {
+    type: SET_SEARCH_PAYLOAD,
+    scope,
+    field,
+    value
   }
 }
 
@@ -99,6 +115,13 @@ function setSearchCount(totalNum) {
   return {
     type: SET_SEARCH_RESULT_COUNT,
     totalNum
+  }
+}
+
+export function clearSearchScopePayload(scope) {
+  return {
+    type: CLEAR_SEARCH_SCOPE_PAYLOAD,
+    scope
   }
 }
 
