@@ -8,6 +8,7 @@ import {
   APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
   CLEAR_SEARCH_SCOPE_PAYLOAD,
+  CLEAR_SEARCH_RESULT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
 
@@ -80,6 +81,9 @@ export default function search(state = initalState, action) {
         case 'talent':
           payloadProp = 'talentPl'
           break
+        case 'project':
+          payloadProp = 'projectPl'
+          break
         default:
           return state
       }
@@ -112,8 +116,24 @@ export default function search(state = initalState, action) {
             ...state,
             talentPl: initalState.talentPl
           }
+        case 'project':
+          return {
+            ...state,
+            projectPl: initalState.projectPl
+          }
         default:
           return state
+      }
+    case CLEAR_SEARCH_RESULT:
+      return {
+        ...state,
+        result: initalState.result,
+        totalNum: initalState.totalNum,
+        reqPayload: {
+          ...state.reqPayload,
+          currentPage: initalState.reqPayload.currentPage,
+          pageSize: initalState.reqPayload.pageSize
+        }
       }
     case CLEAR_SEARCH:
       return {

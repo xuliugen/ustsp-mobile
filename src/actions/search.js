@@ -8,6 +8,7 @@ import {
   APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
   CLEAR_SEARCH_SCOPE_PAYLOAD,
+  CLEAR_SEARCH_RESULT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
 import { searchTalents, searchProjects } from 'src/ajax/search'
@@ -122,6 +123,12 @@ export function clearSearchScopePayload(scope) {
   return {
     type: CLEAR_SEARCH_SCOPE_PAYLOAD,
     scope
+  }
+}
+
+export function clearSearchResult() {
+  return {
+    type: CLEAR_SEARCH_RESULT
   }
 }
 

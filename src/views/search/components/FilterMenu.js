@@ -9,16 +9,20 @@ import {
 import { connect } from 'react-redux'
 
 import { px2dp, px2sp } from 'src/utils/device'
-import { fetchSearchResult, setSearchPage, setSideMenuOpenState, clearSearchScopePayload } from 'src/actions'
+import { fetchSearchResult, clearSearchResult, setSideMenuOpenState, clearSearchScopePayload, setSearchPage } from 'src/actions'
 
-@connect()
+const mapStateToProps = state => ({
+  page: state.search.reqPayload.currentPage
+})
+
+@connect(mapStateToProps)
 export default class FilterMenu extends React.Component {
   handleResetPress = () => {
     this.props.dispatch(clearSearchScopePayload(this.props.scope))
   }
   handleConfirmPress = () => {
-    this.props.dispatch(setSearchPage(1))
-    this.props.dispatch(fetchSearchResult())
+    this.props.dispatch(clearSearchResult())
+    this.props.dispatch(fetchSearchResult(true))
     this.props.dispatch(setSideMenuOpenState(false))
   }
 
