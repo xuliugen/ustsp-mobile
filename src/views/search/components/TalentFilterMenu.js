@@ -9,10 +9,11 @@ import { subject, province, university, teacherTitle } from 'src/constants/datas
 import SelectorBlock from './SelectorBlock'
 import FilterMenu from './FilterMenu'
 
-const subjectData = ['不限'].concat(subject)
-const provinceData = ['不限'].concat(province)
-const teacherTitleData = ['不限'].concat(teacherTitle)
-const talentTypeData = ['不限', '教师', '学生']
+const iarr = [{ k: '不限', v: '' }]
+const subjectData = iarr.concat(subject.map(i => ({ k: i, v: i })))
+const provinceData = iarr.concat(province.map(i => ({ k: i, v: i })))
+const teacherTitleData = iarr.concat(teacherTitle.map(i => ({ k: i, v: i })))
+const talentTypeData = iarr.concat([{ k: '教师', v: 2 }, { k: '学生', v: 1 }])
 
 const mapStateToProps = state => ({
   provinceSelected: state.search.talentPl.province
@@ -24,7 +25,8 @@ export default class TalentFilterMenu extends React.Component {
 
   render() {
     const { provinceSelected } = this.props
-    const universityData = provinceSelected ? ['不限'].concat(university[provinceSelected]) : null
+    const universityData = provinceSelected
+      ? iarr.concat(university[provinceSelected].map(i => ({ k: i, v: i }))) : null
     return (
       <FilterMenu scope={this.scope}>
         <View>

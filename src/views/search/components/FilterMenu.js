@@ -13,8 +13,6 @@ import { fetchSearchResult, setSearchPage, setSideMenuOpenState, clearSearchScop
 
 @connect()
 export default class FilterMenu extends React.Component {
-  scope = 'talent'
-
   handleResetPress = () => {
     this.props.dispatch(clearSearchScopePayload(this.props.scope))
   }

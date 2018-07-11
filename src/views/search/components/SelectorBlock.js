@@ -53,9 +53,9 @@ export default class SelectorBlock extends React.Component {
     if (value === valueSelected) {
       return
     }
-    const _value = value === '不限' ? '' : value
+    // const _value = value === '不限' ? '' : value
     const { field, scope } = this.props
-    this.props.dispatch(setSearchPayload(scope, field, _value))
+    this.props.dispatch(setSearchPayload(scope, field, value))
 
     // 人才筛选时，选择省份时重置大学
     if (scope === 'talent' && field === 'province') {
@@ -94,12 +94,12 @@ export default class SelectorBlock extends React.Component {
         <View style={styles.selectorsContainer}>
           {_2dDataResolved.map((column, idx) => (
             <View style={styles.selectorsColumn} key={`line${idx}`}>
-              {column.map((value) => (
+              {column.map(({ k, v }) => (
                 <TouchableOpacity
-                  key={value}
-                  style={this.getSelectorStyle(value, _value)}
-                  onPress={this.handleSelectPress.bind(this, value, _value)}>
-                  <Text style={this.getSelectorTextStyle(value, _value)}>{value}</Text>
+                  key={k}
+                  style={this.getSelectorStyle(v, _value)}
+                  onPress={this.handleSelectPress.bind(this, v, _value)}>
+                  <Text style={this.getSelectorTextStyle(v, _value)}>{k}</Text>
                 </TouchableOpacity>
               ))}
             </View>
