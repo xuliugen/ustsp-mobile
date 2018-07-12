@@ -1,8 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
-import { MaterialIcons, Feather } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
+/**
+ * @todo add friends
+ */
 export default class TalentDetailBottom extends React.Component {
   render() {
     return (
@@ -14,10 +17,10 @@ export default class TalentDetailBottom extends React.Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomBtnItem}>
-          <View style={styles.textItem}>
+          {/* <View style={styles.textItem}>
             <Feather name="eye" style={styles.btnText} />
             <Text style={styles.btnText}>关注TA</Text>
-          </View>
+          </View> */}
         </TouchableOpacity>
       </View>
     )
