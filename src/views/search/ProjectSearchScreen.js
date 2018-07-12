@@ -1,13 +1,13 @@
 import React from 'react'
 import { StyleSheet, View, Text, FlatList } from 'react-native'
 import { connect } from 'react-redux'
+import SideMenu from 'react-native-side-menu'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import projectNavDecorator from 'src/components/common/projectNavDecorator'
 import { fetchSearchResult, clearSearch, setSideMenuOpenState } from 'src/actions'
 import { canSearchLoadMore } from 'src/selectors'
-import SideMenu from 'react-native-side-menu'
 
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import HeaderRightFilter from './components/HeaderRightFilter'

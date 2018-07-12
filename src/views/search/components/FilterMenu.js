@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux'
 
 import { px2dp, px2sp } from 'src/utils/device'
-import { fetchSearchResult, clearSearchResult, setSideMenuOpenState, clearSearchScopePayload, setSearchPage } from 'src/actions'
+import { fetchSearchResult, clearSearchResult, setSideMenuOpenState, clearSearchScopePayload } from 'src/actions'
 
 const mapStateToProps = state => ({
   page: state.search.reqPayload.currentPage

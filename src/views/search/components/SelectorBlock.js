@@ -8,7 +8,8 @@ import { setSearchPayload } from 'src/actions'
 
 const mapStateToProps = state => ({
   talent: state.search.talentPl,
-  project: state.search.projectPl
+  project: state.search.projectPl,
+  patent: state.search.patentPl
 })
 
 @connect(mapStateToProps)

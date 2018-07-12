@@ -15,7 +15,12 @@ function fetchProjectDetailApi(projectId, userId = '') {
   })
 }
 
+function searchProjects(req) {
+  return axios.post('/search/project/detail', req)
+}
+
 export {
   fetchHomeScreenProjects,
-  fetchProjectDetailApi
+  fetchProjectDetailApi,
+  searchProjects
 }

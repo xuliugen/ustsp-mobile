@@ -11,7 +11,9 @@ import {
   CLEAR_SEARCH_RESULT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
-import { searchTalents, searchProjects } from 'src/ajax/search'
+import { searchTalents } from 'src/ajax/talent'
+import { searchProjects } from 'src/ajax/project'
+import { searchPatents } from 'src/ajax/patent'
 
 export function setSideMenuOpenState(isOpen) {
   return {
@@ -80,6 +82,13 @@ export function fetchSearchResult(ifAppend) {
           res = await searchProjects(reqProject)
           break
         case 'patent':
+          const { reqPayload: reqPayloadPatent, patentPl } = getState().search
+          const reqPatent = {
+            ...reqPayloadPatent,
+            ...patentPl
+          }
+          res = await searchPatents(reqPatent)
+          break
         case 'news':
           break
       }

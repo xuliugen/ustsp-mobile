@@ -18,7 +18,7 @@ const initalState = {
   reqPayload: {
     condition: '',
     currentPage: 1,
-    pageSize: 10
+    pageSize: 50
   },
   talentPl: {
     major: '',
@@ -76,17 +76,20 @@ export default function search(state = initalState, action) {
       }
     case SET_SEARCH_PAYLOAD:
       const { scope, field, value } = action
-      let payloadProp
-      switch (scope) {
-        case 'talent':
-          payloadProp = 'talentPl'
-          break
-        case 'project':
-          payloadProp = 'projectPl'
-          break
-        default:
-          return state
-      }
+      let payloadProp = `${scope}Pl`
+      // switch (scope) {
+      //   case 'talent':
+      //     payloadProp = 'talentPl'
+      //     break
+      //   case 'project':
+      //     payloadProp = 'projectPl'
+      //     break
+      //   case 'patent':
+      //     payloadProp = 'patentPl'
+      //     break
+      //   default:
+      //     return state
+      // }
       return {
         ...state,
         [payloadProp]: {
@@ -120,6 +123,11 @@ export default function search(state = initalState, action) {
           return {
             ...state,
             projectPl: initalState.projectPl
+          }
+        case 'patent':
+          return {
+            ...state,
+            patentPl: initalState.patentPl
           }
         default:
           return state

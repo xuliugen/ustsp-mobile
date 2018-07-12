@@ -72,3 +72,31 @@ export const teacherTitle = [
   '讲师',
   '其他'
 ]
+// 专利行业分类
+export const industryCategory = [
+  'A：人类生活需要',
+  'B：作业运输',
+  'C：化学，冶金',
+  'D：纺织和造纸',
+  'E：固定构造',
+  'F：机械工程，照明，加热，武器，爆破',
+  'G：物理',
+  'H：电学',
+  '其他'
+]
+// 专利类型
+export const patentType = [
+  '发明',
+  '实用新型',
+  '外观设计',
+  '其他'
+]
+// 法律状态
+export const legalStatus = [
+  '等年登印费',
+  '等待恢复',
+  '专利权维持',
+  '权利终止等恢复',
+  '权利失效',
+  '其他'
+]
