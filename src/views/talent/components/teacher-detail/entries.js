@@ -62,7 +62,7 @@ export function EducationInfo(props) {
         <Text style={styles.detailText}>{info.college} / {info.major}</Text>
       </View>
       <View style={styles.time}>
-        <Text style={styles.timeText}>{info.major}级 / {parseTime(info.startTime)} / {parseTime(info.endTime)}</Text>
+        <Text style={styles.timeText}>{info.level}级 / {parseTime(info.startTime)} / {parseTime(info.endTime)}</Text>
       </View>
     </View>
   )

@@ -11,9 +11,6 @@ const mapStateToProps = state => {
   }
 }
 
-/**
- * @todo: userEducationInfoDTO & userAwardInfoDTO
- */
 @connect(mapStateToProps)
 export default class Introduction extends React.Component {
   render() {
