@@ -17,7 +17,7 @@ export default class NewsDetailScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <ScrollView>
           <View style={styles.titleContainer}>
             <Text style={styles.dynamicTitle}>动态的标题一</Text>
