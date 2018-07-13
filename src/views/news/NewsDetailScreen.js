@@ -1,14 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, Image } from 'react-native'
 import HeaderTitle from './components/HeaderTitle'
 import HeaderRightShare from './components/HeaderRightShare'
-import { px2dp, px2sp } from 'src/utils/device'
+import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import { Feather } from '@expo/vector-icons'
-import RemarkItems from './components/RemarkItems'
-
-var dimensions = require('Dimensions')
-var {width} = dimensions.get('window')
 
 export default class NewsDetailScreen extends React.Component {
   static navigationOptions = {
@@ -20,12 +15,9 @@ export default class NewsDetailScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
-  state = {
-    remarks: [{}, {}, {}]
-  }
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <ScrollView>
           <View style={styles.titleContainer}>
             <Text style={styles.dynamicTitle}>动态的标题一</Text>
@@ -34,7 +26,7 @@ export default class NewsDetailScreen extends React.Component {
               <Text style={styles.reading}>22k</Text>
             </View>
           </View>
-          <View>
+          <View style={styles.outerContainer}>
             <View style={styles.subtitleContainer}>
               <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
               <Text style={styles.author}>U小妹</Text>
@@ -56,18 +48,6 @@ export default class NewsDetailScreen extends React.Component {
               </Text>
             </View>
           </View>
-          <View style={styles.commentaryContainer}>
-            <View style={styles.commentaryHeader}>
-              <Text style={styles.iconContainer}><Feather style={styles.commentaryIcon} name="message-square" /></Text>
-              <Text style={styles.commAmount}>评论({this.state.remarks.length})</Text>
-              <TouchableOpacity style={styles.readMore}>
-                <Text style={styles.commAmount}>查看所有<Feather name="chevron-right" style={styles.commentaryIcon} /></Text>
-              </TouchableOpacity>
-            </View>
-            {this.state.remarks.map((remarks, idx) => (
-              <RemarkItems key={idx} />
-            ))}
-          </View>
         </ScrollView>
       </View>
     )
@@ -81,6 +61,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: px2dp(2),
     borderBottomColor: APP_BACKGROUD_COLOR
@@ -93,8 +74,6 @@ const styles = StyleSheet.create({
   readContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    position: 'absolute',
-    right: 0,
     marginRight: px2dp(30),
     paddingVertical: px2dp(10),
     paddingHorizontal: px2dp(20),
@@ -134,42 +113,15 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   pic: {
-    width: width - px2dp(60),
+    width: SCREEN_WIDTH - px2dp(60),
     height: px2dp(400)
   },
   textContainer: {
     paddingHorizontal: px2dp(30),
-    paddingVertical: px2dp(30)
+    paddingTop: px2dp(30),
+    paddingBottom: px2dp(82)
   },
   newsText: {
     fontSize: px2sp(32)
-  },
-  commentaryContainer: {
-    flexDirection: 'column',
-    marginTop: px2dp(52),
-    paddingHorizontal: px2dp(30),
-    paddingBottom: px2dp(42),
-    borderTopWidth: px2dp(2),
-    borderTopColor: APP_BACKGROUD_COLOR
-  },
-  commentaryHeader: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  iconContainer: {
-    marginVertical: px2dp(30)
-  },
-  commentaryIcon: {
-    color: '#8f9ba7',
-    fontSize: px2sp(28)
-  },
-  commAmount: {
-    marginLeft: px2dp(20),
-    fontSize: px2sp(28),
-    color: '#8f9ba7'
-  },
-  readMore: {
-    position: 'absolute',
-    right: 0
   }
 })
