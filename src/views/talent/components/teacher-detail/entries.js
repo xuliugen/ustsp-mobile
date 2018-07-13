@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { parseTime } from 'src/utils/format'
 import { Entypo } from '@expo/vector-icons'
+
 import { px2dp, px2sp } from 'src/utils/device'
+import { parseTime } from 'src/utils/format'
 
 // 基本资料条目
 export function Entry(props) {

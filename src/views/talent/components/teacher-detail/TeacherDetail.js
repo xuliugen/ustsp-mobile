@@ -2,15 +2,15 @@ import React from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 
-import TalentDetailBottom from './components/TalentDetailBottom'
-import Introduction from './components/teacher-detail/Introduction'
+import TalentDetailBottom from '../TalentDetailBottom'
+import TeacherDetailContent from './TeacherDetailContent'
 
 export default class TeacherDetail extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Introduction />
+          <TeacherDetailContent />
         </ScrollView>
         <TalentDetailBottom />
       </View>

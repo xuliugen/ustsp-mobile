@@ -63,7 +63,7 @@ export default class MyScreenHeader extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground source={require('./bg.png')} style={styles.bgImg}>
+        <ImageBackground source={require('./img/bg.png')} style={styles.bgImg}>
           <View style={styles.wrapper}>
             <View style={styles.infoContainer} >
               <View style={styles.avatarContainer} >

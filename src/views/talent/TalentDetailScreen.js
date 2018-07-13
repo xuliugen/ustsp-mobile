@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { getTalentInfo, clearTalentInfo } from 'src/actions'
 
 import TalentDetailHeader from './components/TalentDetailHeader'
-import StudentDetail from './StudentDetail'
-import TeacherDetail from './TeacherDetail'
+import StudentDetail from './components/student-detail/StudentDetail'
+import TeacherDetail from './components/teacher-detail/TeacherDetail'
 
 class TalentDetailScreen extends React.Component {
   static navigationOptions = {

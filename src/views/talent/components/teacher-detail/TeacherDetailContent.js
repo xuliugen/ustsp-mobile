@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { px2dp, px2sp } from 'src/utils/device'
 import { connect } from 'react-redux'
-import {Entry, FoldEntry, ResearchInfo, EducationInfo, AwardInfo} from './entries'
+import { Entry, FoldEntry, ResearchInfo, EducationInfo, AwardInfo } from './entries'
 
 const mapStateToProps = state => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 }
 
 @connect(mapStateToProps)
-export default class Introduction extends React.Component {
+export default class TeacherDetailContent extends React.Component {
   render() {
     const { userInfo } = this.props
     return (
@@ -24,22 +24,27 @@ export default class Introduction extends React.Component {
           <Entry title="QQ" text={userInfo.qq} />
           <Entry title="WeChat" text={userInfo.wechat} />
         </View>
+
         <View>
           <Text style={styles.title}>个人简介</Text>
           <FoldEntry text={userInfo.introduction} />
         </View>
+
         <View>
           <Text style={styles.title}>学术经历</Text>
           <FoldEntry text={userInfo.academicExperience} />
         </View>
+
         <View>
           <Text style={styles.title}>科研介绍</Text>
           <FoldEntry text={userInfo.scienceIntroduction} />
         </View>
+
         <View>
           <Text style={styles.title}>发表文章</Text>
           <FoldEntry text={userInfo.publishPaper} />
         </View>
+
         <View>
           <Text style={styles.title}>教育经历</Text>
           {userInfo.userEducationInfoDTO && (
@@ -48,6 +53,7 @@ export default class Introduction extends React.Component {
             }) : <FoldEntry />
           )}
         </View>
+
         <View>
           <Text style={styles.title}>科研情况</Text>
           {userInfo.researchInfoDTO && (
@@ -56,6 +62,7 @@ export default class Introduction extends React.Component {
             }) : <FoldEntry />
           )}
         </View>
+
         <View>
           <Text style={styles.title}>获奖经历</Text>
           {userInfo.userAwardInfoDTO && (
