@@ -14,42 +14,55 @@ const mapStateToProps = state => {
 @connect(mapStateToProps)
 export default class Introduction extends React.Component {
   render() {
+    const { userInfo } = this.props
     return (
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>基本资料</Text>
-          <Entry title="姓名" text={this.props.userInfo.realName} />
-          <Entry title="邮箱" text={this.props.userInfo.email} />
-          <Entry title="QQ" text={this.props.userInfo.qq} />
-          <Entry title="WeChat" text={this.props.userInfo.wechat} />
+          <Entry title="姓名" text={userInfo.realName} />
+          <Entry title="邮箱" text={userInfo.email} />
+          <Entry title="QQ" text={userInfo.qq} />
+          <Entry title="WeChat" text={userInfo.wechat} />
         </View>
         <View>
           <Text style={styles.title}>个人简介</Text>
-          <FoldEntry text={this.props.userInfo.introduction} />
+          <FoldEntry text={userInfo.introduction} />
         </View>
         <View>
           <Text style={styles.title}>学术经历</Text>
-          <FoldEntry text={this.props.userInfo.academicExperience} />
+          <FoldEntry text={userInfo.academicExperience} />
         </View>
         <View>
           <Text style={styles.title}>科研介绍</Text>
-          <FoldEntry text={this.props.userInfo.scienceIntroduction} />
+          <FoldEntry text={userInfo.scienceIntroduction} />
         </View>
         <View>
           <Text style={styles.title}>发表文章</Text>
-          <FoldEntry text={this.props.userInfo.publishPaper} />
+          <FoldEntry text={userInfo.publishPaper} />
         </View>
         <View>
           <Text style={styles.title}>教育经历</Text>
-          {this.props.userInfo.userEducationInfoDTO && (this.props.userInfo.userEducationInfoDTO.length > 0 ? this.props.userInfo.userEducationInfoDTO.map(item => <EducationInfo key={item.id} info={item} />) : <FoldEntry />)}
+          {userInfo.userEducationInfoDTO && (
+            userInfo.userEducationInfoDTO.length > 0 ? userInfo.userEducationInfoDTO.map(item => {
+              return <EducationInfo key={item.id} info={item} />
+            }) : <FoldEntry />
+          )}
         </View>
         <View>
           <Text style={styles.title}>科研情况</Text>
-          {this.props.userInfo.researchInfoDTO && (this.props.userInfo.researchInfoDTO.length > 0 ? this.props.userInfo.researchInfoDTO.map(item => <ResearchInfo key={item.startTime} info={item} />) : <FoldEntry />)}
+          {userInfo.researchInfoDTO && (
+            userInfo.researchInfoDTO.length > 0 ? userInfo.researchInfoDTO.map(item => {
+              return <ResearchInfo key={item.startTime} info={item} />
+            }) : <FoldEntry />
+          )}
         </View>
         <View>
           <Text style={styles.title}>获奖经历</Text>
-          {this.props.userInfo.userAwardInfoDTO && (this.props.userInfo.userAwardInfoDTO.length > 0 ? this.props.userInfo.userAwardInfoDTO.map(item => <AwardInfo key={item.id} info={item} />) : <FoldEntry />)}
+          {userInfo.userAwardInfoDTO && (
+            userInfo.userAwardInfoDTO.length > 0 ? userInfo.userAwardInfoDTO.map(item => {
+              return <AwardInfo key={item.id} info={item} />
+            }) : <FoldEntry />
+          )}
         </View>
       </View>
     )
