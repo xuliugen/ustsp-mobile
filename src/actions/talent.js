@@ -1,10 +1,10 @@
-import { fetchTeacherInfo, fetchStudentInfo, fetchEnterpriseInfo } from 'src/ajax/auth'
+import { fetchTeacherInfo, fetchStudentInfo, fetchEnterpriseInfo, fetchOtherTeacherInfo } from 'src/ajax/auth'
 import { SET_TALENT_INFO, CLEAR_TALENT_INFO } from '../constants/actionTypes'
 
 export function getTalentInfo(id, userType) {
   return async (dispatch, getState) => {
     try {
-      let res
+      let res, otherRes
       switch (userType) {
         case 1:
           res = await fetchStudentInfo(id)
@@ -18,12 +18,13 @@ export function getTalentInfo(id, userType) {
           break
         case 2:
           res = await fetchTeacherInfo(id)
+          otherRes = await fetchOtherTeacherInfo(id)
           const { userInfoDTO: tuser, teacherInfoDTO } = res.data
           dispatch({
             type: SET_TALENT_INFO,
             userType: 2,
             talent: tuser,
-            talentInfo: teacherInfoDTO
+            talentInfo: Object.assign({}, teacherInfoDTO, otherRes.data)
           })
           break
         case 3:

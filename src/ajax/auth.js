@@ -21,3 +21,9 @@ export function fetchEnterpriseInfo(id) {
     params: { id }
   })
 }
+
+export function fetchOtherTeacherInfo(id) {
+  return axios.get(`/teacher/getOtherAddInfo`, {
+    params: { id }
+  })
+}
