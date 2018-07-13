@@ -35,14 +35,14 @@ export default class StudentDetailContent extends React.Component {
           <FoldEntry text={userInfo.introduction} />
         </View>
 
-        <View>
-          <Title label="教育经历" />
-          {userInfo.edu && (
-            userInfo.edu.length > 0 ? userInfo.edu.map(item => {
+        {userInfo.edu && userInfo.edu.length > 0 &&
+          <View>
+            <Title label="教育经历" />
+            {userInfo.edu.map(item => {
               return <EducationInfo key={item.id} info={item} />
-            }) : <FoldEntry />
-          )}
-        </View>
+            })}
+          </View>
+        }
       </View>
     )
   }

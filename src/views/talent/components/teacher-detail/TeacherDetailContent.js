@@ -46,32 +46,30 @@ export default class TeacherDetailContent extends React.Component {
           <FoldEntry text={userInfo.publishPaper} />
         </View>
 
-        <View>
-          <Title label="教育经历" />
-          {userInfo.userEducationInfoDTO && (
-            userInfo.userEducationInfoDTO.length > 0 ? userInfo.userEducationInfoDTO.map(item => {
+        {userInfo.userEducationInfoDTO && userInfo.userEducationInfoDTO.length > 0 &&
+          <View>
+            <Title label="教育经历" />
+            {userInfo.userEducationInfoDTO.map(item => {
               return <EducationInfo key={item.id} info={item} />
-            }) : <FoldEntry />
-          )}
-        </View>
+            })}
+          </View>
+        }
 
-        <View>
-          <Title label="科研情况" />
-          {userInfo.researchInfoDTO && (
-            userInfo.researchInfoDTO.length > 0 ? userInfo.researchInfoDTO.map(item => {
+        {userInfo.researchInfoDTO && userInfo.researchInfoDTO.length > 0 &&
+          <View>
+            <Title label="科研情况" />
+            {userInfo.researchInfoDTO.map(item => {
               return <ResearchInfo key={item.startTime} info={item} />
-            }) : <FoldEntry />
-          )}
-        </View>
+            })})}
+          </View>
+        }
 
-        <View>
-          <Title label="获奖经历" />
-          {userInfo.userAwardInfoDTO && (
-            userInfo.userAwardInfoDTO.length > 0 ? userInfo.userAwardInfoDTO.map(item => {
-              return <AwardInfo key={item.id} info={item} />
-            }) : <FoldEntry />
-          )}
-        </View>
+        {userInfo.userAwardInfoDTO && userInfo.userAwardInfoDTO.length > 0 &&
+          <View>
+            <Title label="获奖经历" />
+            {userInfo.userAwardInfoDTO.map(item => (<AwardInfo key={item.id} info={item} />))}
+          </View>
+        }
       </View>
     )
   }
