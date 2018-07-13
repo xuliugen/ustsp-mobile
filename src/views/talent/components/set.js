@@ -1,9 +1,17 @@
+/**
+ * @description 人才详情页条目组件集
+ */
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 
 import { px2dp, px2sp } from 'src/utils/device'
 import { parseTime } from 'src/utils/format'
+
+// 信息块title
+export function Title(props) {
+  return <Text style={styles.title}>{props.label}</Text>
+}
 
 // 基本资料条目
 export function Entry(props) {
@@ -102,6 +110,13 @@ export function AwardInfo(props) {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    paddingLeft: px2dp(30),
+    paddingVertical: px2dp(37),
+    fontSize: px2sp(28),
+    color: '#666'
+  },
+
   itemWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
