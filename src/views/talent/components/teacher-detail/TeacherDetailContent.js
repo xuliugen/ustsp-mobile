@@ -46,28 +46,24 @@ export default class TeacherDetailContent extends React.Component {
           <FoldEntry text={userInfo.publishPaper} />
         </View>
 
-        {userInfo.userEducationInfoDTO && userInfo.userEducationInfoDTO.length > 0 &&
+        {!!(userInfo.userEducationInfoDTO && userInfo.userEducationInfoDTO.length > 0) &&
           <View>
             <Title label="教育经历" />
-            {userInfo.userEducationInfoDTO.map(item => {
-              return <EducationInfo key={item.id} info={item} />
-            })}
+            {userInfo.userEducationInfoDTO.map(item => <EducationInfo key={item.id} info={item} />)}
           </View>
         }
 
-        {userInfo.researchInfoDTO && userInfo.researchInfoDTO.length > 0 &&
+        {!!(userInfo.researchInfoDTO && userInfo.researchInfoDTO.length > 0) &&
           <View>
             <Title label="科研情况" />
-            {userInfo.researchInfoDTO.map(item => {
-              return <ResearchInfo key={item.startTime} info={item} />
-            })})}
+            {userInfo.researchInfoDTO.map(item => <ResearchInfo key={item.startTime} info={item} />)}
           </View>
         }
 
-        {userInfo.userAwardInfoDTO && userInfo.userAwardInfoDTO.length > 0 &&
+        {!!(userInfo.userAwardInfoDTO && userInfo.userAwardInfoDTO.length > 0) &&
           <View>
             <Title label="获奖经历" />
-            {userInfo.userAwardInfoDTO.map(item => (<AwardInfo key={item.id} info={item} />))}
+            {userInfo.userAwardInfoDTO.map(item => <AwardInfo key={item.id} info={item} />)}
           </View>
         }
       </View>

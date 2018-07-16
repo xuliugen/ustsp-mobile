@@ -16,12 +16,12 @@ export default class TalentDetailBottom extends React.Component {
             <Text style={styles.btnText}>加好友</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomBtnItem}>
-          {/* <View style={styles.textItem}>
+        {/* <TouchableOpacity style={styles.bottomBtnItem}>
+          <View style={styles.textItem}>
             <Feather name="eye" style={styles.btnText} />
             <Text style={styles.btnText}>关注TA</Text>
-          </View> */}
-        </TouchableOpacity>
+          </View>
+        </TouchableOpacity> */}
       </View>
     )
   }

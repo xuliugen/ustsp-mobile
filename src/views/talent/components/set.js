@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
     color: '#333'
   },
   detailText: {
+    paddingTop: px2dp(15),
     fontSize: px2sp(28),
     color: '#999'
   },
