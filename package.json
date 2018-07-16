@@ -21,6 +21,7 @@
     "moment": "^2.22.2",
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-htmlview": "^0.12.1",
     "react-native-infinite-scroll-view": "^0.4.3",
     "react-native-iphone-x-helper": "^1.0.3",
     "react-native-message-bar": "^2.0.10",
