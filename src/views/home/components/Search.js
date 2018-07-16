@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import TextInput from 'src/components/common/TextInput'
 import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
 import { connect } from 'react-redux'
+import TextInput from 'src/components/common/TextInput'
 
 import { toSearchPageByType } from 'src/utils/nav'
 import { px2dp, px2sp } from 'src/utils/device'
@@ -54,9 +54,8 @@ export default class Search extends React.Component {
         <View style={styles.inputContainer}>
           <TextInput
             returnKeyType="search"
-            // defaultValue={this.props.searchIptVal}
+            // value={this.props.searchIptVal}
             onChangeText={(text) => this.props.dispatch(setSearchCondition(text))}
-            // onChangeText={(text) => this.setState({ searchIptVal: text })}
             onSubmitEditing={this.handleSubmit}
             {...textIptProps}
             style={styles.input} />
