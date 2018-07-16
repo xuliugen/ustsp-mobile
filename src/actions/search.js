@@ -1,13 +1,26 @@
 import {
+  SET_SEARCH_MENU_OPEN_STATE,
   SET_SEARCH_TYPE,
   SET_SEARCH_CONDITION,
   SET_SEARCH_PAGE,
+  SET_SEARCH_PAYLOAD,
   SET_SEARCH_RESULT,
   APPEND_SEARCH_RESULT,
   SET_SEARCH_RESULT_COUNT,
+  CLEAR_SEARCH_SCOPE_PAYLOAD,
+  CLEAR_SEARCH_RESULT,
   CLEAR_SEARCH
 } from '../constants/actionTypes'
-import { searchTalents, searchProjects } from 'src/ajax/search'
+import { searchTalents } from 'src/ajax/talent'
+import { searchProjects } from 'src/ajax/project'
+import { searchPatents } from 'src/ajax/patent'
+
+export function setSideMenuOpenState(isOpen) {
+  return {
+    type: SET_SEARCH_MENU_OPEN_STATE,
+    isOpen
+  }
+}
 
 export function setSearchType(searchType) {
   return {
@@ -27,6 +40,20 @@ export function setSearchPage(currentPage) {
   return {
     type: SET_SEARCH_PAGE,
     currentPage: currentPage
+  }
+}
+
+/**
+ * @param {string} scope search payload type
+ * @param {string} field certain prop of payload
+ * @param value the value
+ */
+export function setSearchPayload(scope, field, value) {
+  return {
+    type: SET_SEARCH_PAYLOAD,
+    scope,
+    field,
+    value
   }
 }
 
@@ -55,6 +82,13 @@ export function fetchSearchResult(ifAppend) {
           res = await searchProjects(reqProject)
           break
         case 'patent':
+          const { reqPayload: reqPayloadPatent, patentPl } = getState().search
+          const reqPatent = {
+            ...reqPayloadPatent,
+            ...patentPl
+          }
+          res = await searchPatents(reqPatent)
+          break
         case 'news':
           break
       }
@@ -91,6 +125,19 @@ function setSearchCount(totalNum) {
   return {
     type: SET_SEARCH_RESULT_COUNT,
     totalNum
+  }
+}
+
+export function clearSearchScopePayload(scope) {
+  return {
+    type: CLEAR_SEARCH_SCOPE_PAYLOAD,
+    scope
+  }
+}
+
+export function clearSearchResult() {
+  return {
+    type: CLEAR_SEARCH_RESULT
   }
 }
 
