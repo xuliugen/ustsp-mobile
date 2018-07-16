@@ -1,10 +1,18 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView, Image } from 'react-native'
+import HTMLView from 'react-native-htmlview'
+
 import HeaderTitle from './components/HeaderTitle'
 import HeaderRightShare from './components/HeaderRightShare'
+
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
+import { fetchNewsDetail } from 'src/ajax/news'
+import { parseTime } from 'src/utils/format'
 
+/**
+ * @todo 根据navgation的param的id来获取详情
+ */
 export default class NewsDetailScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitle />,
@@ -15,37 +23,53 @@ export default class NewsDetailScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
+  state = {
+    detail: {}
+  }
+
+  componentDidMount() {
+    this.getDetail()
+  }
+
+  async getDetail() {
+    const { data } = await fetchNewsDetail('aa5b57377c5d4724a1461ae1640a9518')
+    this.setState({
+      detail: data
+    })
+  }
+
+  renderNode(node, index, siblings, parent, defaultRenderer) {
+    if (node.name === 'img') {
+      const a = node.attribs
+      return <Image
+        style={{ width: SCREEN_WIDTH - 60, height: SCREEN_WIDTH - 60 }}
+        source={{ uri: a.src }} />
+    }
+  }
+
   render() {
+    const { detail } = this.state
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.titleContainer}>
-            <Text style={styles.dynamicTitle}>动态的标题一</Text>
+            <Text style={styles.dynamicTitle}>{detail.title}</Text>
             <View style={styles.readContainer}>
               <Text style={styles.reading}>阅读量</Text>
-              <Text style={styles.reading}>22k</Text>
+              <Text style={styles.reading}>{detail.view}</Text>
             </View>
           </View>
           <View style={styles.outerContainer}>
             <View style={styles.subtitleContainer}>
-              <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
-              <Text style={styles.author}>U小妹</Text>
-              <Text style={styles.date}>发表于2017-12-30</Text>
-            </View>
-            <View style={styles.newsContainer}>
-              <Image source={require('src/img/banner1.png')} style={styles.pic} />
+              <Image source={{ uri: detail.avatar }} style={styles.avatar} />
+              <Text style={styles.author}>{detail.username}</Text>
+              <Text style={styles.date}>发表于{parseTime(detail.date)}</Text>
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.newsText}>
-                欢迎您加入uppfind！以下为您提供一些指南，以助您更好地使用本平台。{'\n\n'}
-
-                在使用本平台前，确保您阅读并已同意《UPPFIND平台管理条例》，如发生条例以外的纠纷，本平台一概不负责任。{'\n'}
-
-                欢迎您加入uppfind！以下为您提供一些指南，以助您更好地使用本平台。{'\n\n'}
-
-                有任何问题都可以致电400-885-335咨询客服。{'\n\n'}
-                欢迎您加入uppfind！以下为您提供一些指南，
-              </Text>
+              <HTMLView
+                value={detail.dynamics}
+                renderNode={this.renderNode}
+              />
             </View>
           </View>
         </ScrollView>
@@ -57,7 +81,7 @@ export default class NewsDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#fff'
   },
   titleContainer: {
     flexDirection: 'row',
@@ -122,6 +146,7 @@ const styles = StyleSheet.create({
     paddingBottom: px2dp(82)
   },
   newsText: {
-    fontSize: px2sp(32)
+    fontSize: px2sp(32),
+    color: '#333'
   }
 })

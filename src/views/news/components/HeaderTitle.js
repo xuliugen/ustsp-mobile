@@ -6,7 +6,7 @@ export default class HeaderTitle extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.headerTitle}>消息详情</Text>
+        <Text style={styles.headerTitle}>动态详情</Text>
       </View>
     )
   }
