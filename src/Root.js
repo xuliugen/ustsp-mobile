@@ -21,7 +21,7 @@ import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
 import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
-// import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
+import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
 import LoginScreen from 'src/views/login/LoginScreen'
@@ -34,7 +34,8 @@ const HomeStack = createStackNavigator({
   NewsSearch: { screen: NewsSearchScreen },
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
-  PatentDetail: { screen: PatentDetailScreen }
+  PatentDetail: { screen: PatentDetailScreen },
+  NewsDetail: { screen: NewsDetailScreen }
 })
 
 HomeStack.navigationOptions = ({ navigation }) => {

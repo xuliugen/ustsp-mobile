@@ -14,3 +14,11 @@ var styles = StyleSheet.create({
   }
 });
 ```
+
+# Packager unable to resolve module from /Users/node_modules/
+> https://github.com/facebook/react-native/issues/4968/
+
+1. Delete the node_modules folder - rm -rf node_modules && npm install
+2. Reset packager cache - rm -fr $TMPDIR/react-* or node_modules/react-native/packager/packager.sh --reset-cache
+3. Clear watchman watches - watchman watch-del-all
+

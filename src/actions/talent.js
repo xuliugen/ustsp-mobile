@@ -1,39 +1,45 @@
-import { fetchTeacherInfo, fetchStudentInfo, fetchEnterpriseInfo, fetchOtherTeacherInfo } from 'src/ajax/auth'
+import {
+  fetchTeacherInfo,
+  fetchOtherTeacherInfo,
+  fetchStudentInfo,
+  fetchStudentOtherInfo,
+  fetchEnterpriseInfo
+} from 'src/ajax/talent'
 import { SET_TALENT_INFO, CLEAR_TALENT_INFO } from '../constants/actionTypes'
 
 export function getTalentInfo(id, userType) {
   return async (dispatch, getState) => {
     try {
-      let res, otherRes
       switch (userType) {
         case 1:
-          res = await fetchStudentInfo(id)
-          const { userInfoDTO, studentInfoDTO } = res.data
+          const [stdInfo, stdOtherInfo] = await Promise.all([fetchStudentInfo(id), fetchStudentOtherInfo(id)])
+          const { userInfoDTO, studentInfoDTO } = stdInfo.data
           dispatch({
             type: SET_TALENT_INFO,
             userType: 1,
             talent: userInfoDTO,
-            talentInfo: studentInfoDTO
+            talentInfo: {
+              ...studentInfoDTO,
+              edu: stdOtherInfo.data
+            }
           })
           break
         case 2:
-          res = await fetchTeacherInfo(id)
-          otherRes = await fetchOtherTeacherInfo(id)
-          const { userInfoDTO: tuser, teacherInfoDTO } = res.data
+          const [tchInfo, tchOtherInfo] = await Promise.all([fetchTeacherInfo(id), fetchOtherTeacherInfo(id)])
+          const { userInfoDTO: tuser, teacherInfoDTO } = tchInfo.data
           dispatch({
             type: SET_TALENT_INFO,
             userType: 2,
             talent: tuser,
-            talentInfo: Object.assign({}, teacherInfoDTO, otherRes.data)
+            talentInfo: Object.assign({}, teacherInfoDTO, tchOtherInfo.data)
           })
           break
         case 3:
-          res = await fetchEnterpriseInfo(id)
+          const etpInfo = await fetchEnterpriseInfo(id)
           dispatch({
             type: SET_TALENT_INFO,
             userType: 3,
-            talent: res.data,
-            talentInfo: res.data
+            talentInfo: etpInfo.data
           })
           break
       }

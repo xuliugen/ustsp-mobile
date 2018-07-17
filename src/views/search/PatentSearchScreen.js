@@ -1,19 +1,30 @@
 import React from 'react'
-import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import { StyleSheet, View, Text, FlatList } from 'react-native'
+import { connect } from 'react-redux'
+import SideMenu from 'react-native-side-menu'
+
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
 import PatentItem from './components/PatentItem'
 import patentNavDecorator from 'src/components/common/patentNavDecorator'
+import PatentFilterMenu from './components/PatentFilterMenu'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import { px2dp, px2sp } from 'src/utils/device'
-import { searchPatents } from 'src/ajax/patent'
+import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
+import { canSearchLoadMore } from 'src/selectors'
+import { fetchSearchResult, clearSearch, setSideMenuOpenState } from 'src/actions'
 
 const PatentItemWithNav = patentNavDecorator(PatentItem)
 
-/**
- * @todo: dispath search action with filter
- */
+const mapStateToProps = state => ({
+  isOpen: state.search.isOpen,
+  patents: state.search.result,
+  patentsCount: state.search.totalNum,
+  page: state.search.reqPayload.currentPage,
+  canLoadMore: canSearchLoadMore(state)
+})
+
+@connect(mapStateToProps)
 export default class PatentSearchScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitleSearch />,
@@ -24,32 +35,45 @@ export default class PatentSearchScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
-  state = {
-    searchIptVal: '',
-    patents: []
+  componentDidMount() {
+    this.dispatchSearch()
+  }
+  componentWillUnmount() {
+    this.props.dispatch(clearSearch())
   }
 
-  async componentDidMount() {
-    const { data } = await searchPatents({ 'industryCategory': '', 'patentType': '', 'legalStatus': '', 'condition': '', 'pageSize': 10, 'currentPage': 1 })
-    this.setState({
-      patents: data.data
-    })
+  dispatchSearch() {
+    this.props.dispatch(fetchSearchResult(true))
+  }
+
+  onEndReached = () => {
+    if (this.props.canLoadMore) {
+      this.dispatchSearch()
+    }
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView>
+      <SideMenu
+        menu={<PatentFilterMenu />}
+        isOpen={this.props.isOpen}
+        openMenuOffset={SCREEN_WIDTH - px2dp(75)}
+        disableGestures
+        menuPosition="right"
+        onChange={isOpen => this.props.dispatch(setSideMenuOpenState(isOpen))}
+      >
+        <View style={styles.container}>
           <View style={styles.resultTitleContainer}>
-            <Text style={styles.titleText}>共为您找到：<Text style={styles.titleTextHighlight}>3 </Text>个相关知识产权</Text>
+            <Text style={styles.titleText}>共为您找到：<Text style={styles.titleTextHighlight}>{this.props.patentsCount} </Text>个相关知识产权</Text>
           </View>
-          <View>
-            {this.state.patents.map((patent) => (
-              <PatentItemWithNav key={patent.id} patent={patent} />
-            ))}
-          </View>
-        </ScrollView>
-      </View>
+          <FlatList
+            data={this.props.patents}
+            renderItem={({ item }) => <PatentItemWithNav patent={item} />}
+            keyExtractor={(item) => item.id}
+            onEndReached={this.onEndReached}
+          />
+        </View>
+      </SideMenu>
     )
   }
 }
