@@ -20,8 +20,8 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName: '13402877726',
-      password: '123456'
+      userName: '',
+      password: ''
     }
     this.pwdIptRef = React.createRef()
   }

@@ -1,4 +1,5 @@
-import { login, fetchTeacherInfo, fetchStudentInfo, fetchEnterpriseInfo } from 'src/ajax/auth'
+import { login } from 'src/ajax/auth'
+import { fetchTeacherInfo, fetchStudentInfo, fetchEnterpriseInfo } from 'src/ajax/talent'
 import { LOGGED_IN, LOGGED_OUT, SET_USER_INFO } from '../constants/actionTypes'
 
 export function dispatchAuthData(token, user) {
