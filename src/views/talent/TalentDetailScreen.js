@@ -6,6 +6,7 @@ import { getTalentInfo, clearTalentInfo } from 'src/actions'
 import TalentDetailHeader from './components/TalentDetailHeader'
 import StudentDetail from './components/student-detail/StudentDetail'
 import TeacherDetail from './components/teacher-detail/TeacherDetail'
+import EnterpriseDetail from './components/enterprise-detail/EnterpriseDetail'
 
 class TalentDetailScreen extends React.Component {
   static navigationOptions = {
@@ -34,6 +35,7 @@ class TalentDetailScreen extends React.Component {
       case 2:
         return <TeacherDetail id={userId} />
       case 3:
+        return <EnterpriseDetail id={userId} />
       default:
         return null
     }

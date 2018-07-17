@@ -22,10 +22,11 @@ const mapStateToProps = state => {
 
 @connect(mapStateToProps)
 @withNavigation
-export default class MyScreenHeader extends React.Component {
+export default class TalentDetailHeader extends React.Component {
   renderUserInfo() {
     const { userInfo } = this.props
-    switch (Number(userInfo.type)) {
+    const userType = userInfo.type || userInfo.userType
+    switch (Number(userType)) {
       case 1:
         return (
           <View style={{ alignItems: 'center' }}>
@@ -67,7 +68,7 @@ export default class MyScreenHeader extends React.Component {
           <View style={styles.wrapper}>
             <View style={styles.infoContainer} >
               <View style={styles.avatarContainer} >
-                <Image source={{ uri: this.props.user.avatar }} style={styles.avatar} />
+                <Image source={{ uri: this.props.userInfo.photo }} style={styles.avatar} />
               </View>
               { this.renderUserInfo() }
             </View>
