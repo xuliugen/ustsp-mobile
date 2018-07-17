@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import { parseTime, parseUserType } from 'src/utils/format'
+import { parseTime } from 'src/utils/format'
 import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
 
 import talentNavDecorator from 'src/components/common/talentNavDecorator'
@@ -16,6 +16,7 @@ import DetailLine from 'src/components/common/DetailLine'
 const mapStateToProps = state => ({
   project: state.project.detail
 })
+
 const PublisherWithNav = talentNavDecorator(ProjectPublisher)
 
 /**
@@ -39,7 +40,7 @@ export default class ProjectDetailScreen extends React.Component {
 
   render() {
     const { project } = this.props
-    const talent = {
+    const talentNav = {
       id: project.ownerId,
       type: project.ownerType
     }
@@ -80,7 +81,7 @@ export default class ProjectDetailScreen extends React.Component {
             </View>
           </View>
 
-          <PublisherWithNav project={project} key={talent.id} talent={talent}/>
+          <PublisherWithNav project={project} talentNav={talentNav} />
         </ScrollView>
 
         <View style={styles.bottomBlock}>

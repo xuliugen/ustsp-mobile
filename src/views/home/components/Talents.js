@@ -27,7 +27,9 @@ export default class Talents extends React.Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentontainer}
         horizontal showsHorizontalScrollIndicator={false}>
-        {this.state.talents.map(talent => <TalentWithNav key={talent.id} talent={talent} />)}
+        {this.state.talents.map(talent =>
+          <TalentWithNav key={talent.id} talent={talent} talentNav={{ id: talent.id, type: talent.type }} />
+        )}
       </ScrollView>
     )
   }
