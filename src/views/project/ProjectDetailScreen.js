@@ -8,12 +8,15 @@ import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { parseTime, parseUserType } from 'src/utils/format'
 import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
 
+import talentNavDecorator from 'src/components/common/talentNavDecorator'
+import ProjectPublisher from './components/ProjectPublisher'
 import ProjectDetailHeader from './components/ProjectDetailHeader'
 import DetailLine from 'src/components/common/DetailLine'
 
 const mapStateToProps = state => ({
   project: state.project.detail
 })
+const PublisherWithNav = talentNavDecorator(ProjectPublisher)
 
 /**
  * @todo download file, hint: https://stackoverflow.com/questions/44546199/how-to-download-a-file-with-react-native
@@ -36,6 +39,10 @@ export default class ProjectDetailScreen extends React.Component {
 
   render() {
     const { project } = this.props
+    const talent = {
+      id: project.ownerId,
+      type: project.ownerType
+    }
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -73,22 +80,7 @@ export default class ProjectDetailScreen extends React.Component {
             </View>
           </View>
 
-          <View style={[styles.publisherBlock, styles.block]}>
-            <View style={{ flexDirection: 'row' }}>
-              <View>
-                <Image source={{ uri: project.ownerAvatarUrl }} style={styles.publisherAvatar} />
-              </View>
-              <View style={styles.publisherInfo}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.publisherName}>{project.ownerName}</Text>
-                  <Text style={styles.publisherTitle}>{project.ownerLocation} / {parseUserType(project.ownerType)}</Text>
-                </View>
-                <View>
-                  <Text style={styles.publisherDate}>发布于 {parseTime(project.createTime)}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
+          <PublisherWithNav project={project} key={talent.id} talent={talent}/>
         </ScrollView>
 
         <View style={styles.bottomBlock}>
@@ -249,34 +241,6 @@ const styles = StyleSheet.create({
     color: '#333'
   },
   fileGoIcon: {
-    color: '#999'
-  },
-
-  publisherBlock: {
-    marginBottom: px2dp(30 + 88),
-    padding: px2dp(30),
-    backgroundColor: '#fff'
-  },
-  publisherAvatar: {
-    width: px2dp(100),
-    height: px2dp(100)
-  },
-  publisherInfo: {
-    marginLeft: px2dp(22),
-    paddingVertical: px2dp(12),
-    justifyContent: 'space-between'
-  },
-  publisherName: {
-    marginRight: px2dp(22),
-    fontSize: px2sp(28),
-    color: '#333'
-  },
-  publisherTitle: {
-    fontSize: px2sp(28),
-    color: '#999'
-  },
-  publisherDate: {
-    fontSize: px2sp(26),
     color: '#999'
   }
 })
