@@ -27,7 +27,9 @@ const iconPatent = require('./components/img/patent_mgt.png')
 
 const mapStateToProps = state => {
   return {
-    isLogin: checkIfLogin(state)
+    isLogin: checkIfLogin(state),
+    userId: state.auth.user.id,
+    userType: state.auth.user.userType
   }
 }
 
@@ -39,7 +41,16 @@ export default class MyScreen extends React.Component {
   }
 
   handleMenuPress = (title) => {
-    Alert.alert(title)
+    switch (title) {
+      case 'resume':
+        this.props.navigation.navigate('TalentDetail', {
+          userId: this.props.userId,
+          userType: this.props.userType
+        })
+        break
+      default:
+        Alert.alert(title)
+    }
   }
   handleLogoutPress = () => {
     this.props.dispatch(userLogout())
