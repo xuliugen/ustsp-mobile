@@ -73,7 +73,7 @@ export default class TalentSearchScreen extends React.Component {
   }
 
   _renderRowView = (rowData) => {
-    return <TalentItemWithNav talent={rowData} />
+    return <TalentItemWithNav talent={rowData} talentNav={{ id: rowData.id, type: rowData.type }} />
   }
 
   _renderRefreshControl() {

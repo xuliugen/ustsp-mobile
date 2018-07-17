@@ -3,21 +3,22 @@ import { TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation'
 
 /**
- * @todo 使用对应props进行传参并导航
+ * @description To use this HOC, you must pass talentNav prop with id and type attr
  */
 const talentNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
-    handlePress = () => {
+    handlePress = (id, type) => {
       this.props.navigation.navigate('TalentDetail', {
-        userId: this.props.talent.id,
-        userType: Number(this.props.talent.type)
+        userId: id,
+        userType: Number(type)
       })
     }
 
     render() {
+      const { talentNav = {}, ...props } = this.props
       return (
-        <TouchableOpacity onPress={this.handlePress}>
-          <WrappedComponent {...this.props} />
+        <TouchableOpacity onPress={this.handlePress.bind(this, talentNav.id, talentNav.type)}>
+          <WrappedComponent {...props} />
         </TouchableOpacity>
       )
     }
