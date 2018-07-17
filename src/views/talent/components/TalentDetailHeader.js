@@ -25,7 +25,7 @@ const mapStateToProps = state => {
 export default class TalentDetailHeader extends React.Component {
   renderUserInfo() {
     const { userInfo } = this.props
-    const userType = userInfo.type === undefined ? userInfo.userType : userInfo.type
+    const userType = userInfo.type || userInfo.userType
     switch (Number(userType)) {
       case 1:
         return (

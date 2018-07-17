@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { px2dp, px2sp } from 'src/utils/device'
 
+import { px2dp, px2sp } from 'src/utils/device'
 import { Entry, FoldEntry } from '../set'
 
 export default class EnterpriseDetailContent extends React.Component {

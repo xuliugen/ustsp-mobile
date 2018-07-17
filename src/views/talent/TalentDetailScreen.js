@@ -28,7 +28,6 @@ class TalentDetailScreen extends React.Component {
     const { navigation } = this.props
     const userType = navigation.getParam('userType')
     const userId = navigation.getParam('userId')
-    console.log(userId)
 
     switch (userType) {
       case 1:
@@ -36,7 +35,7 @@ class TalentDetailScreen extends React.Component {
       case 2:
         return <TeacherDetail id={userId} />
       case 3:
-        return <EnterpriseDetail id={userId}/>
+        return <EnterpriseDetail id={userId} />
       default:
         return null
     }
