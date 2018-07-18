@@ -8,6 +8,9 @@ import { withNavigation } from 'react-navigation'
 const talentNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
     handlePress = (id, type) => {
+      if (Number(type) === 4) {
+        return
+      }
       this.props.navigation.navigate('TalentDetail', {
         userId: id,
         userType: Number(type)

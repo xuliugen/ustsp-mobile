@@ -110,9 +110,9 @@ export default class MyScreen extends React.Component {
             <MenuListItem item={{ to: 'Contacts', iconName: 'md-contacts', text: '人脉管理' }} />
           </View>
           <View style={styles.menuListContainer}>
-            <MenuListItem item={{ iconName: 'md-help-circle', text: '常见问题' }} />
-            <MenuListItem item={{ iconName: 'md-information-circle', text: '关于UppFind' }} />
-            <MenuListItem item={{ iconName: 'md-thumbs-up', text: '去打分' }} />
+            <MenuListItem pass item={{ iconName: 'md-help-circle', text: '常见问题' }} />
+            <MenuListItem pass item={{ iconName: 'md-information-circle', text: '关于UppFind' }} />
+            <MenuListItem pass item={{ iconName: 'md-thumbs-up', text: '去打分' }} />
           </View>
           {isLogin && <View style={styles.menuListContainer}>
             <TouchableOpacity onPress={this.handleLogoutPress} >

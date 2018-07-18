@@ -1,11 +1,14 @@
 import React from 'react'
-import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
 import { fetchFriendsList } from 'src/ajax/contacts'
 import { APP_BACKGROUD_COLOR, THEME_COLOR } from 'src/styles/common'
 import { px2dp, px2sp } from 'src/utils/device'
-import TalentItem from 'src/components/common/TalentItem'
+import talentNavDecorator from 'src/components/common/talentNavDecorator'
+import TalentItem from './components/TalentItem'
+
+const FriendsWithNav = talentNavDecorator(TalentItem)
 
 const mapStateToProps = state => {
   return {
@@ -50,16 +53,6 @@ export default class ContactsMgntScreen extends React.Component {
     })
   }
 
-  handleTalentPress = (id, type) => {
-    if (type === 4) {
-      return
-    }
-    this.props.navigation.navigate('TalentDetail', {
-      userId: id,
-      userType: Number(type)
-    })
-  }
-
   render() {
     // const tabs = [
     //   { type: 'my-friends', title: '我的好友' },
@@ -79,11 +72,7 @@ export default class ContactsMgntScreen extends React.Component {
         <View style={styles.friendsContainer}>
           <FlatList
             data={this.state.friends}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={this.handleTalentPress.bind(this, item.userInfo.id, item.userInfo.userType)}>
-                <TalentItem talent={Object.assign({}, item.userInfo, { 'username': item.username })} />
-              </TouchableOpacity>
-            )}
+            renderItem={({ item }) => <FriendsWithNav talentNav={{id: item.userInfo.id, type: item.userInfo.userType}} talent={Object.assign({}, item.userInfo, { 'username': item.username })} />}
             keyExtractor={(item) => item.userInfo.id}
           />
         </View>
