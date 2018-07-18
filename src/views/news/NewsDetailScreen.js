@@ -42,6 +42,7 @@ export default class NewsDetailScreen extends React.Component {
     if (node.name === 'img') {
       const a = node.attribs
       return <Image
+        key={a.src}
         style={{ width: SCREEN_WIDTH - 60, height: SCREEN_WIDTH - 60 }}
         source={{ uri: a.src }} />
     }

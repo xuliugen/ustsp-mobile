@@ -1,16 +1,18 @@
 import React from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
 import { px2dp, px2sp } from 'src/utils/device'
+import { parseTime } from 'src/utils/format'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 
 export default class NewsItem extends React.Component {
   render() {
+    const { news } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.firstContainer}>
-          <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
-          <Text style={styles.name}>陈素粉</Text>
-          <Text style={styles.date}>2018-1-30</Text>
+          <Image source={{ uri: news.avatar }} style={styles.avatar} />
+          <Text style={styles.name}>{news.username}</Text>
+          <Text style={styles.date}>{parseTime(news.date)}</Text>
         </View>
         <View style={styles.secondContainer}>
           <View>
@@ -18,10 +20,10 @@ export default class NewsItem extends React.Component {
           </View>
           <View style={styles.rightContainer}>
             <View style={styles.topicContainer}>
-              <Text style={styles.newsTopic} numberOfLines={1}>动态的标题一</Text>
+              <Text style={styles.newsTopic} numberOfLines={1}>{news.title}</Text>
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.newsText} numberOfLines={2}>设计是一种设想通过各种合理的规划周密的计划过各种感觉形式传达出来的设计是一种设想通过</Text>
+              <Text style={styles.newsText} numberOfLines={2}>{news.abstracts}</Text>
             </View>
           </View>
         </View>

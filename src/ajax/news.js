@@ -7,3 +7,7 @@ export function fetchNewsDetail(id) {
     }
   })
 }
+
+export function searchNews(req) {
+  return axios.post('/search/dynamics/detail', req)
+}

@@ -129,6 +129,11 @@ export default function search(state = initalState, action) {
             ...state,
             patentPl: initalState.patentPl
           }
+        case 'news':
+          return {
+            ...state,
+            newsPl: initalState.newsPl
+          }
         default:
           return state
       }
