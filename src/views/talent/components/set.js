@@ -31,7 +31,8 @@ export class FoldEntry extends React.Component {
     this.state = {
       isFold: true,
       showExpand: false,
-      checkFlag: true// 只在onLayout被调用时进行一次高度比对，防止循环setState
+      isPropsSet: false,
+      checkFlag: true // 在mounted时，onLayout被调用时进行一次高度比对，防止循环setState
     }
   }
 
@@ -42,11 +43,23 @@ export class FoldEntry extends React.Component {
   }
 
   onTextLayout = (event) => {
+    // 情况1: mounted 时第一次调用，props.text 不是从 redux 取的
+    if (this.props && this.props.text) {
+      this.setState({ isPropsSet: true })
+    }
+    // 情况2: mounted 时第一次调用，props.text 数据还未获取
+    if (!this.state.isPropsSet) {
+      this.setState({ isPropsSet: true })
+      return
+    }
     if (this.state.checkFlag) {
       if (this.state.isFold) {
+        // 有 props.text 后，先获取折叠时 Text 的高度
         this.foldHeight = event.nativeEvent.layout.height
+        // 展开，这里会改变 Text 高度，会触发 onTextLayout
         this.setState({isFold: false})
       } else {
+        // 获取展开的 Text 高度
         this.unfoldHeight = event.nativeEvent.layout.height
         if (this.unfoldHeight > this.foldHeight) {
           this.setState({isFold: true, showExpand: true, checkFlag: false})
@@ -55,8 +68,8 @@ export class FoldEntry extends React.Component {
     }
   }
 
-  render() {
-    let foldButton = this.state.isFold ? (
+  renderFoldBtn() {
+    return this.state.isFold ? (
       <Text style={styles.btnText}>
         显示全部&nbsp;&nbsp;
         <Entypo name="chevron-down" />
@@ -67,14 +80,20 @@ export class FoldEntry extends React.Component {
         <Entypo name="chevron-up" />
       </Text>
     )
+  }
+
+  render() {
     return (
       <View style={styles.foldEntryContainer}>
-        <Text style={styles.foldText} numberOfLines={this.state.isFold ? 5 : Infinity} onLayout={this.onTextLayout}>{this.props.text || '暂无'}</Text>
-        <TouchableOpacity style={styles.foldBtn} onPress={this.handleFoldPress}>
-          {
-            this.state.showExpand ? foldButton : null
-          }
-        </TouchableOpacity>
+        <Text
+          style={styles.foldText}
+          numberOfLines={this.state.isFold ? 5 : Infinity}
+          onLayout={this.onTextLayout}>
+          {this.props.text}
+        </Text>
+        {this.state.showExpand && <TouchableOpacity style={styles.foldBtn} onPress={this.handleFoldPress}>
+          {this.renderFoldBtn()}
+        </TouchableOpacity>}
       </View>
     )
   }
