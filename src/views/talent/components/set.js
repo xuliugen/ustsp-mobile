@@ -31,8 +31,7 @@ export class FoldEntry extends React.Component {
     this.state = {
       isFold: true,
       showExpand: false,
-      checkFlag: true,
-      layoutCount: 2
+      checkFlag: true// 只在onLayout被调用时进行一次高度比对，防止循环setState
     }
   }
 
