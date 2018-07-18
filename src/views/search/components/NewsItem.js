@@ -4,6 +4,8 @@ import { px2dp, px2sp } from 'src/utils/device'
 import { parseTime } from 'src/utils/format'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 
+const imgNews = [require('./img/news1.png'), require('./img/news2.png'), require('./img/news3.png')]
+
 export default class NewsItem extends React.Component {
   render() {
     const { news } = this.props
@@ -16,7 +18,7 @@ export default class NewsItem extends React.Component {
         </View>
         <View style={styles.secondContainer}>
           <View>
-            <Image source={require('src/img/news.png')} style={styles.image} />
+            <Image source={imgNews[Math.floor(Math.random() * 3)]} style={styles.image} />
           </View>
           <View style={styles.rightContainer}>
             <View style={styles.topicContainer}>

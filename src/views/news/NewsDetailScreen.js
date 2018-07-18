@@ -1,18 +1,21 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView, Image } from 'react-native'
 import HTMLView from 'react-native-htmlview'
+import { connect } from 'react-redux'
 
 import HeaderTitle from './components/HeaderTitle'
 import HeaderRightShare from './components/HeaderRightShare'
 
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import { fetchNewsDetail } from 'src/ajax/news'
 import { parseTime } from 'src/utils/format'
+import { fetchNewsDetail, clearNewsDetail } from 'src/actions'
 
-/**
- * @todo 根据navgation的param的id来获取详情
- */
+const mapStateToProps = state => ({
+  news: state.news.detail
+})
+
+@connect(mapStateToProps)
 export default class NewsDetailScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitle />,
@@ -23,19 +26,13 @@ export default class NewsDetailScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
-  state = {
-    detail: {}
-  }
-
   componentDidMount() {
-    this.getDetail()
+    const { dispatch, navigation } = this.props
+    dispatch(fetchNewsDetail(navigation.getParam('newsId')))
   }
 
-  async getDetail() {
-    const { data } = await fetchNewsDetail('aa5b57377c5d4724a1461ae1640a9518')
-    this.setState({
-      detail: data
-    })
+  componentWillUnmount() {
+    this.props.dispatch(clearNewsDetail())
   }
 
   renderNode(node, index, siblings, parent, defaultRenderer) {
@@ -49,26 +46,26 @@ export default class NewsDetailScreen extends React.Component {
   }
 
   render() {
-    const { detail } = this.state
+    const { news } = this.props
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.titleContainer}>
-            <Text style={styles.dynamicTitle}>{detail.title}</Text>
+            <Text style={styles.dynamicTitle}>{news.title}</Text>
             <View style={styles.readContainer}>
               <Text style={styles.reading}>阅读量</Text>
-              <Text style={styles.reading}>{detail.view}</Text>
+              <Text style={styles.reading}>{news.view}</Text>
             </View>
           </View>
           <View style={styles.outerContainer}>
             <View style={styles.subtitleContainer}>
-              <Image source={{ uri: detail.avatar }} style={styles.avatar} />
-              <Text style={styles.author}>{detail.username}</Text>
-              <Text style={styles.date}>发表于{parseTime(detail.date)}</Text>
+              <Image source={{ uri: news.avatar }} style={styles.avatar} />
+              <Text style={styles.author}>{news.username}</Text>
+              <Text style={styles.date}>发表于{parseTime(news.date)}</Text>
             </View>
             <View style={styles.textContainer}>
               <HTMLView
-                value={detail.dynamics}
+                value={news.dynamics}
                 renderNode={this.renderNode}
               />
             </View>
