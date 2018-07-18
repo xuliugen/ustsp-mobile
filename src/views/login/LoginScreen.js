@@ -73,7 +73,7 @@ export default class LoginScreen extends React.Component {
     this.handleLogin()
   }
   handleRegisterPress = () => {
-    alert('reg')
+    this.props.navigation.push('Register1')
   }
   handleGoBack = () => {
     this.props.navigation.goBack(null)

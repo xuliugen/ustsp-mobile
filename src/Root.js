@@ -24,7 +24,14 @@ import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
+// login
 import LoginScreen from 'src/views/login/LoginScreen'
+// register
+import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
+import RegisterAccountScreen from 'src/views/register/RegisterAccountScreen'
+import RegisterPasswordScreen from 'src/views/register/RegisterPasswordScreen'
+import RegisterEmailScreen from 'src/views/register/RegisterEmailScreen'
+import RegisterCompleteScreen from 'src/views/register/RegisterCompleteScreen'
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -53,7 +60,12 @@ const MyStack = createStackNavigator({
 })
 
 const LoginStack = createStackNavigator({
-  Login: { screen: LoginScreen }
+  Login: { screen: LoginScreen },
+  Register1: { screen: RegisterUserTypeScreen },
+  Register2: { screen: RegisterAccountScreen },
+  Register3: { screen: RegisterPasswordScreen },
+  Register4: { screen: RegisterEmailScreen },
+  RegisterComplete: { screen: RegisterCompleteScreen }
 })
 
 const TalentDetailStack = createStackNavigator({
