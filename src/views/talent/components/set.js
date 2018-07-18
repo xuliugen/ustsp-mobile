@@ -29,7 +29,10 @@ export class FoldEntry extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isFold: true
+      isFold: true,
+      showExpand: false,
+      checkFlag: true,
+      layoutCount: 2
     }
   }
 
@@ -39,22 +42,39 @@ export class FoldEntry extends React.Component {
     }))
   }
 
+  onTextLayout = (event) => {
+    if (this.state.checkFlag) {
+      if (this.state.isFold) {
+        this.foldHeight = event.nativeEvent.layout.height
+        this.setState({isFold: false})
+      } else {
+        this.unfoldHeight = event.nativeEvent.layout.height
+        if (this.unfoldHeight > this.foldHeight) {
+          this.setState({isFold: true, showExpand: true, checkFlag: false})
+        }
+      }
+    }
+  }
+
   render() {
+    let foldButton = this.state.isFold ? (
+      <Text style={styles.btnText}>
+        显示全部&nbsp;&nbsp;
+        <Entypo name="chevron-down" />
+      </Text>
+    ) : (
+      <Text style={styles.btnText}>
+        收起全部&nbsp;&nbsp;
+        <Entypo name="chevron-up" />
+      </Text>
+    )
     return (
       <View style={styles.foldEntryContainer}>
-        <Text style={styles.foldText} numberOfLines={this.state.isFold ? 5 : Infinity} >{this.props.text || '暂无'}</Text>
+        <Text style={styles.foldText} numberOfLines={this.state.isFold ? 5 : Infinity} onLayout={this.onTextLayout}>{this.props.text || '暂无'}</Text>
         <TouchableOpacity style={styles.foldBtn} onPress={this.handleFoldPress}>
-          {this.state.isFold ? (
-            <Text style={styles.btnText}>
-              显示全部&nbsp;&nbsp;
-              <Entypo name="chevron-down" />
-            </Text>
-          ) : (
-            <Text style={styles.btnText}>
-              收起全部&nbsp;&nbsp;
-              <Entypo name="chevron-up" />
-            </Text>
-          )}
+          {
+            this.state.showExpand ? foldButton : null
+          }
         </TouchableOpacity>
       </View>
     )
