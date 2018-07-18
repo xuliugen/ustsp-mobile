@@ -7,8 +7,9 @@ import {
   StyleSheet
 } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import {px2dp, px2sp} from "../../utils/device";
-import {THEME_COLOR} from "../../styles/common";
+
+import { px2dp, px2sp } from '../../utils/device'
+import { THEME_COLOR } from '../../styles/common'
 
 @withNavigation
 export default class RegisterCompleteScreen extends React.Component {
@@ -27,9 +28,9 @@ export default class RegisterCompleteScreen extends React.Component {
         </View>
         <View style={styles.nextOperation}>
           <Text style={styles.nextText}>您现在可以继续</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.popToTop()} style={[styles.btns, styles.completeInfoBtn]}>
+          {/* <TouchableOpacity onPress={() => this.props.navigation.popToTop()} style={[styles.btns, styles.completeInfoBtn]}>
             <Text style={styles.completeInfoText}>完善资料</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={() => this.props.navigation.popToTop()} style={[styles.btns, styles.toHomeBtn]}>
             <Text style={styles.toHomeText}>进入主页</Text>
           </TouchableOpacity>

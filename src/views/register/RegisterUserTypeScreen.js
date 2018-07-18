@@ -11,7 +11,7 @@ import { px2dp, px2sp } from 'src/utils/device'
 @withNavigation
 export default class RegisterUserTypeScreen extends React.Component {
   static navigationOptions = {
-    title: '注册',
+    title: '选择身份',
     headerStyle: {
       backgroundColor: '#8d9caa'
     },

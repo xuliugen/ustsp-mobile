@@ -14,7 +14,7 @@ import TextInput from 'src/components/common/TextInput'
 @withNavigation
 export default class RegisterAccountScreen extends React.Component {
   static navigationOptions = {
-    title: '注册',
+    title: '输入手机号',
     headerStyle: {
       backgroundColor: '#8d9caa'
     },

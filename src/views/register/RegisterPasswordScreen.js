@@ -15,7 +15,7 @@ import { THEME_COLOR } from 'src/styles/common'
 @withNavigation
 export default class RegisterPasswordScreen extends React.Component {
   static navigationOptions = {
-    title: '注册',
+    title: '输入密码',
     headerStyle: {
       backgroundColor: '#8d9caa'
     },
@@ -39,8 +39,8 @@ export default class RegisterPasswordScreen extends React.Component {
             style={styles.input} />
           <View style={styles.checkBoxContainer}>
             <CheckBox
-              onClick={()=>{}}
-              isChecked={true}
+              onClick={() => {}}
+              isChecked
               checkBoxColor="#3091e6" />
             <Text style={styles.checkBoxText}>注册即代表同意</Text>
             <Text style={[styles.checkBoxText, styles.contract]}>《uppfind平台使用协议》</Text>
