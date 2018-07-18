@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
-import {px2dp, px2sp} from "../../../utils/device";
-import {parseTime, parseUserType} from "../../../utils/format";
+
+import {px2dp, px2sp} from 'src/utils/device'
+import {parseTime, parseUserType} from 'src/utils/format'
 
 export default class ProjectPublisher extends React.Component {
   render() {
@@ -27,7 +28,7 @@ export default class ProjectPublisher extends React.Component {
   }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   publisherBlock: {
     marginBottom: px2dp(30 + 88),
     padding: px2dp(30),
