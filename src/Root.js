@@ -39,9 +39,8 @@ const HomeStack = createStackNavigator({
   TalentSearch: { screen: TalentSearchScreen },
   PatentSearch: { screen: PatentSearchScreen },
   NewsSearch: { screen: NewsSearchScreen },
-  TalentDetail: { screen: TalentDetailScreen },
+  PalentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
-  PatentDetail: { screen: PatentDetailScreen },
   NewsDetail: { screen: NewsDetailScreen }
 })
 
@@ -67,6 +66,10 @@ const LoginStack = createStackNavigator({
   Register3: { screen: RegisterPasswordScreen },
   Register4: { screen: RegisterEmailScreen },
   RegisterComplete: { screen: RegisterCompleteScreen }
+})
+
+const TalentDetailStack = createStackNavigator({
+  TalentDetail: { screen: TalentDetailScreen }
 })
 
 const AppStack = createBottomTabNavigator(
@@ -115,7 +118,8 @@ const AppStack = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
   {
     App: AppStack,
-    Login: LoginStack
+    Login: LoginStack,
+    TalentDetail: TalentDetailStack
   },
   {
     initialRouteName: 'App',

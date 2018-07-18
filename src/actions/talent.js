@@ -39,6 +39,7 @@ export function getTalentInfo(id, userType) {
           dispatch({
             type: SET_TALENT_INFO,
             userType: 3,
+            talent: etpInfo.data,
             talentInfo: etpInfo.data
           })
           break
