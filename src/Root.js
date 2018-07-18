@@ -26,12 +26,23 @@ import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 import MyScreen from 'src/views/my/MyScreen'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
+import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // register
 import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
 import RegisterAccountScreen from 'src/views/register/RegisterAccountScreen'
 import RegisterPasswordScreen from 'src/views/register/RegisterPasswordScreen'
 import RegisterEmailScreen from 'src/views/register/RegisterEmailScreen'
 import RegisterCompleteScreen from 'src/views/register/RegisterCompleteScreen'
+
+const navOptions = ({ navigation }) => {
+  let tabBarVisible = true
+  if (navigation.state.index > 0) {
+    tabBarVisible = false
+  }
+  return {
+    tabBarVisible
+  }
+}
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -44,20 +55,14 @@ const HomeStack = createStackNavigator({
   NewsDetail: { screen: NewsDetailScreen }
 })
 
-HomeStack.navigationOptions = ({ navigation }) => {
-  let tabBarVisible = true
-  if (navigation.state.index > 0) {
-    tabBarVisible = false
-  }
-
-  return {
-    tabBarVisible
-  }
-}
+HomeStack.navigationOptions = navOptions
 
 const MyStack = createStackNavigator({
-  My: { screen: MyScreen }
+  My: { screen: MyScreen },
+  Contacts: { screen: ContactsMgntScreen }
 })
+
+MyStack.navigationOptions = navOptions
 
 const LoginStack = createStackNavigator({
   Login: { screen: LoginScreen },

@@ -19,7 +19,7 @@ import { canSearchLoadMore } from 'src/selectors'
 import TalentFilterMenu from './components/TalentFilterMenu'
 import HeaderRightFilter from './components/HeaderRightFilter'
 import HeaderTitleSearch from './components/HeaderTitleSearch'
-import TalentItem from './components/TalentItem'
+import TalentItem from 'src/components/common/TalentItem'
 
 const TalentItemWithNav = talentNavDecorator(TalentItem)
 const mapStateToProps = state => ({

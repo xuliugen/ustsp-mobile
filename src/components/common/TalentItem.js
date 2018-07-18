@@ -8,18 +8,20 @@ export default class TalentItem extends React.Component {
     return (
       <View style={styles.itemContainer}>
         <View>
-          <Image source={{ uri: talent.photo }} style={styles.avatar} />
+          <Image source={{ uri: talent.photo || talent.avatar }} style={styles.avatar} />
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.infoTop}>
-            <Text style={styles.name}>{talent.realName}</Text>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{talent.stuLevel || talent.title}</Text>
-            </View>
-            {talent.isClaim === 1 && <Image source={require('src/img/certificate.png')} style={styles.certificate} />}
+            <Text style={styles.name}>{talent.realName || talent.username}<Text style={styles.realName}>{(talent.username && talent.realName) && `(${talent.realName})`}</Text></Text>
+            {(talent.stuLevel || talent.title) && (
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>{talent.stuLevel || talent.title}</Text>
+              </View>
+            )}
+            {(talent.isClaim === 1 || talent.isValid) && <Image source={require('src/img/certificate.png')} style={styles.certificate} />}
           </View>
           <View style={styles.schoolContainer}>
-            <Text style={styles.school}>{talent.school} / {talent.college}</Text>
+            <Text style={styles.school}>{talent.school || talent.location}{talent.college && ` / ${talent.college}`}</Text>
           </View>
         </View>
       </View>
@@ -54,6 +56,9 @@ const styles = StyleSheet.create({
     marginRight: px2dp(15),
     fontSize: px2sp(28),
     color: '#333'
+  },
+  realName: {
+    color: '#8f9ba7'
   },
   titleContainer: {
     alignItems: 'center',
