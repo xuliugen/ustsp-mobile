@@ -1,11 +1,12 @@
 import React from 'react'
 import { Text, StyleSheet, View, AsyncStorage } from 'react-native'
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from 'src/styles/common'
 import { MessageBarManager, MessageBar } from 'react-native-message-bar'
 import { dispatchAuthData, getUserInfo } from 'src/actions'
 import { connect } from 'react-redux'
+import { px2dp, px2sp } from 'src/utils/device'
 
 // home
 import HomeScreen from 'src/views/home/HomeScreen'
@@ -27,12 +28,20 @@ import MyScreen from 'src/views/my/MyScreen'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
+// messages
+import MessagesScreen from 'src/views/messages/MessagesScreen'
+import ConnectionRequestScreen from 'src/views/messages/components/ConnectionRequestScreen'
+import InnerMessagesScreen from 'src/views/messages/components/InnerMessagesScreen'
+import ProjectNewsScreen from 'src/views/messages/components/ProjectNewsScreen'
+import SystemMessagesScreen from 'src/views/messages/components/SystemMessagesScreen'
 // register
 import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
 import RegisterAccountScreen from 'src/views/register/RegisterAccountScreen'
 import RegisterPasswordScreen from 'src/views/register/RegisterPasswordScreen'
 import RegisterEmailScreen from 'src/views/register/RegisterEmailScreen'
 import RegisterCompleteScreen from 'src/views/register/RegisterCompleteScreen'
+
+
 
 const navOptions = ({ navigation }) => {
   let tabBarVisible = true
@@ -57,9 +66,54 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = navOptions
 
+const MessageStack = createMaterialTopTabNavigator(
+  {
+    ConnectionRequest: { screen: ConnectionRequestScreen },
+    ProjectNews: { screen: ProjectNewsScreen },
+    SystemMessages: { screen: SystemMessagesScreen },
+    InnerMessages: { screen: InnerMessagesScreen },
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#fff'
+      },
+      activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#999',
+      indicatorStyle: {
+        height: 5,
+        width: 50,
+        marginLeft: 20,
+        backgroundColor: THEME_COLOR
+      }
+    },
+    navigationOptions: ({navigation}) => ({
+      tabBarLabel: ({tintColor}) => {
+        const { routeName } = navigation.state
+        let label
+        switch (routeName) {
+          case 'ConnectionRequest':
+            label = '好友申请'
+            break
+          case 'ProjectNews':
+            label = '项目动态'
+            break
+          case 'SystemMessages':
+            label = '系统消息'
+            break
+          case 'InnerMessages':
+            label = '站内信'
+        }
+        return <Text style={[styles.topTabLabel, { color: tintColor }]}>{label}</Text>
+      }
+    })
+  }
+)
+
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
-  Contacts: { screen: ContactsMgntScreen }
+  Contacts: { screen: ContactsMgntScreen },
+  Messages: { screen: MessagesScreen }
 })
 
 MyStack.navigationOptions = navOptions
@@ -166,9 +220,23 @@ export default class AppRoot extends React.Component {
   }
 }
 
+export class MessageStackNavigator extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <MessageStack />
+      </View>
+    )
+  }
+}
+
 const styles = StyleSheet.create({
   tabLabel: {
     textAlign: 'center',
     marginBottom: 3
+  },
+  topTabLabel: {
+    marginVertical: px2dp(20),
+    fontSize: px2sp(32)
   }
 })

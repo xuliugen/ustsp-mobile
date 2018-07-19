@@ -102,6 +102,9 @@ export default class MyScreen extends React.Component {
             <MenuListItem item={{ iconName: 'md-megaphone', text: '我的动态', num: 134 }} />
           </View>
           <View style={styles.menuListContainer}>
+            <MenuListItem item={{ to: 'Messages', iconName: 'ios-chatbubbles', text: '消息中心' }} />
+          </View>
+          <View style={styles.menuListContainer}>
             <MenuListItem item={{ to: 'Contacts', iconName: 'md-contacts', text: '人脉管理' }} />
           </View>
           <View style={styles.menuListContainer}>
