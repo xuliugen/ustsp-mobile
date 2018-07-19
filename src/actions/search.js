@@ -14,6 +14,7 @@ import {
 import { searchTalents } from 'src/ajax/talent'
 import { searchProjects } from 'src/ajax/project'
 import { searchPatents } from 'src/ajax/patent'
+import { searchNews } from 'src/ajax/news'
 
 export function setSideMenuOpenState(isOpen) {
   return {
@@ -90,6 +91,12 @@ export function fetchSearchResult(ifAppend) {
           res = await searchPatents(reqPatent)
           break
         case 'news':
+          const { reqPayload: reqPayloadNews, newsPl } = getState().search
+          const reqNews = {
+            ...reqPayloadNews,
+            ...newsPl
+          }
+          res = await searchNews(reqNews)
           break
       }
       if (res.data) {

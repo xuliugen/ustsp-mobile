@@ -5,8 +5,11 @@ import { withNavigation } from 'react-navigation'
 const newsNavDecorator = (WrappedComponent) => {
   return withNavigation(class extends React.Component {
     handlePress = () => {
-      this.props.navigation.navigate('NewsDetail')
+      this.props.navigation.navigate('NewsDetail', {
+        newsId: this.props.news.id
+      })
     }
+
     render() {
       return (
         <TouchableOpacity onPress={this.handlePress}>
