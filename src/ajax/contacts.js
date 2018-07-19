@@ -7,3 +7,17 @@ export function fetchFriendsList(id) {
     }
   })
 }
+
+export function checkIsFriendApi(ownerId, partyId) {
+  return axios.get(`/connection/check/friend`, {
+    params: {
+      ownerId: ownerId,
+      partyId: partyId
+    }
+  })
+}
+
+// first 发起者 second 接受者
+export function sendAddFirend(ownerId, partyId) {
+  return axios.post(`/message/add/friend?ownerId=${ownerId}&partyId=${partyId}`)
+}
