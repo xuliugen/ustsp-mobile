@@ -6,8 +6,12 @@ import {
   StyleSheet
 } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import { px2dp, px2sp } from 'src/utils/device'
+import { connect } from 'react-redux'
 
+import { px2dp, px2sp } from 'src/utils/device'
+import { setRegisterUserType } from 'src/actions'
+
+@connect()
 @withNavigation
 export default class RegisterUserTypeScreen extends React.Component {
   static navigationOptions = {
@@ -18,18 +22,23 @@ export default class RegisterUserTypeScreen extends React.Component {
     headerTintColor: '#fff'
   }
 
+  onTypeBtnPress = (userType) => {
+    this.props.dispatch(setRegisterUserType(userType))
+    this.props.navigation.push('Register2')
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.tipsText}>请先选择您的身份</Text>
         <View style={styles.roleCardContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.push('Register2')} style={styles.roleCard}>
+          <TouchableOpacity onPress={this.onTypeBtnPress.bind(this, 1)} style={styles.roleCard}>
             <Text style={styles.stuText}>我是学生</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.push('Register2')} style={styles.roleCard}>
+          <TouchableOpacity onPress={this.onTypeBtnPress.bind(this, 2)} style={styles.roleCard}>
             <Text style={styles.stuText}>我是教师</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.push('Register2')} style={styles.roleCard}>
+          <TouchableOpacity onPress={this.onTypeBtnPress.bind(this, 3)} style={styles.roleCard}>
             <Text style={styles.stuText}>我是企业人员</Text>
           </TouchableOpacity>
         </View>

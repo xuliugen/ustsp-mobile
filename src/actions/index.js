@@ -4,6 +4,7 @@ import * as patentAction from './patent'
 import * as talentAction from './talent'
 import * as NewsAction from './news'
 import * as searchAction from './search'
+import * as registerAction from './register'
 
 module.exports = {
   ...authAction,
@@ -11,5 +12,6 @@ module.exports = {
   ...patentAction,
   ...talentAction,
   ...NewsAction,
-  ...searchAction
+  ...searchAction,
+  ...registerAction
 }

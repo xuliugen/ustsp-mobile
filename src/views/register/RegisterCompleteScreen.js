@@ -7,14 +7,21 @@ import {
   StyleSheet
 } from 'react-native'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
 
-import { px2dp, px2sp } from '../../utils/device'
-import { THEME_COLOR } from '../../styles/common'
+import { px2dp, px2sp } from 'src/utils/device'
+import { THEME_COLOR } from 'src/styles/common'
+import { clearRegister } from 'src/actions'
 
+@connect()
 @withNavigation
 export default class RegisterCompleteScreen extends React.Component {
   static navigationOptions = {
     header: null
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(clearRegister())
   }
 
   render() {
@@ -28,10 +35,10 @@ export default class RegisterCompleteScreen extends React.Component {
         </View>
         <View style={styles.nextOperation}>
           <Text style={styles.nextText}>您现在可以继续</Text>
-          {/* <TouchableOpacity onPress={() => this.props.navigation.popToTop()} style={[styles.btns, styles.completeInfoBtn]}>
-            <Text style={styles.completeInfoText}>完善资料</Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity onPress={() => this.props.navigation.popToTop()} style={[styles.btns, styles.toHomeBtn]}>
+          <TouchableOpacity onPress={() => this.props.navigation.popToTop()} style={[styles.btns, styles.completeInfoBtn]}>
+            <Text style={styles.completeInfoText}>前往登录</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={[styles.btns, styles.toHomeBtn]}>
             <Text style={styles.toHomeText}>进入主页</Text>
           </TouchableOpacity>
         </View>
