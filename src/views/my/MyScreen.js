@@ -22,7 +22,7 @@ import MenuListItem from './components/MenuListItem'
 
 const iconIntro = require('./components/img/intro.png')
 const iconProject = require('./components/img/project_mgt.png')
-const iconPatent = require('./components/img/patent_mgt.png')
+// const iconPatent = require('./components/img/patent_mgt.png')
 // const iconJobMarket = require('./components/img/job_market.png')
 
 const mapStateToProps = state => {
@@ -60,26 +60,22 @@ export default class MyScreen extends React.Component {
   renderTopMenu = (type) => {
     const menus = [
       { title: 'project', text: '管理项目', img: iconProject },
-      { title: 'patent', text: '管理专利', img: iconPatent },
       { title: 'resume', text: '我的履历', img: iconIntro },
-      // { title: 'job-market', text: '职场入口（未开通）', img: iconJobMarket },
       { title: 'company-profile', text: '公司资料', img: iconIntro }
+      // { title: 'patent', text: '管理专利', img: iconPatent },
+      // { title: 'job-market', text: '职场入口（未开通）', img: iconJobMarket },
     ]
     let userMenu = []
     switch (type) {
       case 1:
-        userMenu = menus.filter((item, idx) => {
-          return idx <= 2
-        })
-        break
       case 2:
-        userMenu = menus.filter((item, idx) => {
-          return idx <= 2 && idx !== 1
+        userMenu = menus.filter(({ title }) => {
+          return ['project', 'resume'].includes(title)
         })
         break
       case 3:
-        userMenu = menus.filter((item, idx) => {
-          return idx < 1 || idx === 4
+        userMenu = menus.filter(({ title }) => {
+          return ['project', 'company-profile'].includes(title)
         })
         break
       default:
@@ -95,21 +91,23 @@ export default class MyScreen extends React.Component {
   }
 
   render() {
-    const type = 2
-    const { isLogin } = this.props
+    const { isLogin, userType } = this.props
     return (
       <View style={styles.container}>
         <ScrollView>
           {isLogin && <View style={styles.menuContainer}>
-            {this.renderTopMenu(type)}
+            {this.renderTopMenu(userType)}
           </View>}
           <View style={styles.menuListContainer}>
             <MenuListItem item={{ iconName: 'md-megaphone', text: '我的动态', num: 134 }} />
           </View>
           <View style={styles.menuListContainer}>
-            <MenuListItem item={{ iconName: 'md-help-circle', text: '常见问题' }} />
-            <MenuListItem item={{ iconName: 'md-information-circle', text: '关于UppFind' }} />
-            <MenuListItem item={{ iconName: 'md-thumbs-up', text: '去打分' }} />
+            <MenuListItem item={{ to: 'Contacts', iconName: 'md-contacts', text: '人脉管理' }} />
+          </View>
+          <View style={styles.menuListContainer}>
+            <MenuListItem pass item={{ iconName: 'md-help-circle', text: '常见问题' }} />
+            <MenuListItem pass item={{ iconName: 'md-information-circle', text: '关于UppFind' }} />
+            <MenuListItem pass item={{ iconName: 'md-thumbs-up', text: '去打分' }} />
           </View>
           {isLogin && <View style={styles.menuListContainer}>
             <TouchableOpacity onPress={this.handleLogoutPress} >

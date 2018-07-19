@@ -8,18 +8,15 @@ export default class TalentItem extends React.Component {
     return (
       <View style={styles.itemContainer}>
         <View>
-          <Image source={{ uri: talent.photo }} style={styles.avatar} />
+          <Image source={{ uri: talent.avatar }} style={styles.avatar} />
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.infoTop}>
-            <Text style={styles.name}>{talent.realName}</Text>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{talent.stuLevel || talent.title}</Text>
-            </View>
-            {(talent.isClaim === 1) && <Image source={require('src/img/certificate.png')} style={styles.certificate} />}
+            <Text style={styles.name}>{talent.username}<Text style={styles.realName}>{talent.realName && `(${talent.realName})`}</Text></Text>
+            {talent.isValid && <Image source={require('src/img/certificate.png')} style={styles.certificate} />}
           </View>
           <View style={styles.schoolContainer}>
-            <Text style={styles.school}>{talent.school} / {talent.college}</Text>
+            <Text style={styles.school}>{talent.location}</Text>
           </View>
         </View>
       </View>
@@ -55,15 +52,7 @@ const styles = StyleSheet.create({
     fontSize: px2sp(28),
     color: '#333'
   },
-  titleContainer: {
-    alignItems: 'center',
-    paddingHorizontal: px2dp(18),
-    marginRight: px2dp(12),
-    borderRadius: px2dp(30 / 8),
-    backgroundColor: '#eee'
-  },
-  title: {
-    fontSize: px2dp(22),
+  realName: {
     color: '#8f9ba7'
   },
   certificate: {

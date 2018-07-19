@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { px2dp, px2sp } from 'src/utils/device'
 
-export default class TalentItem extends React.Component {
+export default class PalentItem extends React.Component {
   render() {
     const { patent } = this.props
     return (

@@ -3,11 +3,26 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { px2dp, px2sp } from 'src/utils/device'
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
+import { checkIfLogin } from 'src/selectors'
 
+const mapStateToProps = state => {
+  return {
+    isLogin: checkIfLogin(state)
+  }
+}
+
+@connect(mapStateToProps)
 @withNavigation
 export default class MenuListItem extends React.Component {
   handlePress = () => {
-    this.props.navigation.navigate('Login')
+    if (this.props.pass) {
+      this.props.navigation.navigate(this.props.item.to)
+    } else if (!this.props.isLogin) {
+      this.props.navigation.navigate('Login')
+    } else {
+      this.props.navigation.navigate(this.props.item.to)
+    }
   }
 
   render() {
