@@ -1,8 +1,9 @@
 import React from 'react'
 import { Text, StyleSheet, View, AsyncStorage } from 'react-native'
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from 'src/styles/common'
+import { px2sp, px2dp } from 'src/utils/device'
 import { MessageBarManager, MessageBar } from 'react-native-message-bar'
 import { dispatchAuthData, getUserInfo } from 'src/actions'
 import { connect } from 'react-redux'
@@ -17,6 +18,8 @@ import PatentSearchScreen from 'src/views/search/PatentSearchScreen'
 import TalentDetailScreen from 'src/views/talent/TalentDetailScreen'
 // project
 import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
+import PublishedProjectsScreen from 'src/views/project/PublishedProjectsScreen.js'
+import UndertakenProjectsScreen from 'src/views/project/UndertakenProjectsScreen.js'
 // patent
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
@@ -24,9 +27,9 @@ import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
+import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
-import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // register
 import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
 import RegisterAccountScreen from 'src/views/register/RegisterAccountScreen'
@@ -52,14 +55,69 @@ const HomeStack = createStackNavigator({
   NewsSearch: { screen: NewsSearchScreen },
   PalentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
+  TalentDetail: { screen: TalentDetailScreen },
   NewsDetail: { screen: NewsDetailScreen }
 })
 
 HomeStack.navigationOptions = navOptions
 
+const ProjectMgntStack = createMaterialTopTabNavigator(
+  {
+    PublishedProjects: { screen: PublishedProjectsScreen },
+    UndertakenProjects: { screen: UndertakenProjectsScreen }
+  },
+  {
+    initialRouteName: 'PublishedProjects',
+    backBehavior: 'none',
+    tabBarOptions: {
+      style: {
+        paddingVertical: px2dp(10),
+        backgroundColor: '#fff'
+      },
+      labelStyle: {
+        fontSize: px2sp(28)
+      },
+      indicatorStyle: {
+        backgroundColor: THEME_COLOR
+      },
+      activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#999'
+    },
+    navigationOptions: ({ navigation }) => ({
+      tabBarLabel: ({ tintColor }) => {
+        const { routeName } = navigation.state
+        let label
+        if (routeName === 'PublishedProjects') {
+          label = '我发布的'
+        } else if (routeName === 'UndertakenProjects') {
+          label = '我承接的'
+        }
+        return <Text style={[{ color: tintColor }, styles.tabLabel]}>{label}</Text>
+      }
+    })
+  }
+)
+
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
-  Contacts: { screen: ContactsMgntScreen }
+  TalentDetail: { screen: TalentDetailScreen },
+  ProjectDetail: { screen: ProjectDetailScreen },
+  ContactsMgnt: { screen: ContactsMgntScreen },
+  ProjectMgnt: {
+    screen: ProjectMgntStack,
+    navigationOptions: ({ navigation }) => ({
+      title: '项目管理',
+      headerStyle: {
+        backgroundColor: '#8d9caa'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        flex: 1,
+        textAlign: 'center'
+      },
+      headerRight: <View />
+    })
+  }
 })
 
 MyStack.navigationOptions = navOptions
@@ -71,10 +129,6 @@ const LoginStack = createStackNavigator({
   Register3: { screen: RegisterPasswordScreen },
   Register4: { screen: RegisterEmailScreen },
   RegisterComplete: { screen: RegisterCompleteScreen }
-})
-
-const TalentDetailStack = createStackNavigator({
-  TalentDetail: { screen: TalentDetailScreen }
 })
 
 const AppStack = createBottomTabNavigator(
@@ -123,8 +177,7 @@ const AppStack = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
   {
     App: AppStack,
-    Login: LoginStack,
-    TalentDetail: TalentDetailStack
+    Login: LoginStack
   },
   {
     initialRouteName: 'App',

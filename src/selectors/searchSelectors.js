@@ -7,6 +7,6 @@ const getTotalPage = state => state.search.totalNum
 export const canSearchLoadMore = createSelector(
   [getPageNum, getPageSize, getTotalPage],
   (pageNum, pageSize, totalPage) => {
-    return pageNum < Math.ceil(totalPage / 10)
+    return pageNum <= Math.ceil(totalPage / pageSize)
   }
 )
