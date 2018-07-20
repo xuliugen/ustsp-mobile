@@ -34,14 +34,16 @@ export default class PublishedProjectsScreen extends React.Component {
   }
 
   async fetchPublishedProjects() {
-    const { curPage, pageSize } = this.state
+    let { projects, curPage, pageSize } = this.state
     try {
       const { data } = await getPublishedDemand(this.props.userId, curPage, pageSize)
-      this.setState(prev => ({
-        projects: prev.projects.concat(data.data),
+      const newProjects = projects.concat(data.data)
+      const nextPage = ++curPage
+      this.setState({
+        projects: newProjects,
         totalNum: data.totalNum,
-        curPage: ++prev.curPage
-      }))
+        curPage: nextPage
+      })
     } catch (error) {
       console.log(error)
     }

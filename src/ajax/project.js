@@ -20,44 +20,18 @@ function searchProjects(req) {
 }
 
 // 甲方获取已发布项目
-function getPublishedDemand(userId, page, row, status) {
-  if (status === undefined) {
-    return axios.get(`/project/query/status`, {
-      params: {
-        userId: userId,
-        page: page,
-        rows: row
-      }
-    })
-  }
+function getPublishedDemand(userId, page, rows, status) {
+  const params = { userId, page, rows }
   return axios.get(`/project/query/status`, {
-    params: {
-      userId: userId,
-      status: status,
-      page: page,
-      rows: row
-    }
+    params: (status ? { ...params, status } : params)
   })
 }
 
 // 乙方获取已报名项目
-function getUndertakenDemand(userId, page, row, status) {
-  if (status === undefined) {
-    return axios.get(`/project/query/applicated`, {
-      params: {
-        userId: userId,
-        page: page,
-        rows: row
-      }
-    })
-  }
+function getUndertakenDemand(userId, page, rows, status) {
+  const params = { userId, page, rows }
   return axios.get(`/project/query/applicated`, {
-    params: {
-      userId: userId,
-      status: status,
-      page: page,
-      rows: row
-    }
+    params: (status ? { ...params, status } : params)
   })
 }
 
