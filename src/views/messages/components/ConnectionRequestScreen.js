@@ -14,7 +14,8 @@ export default class ConnectionRequestScreen extends React.Component {
   render() {
     return (
       <View style={styles.conatiner}>
-        <RequestItem />
+        <RequestItem status={1} btnText={"已通过"} />
+        <RequestItem status={0} btnText={"通过"}/>
       </View>
     )
   }
