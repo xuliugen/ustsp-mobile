@@ -34,16 +34,14 @@ export default class UndertakenProjectsScreen extends React.Component {
   }
 
   async fetchUndertakenProjects() {
-    let { projects, curPage, pageSize } = this.state
+    let { curPage, pageSize } = this.state
     try {
       const { data } = await getUndertakenDemand(this.props.userId, curPage, pageSize)
-      const newProjects = projects.concat(data.data)
-      const nextPage = ++curPage
-      this.setState({
-        projects: newProjects,
+      this.setState(prev => ({
+        projects: prev.projects.concat(data.data),
         totalNum: data.totalNum,
-        curPage: nextPage
-      })
+        curPage: prev.curPage + 1
+      }))
     } catch (error) {
       console.log(error)
     }
