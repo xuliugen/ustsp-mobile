@@ -49,6 +49,9 @@ export default class MyScreen extends React.Component {
           userType: this.props.userType
         })
         break
+      case 'project':
+        this.props.navigation.navigate('ProjectMgnt')
+        break
       default:
         Alert.alert(title)
     }
@@ -103,7 +106,7 @@ export default class MyScreen extends React.Component {
             <MenuListItem item={{ iconName: 'md-megaphone', text: '我的动态', num: 134 }} />
           </View>
           <View style={styles.menuListContainer}>
-            <MenuListItem item={{ to: 'Contacts', iconName: 'md-contacts', text: '人脉管理' }} />
+            <MenuListItem item={{ to: 'ContactsMgnt', iconName: 'md-contacts', text: '人脉管理' }} />
           </View>
           <View style={styles.menuListContainer}>
             <MenuListItem pass item={{ iconName: 'md-help-circle', text: '常见问题' }} />
