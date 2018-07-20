@@ -21,6 +21,7 @@ export default class StudentDetail extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+    flex: 1,
     backgroundColor: APP_BACKGROUD_COLOR
   }
 })
