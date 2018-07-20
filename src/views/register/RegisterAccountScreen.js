@@ -65,6 +65,7 @@ export default class RegisterAccountScreen extends React.Component {
   }
   // check code
   async checkCode() {
+    if (this.state.codeChecked) return
     const { data } = await checkVerifyCode(this.state.code, this.props.phone)
     if (!data) {
       // MessageBar.show({
