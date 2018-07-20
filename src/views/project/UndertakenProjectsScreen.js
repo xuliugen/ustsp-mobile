@@ -1,10 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { connect } from 'react-redux'
+
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
+import { getUndertakenDemand } from 'src/ajax/project'
 
 import UndertakenProjectItem from './components/UndertakenProjectItem'
-import { getUndertakenDemand } from 'src/ajax/project'
 import projectNavDecorator from 'src/components/common/projectNavDecorator'
 
 const ProjectItemWithNav = projectNavDecorator(UndertakenProjectItem)
