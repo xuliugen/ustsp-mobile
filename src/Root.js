@@ -4,9 +4,9 @@ import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNav
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from 'src/styles/common'
 import { px2sp, px2dp } from 'src/utils/device'
+import { MessageBarManager, MessageBar } from 'react-native-message-bar'
 import { dispatchAuthData, getUserInfo } from 'src/actions'
 import { connect } from 'react-redux'
-import { px2dp, px2sp } from 'src/utils/device'
 
 // home
 import HomeScreen from 'src/views/home/HomeScreen'
@@ -30,9 +30,8 @@ import MyScreen from 'src/views/my/MyScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
-import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
-// messages
-import ConnectionRequestScreen from 'src/views/messages/FriendRequestScreen'
+//messages
+import FriendRequestScreen from 'src/views/messages/FriendRequestScreen'
 import InnerMessagesScreen from 'src/views/messages/InternalMessagesScreen'
 import ProjectNewsScreen from 'src/views/messages/ProjectNewsScreen'
 import SystemMessagesScreen from 'src/views/messages/SystemMessagesScreen'
@@ -69,10 +68,55 @@ HomeStack.navigationOptions = navOptions
 
 const MessageStack = createMaterialTopTabNavigator(
   {
-    ConnectionRequest: { screen: ConnectionRequestScreen },
+    FriendRequestScreen: { screen: FriendRequestScreen },
     ProjectNews: { screen: ProjectNewsScreen },
     SystemMessages: { screen: SystemMessagesScreen },
     InnerMessages: { screen: InnerMessagesScreen }
+  },
+  {
+    initialRouteName: 'FriendRequestScreen',
+    backBehavior: 'none',
+    tabBarOptions: {
+      style: {
+        paddingVertical: px2dp(10),
+        backgroundColor: '#fff'
+      },
+      labelStyle: {
+        fontSize: px2sp(28)
+      },
+      indicatorStyle: {
+        backgroundColor: THEME_COLOR
+      },
+      activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#999'
+    },
+    navigationOptions: ({ navigation }) => ({
+      tabBarLabel: ({tintColor}) => {
+        const {routeName} = navigation.state
+        let label
+        switch (routeName) {
+          case 'FriendRequestScreen':
+            label = '好友申请'
+            break
+          case 'ProjectNews':
+            label = '项目动态'
+            break
+          case 'SystemMessages':
+            label = '系统消息'
+            break
+          case 'InnerMessages':
+            label = '站内信'
+        }
+        return <Text style={[styles.tabLabel, {color: tintColor}]}>{label}</Text>
+      }
+    })
+  }
+)
+
+const ProjectMgntStack = createMaterialTopTabNavigator(
+  {
+    PublishedProjects: { screen: PublishedProjectsScreen },
+    UndertakenProjects: { screen: UndertakenProjectsScreen }
   },
   {
     initialRouteName: 'PublishedProjects',
@@ -91,24 +135,6 @@ const MessageStack = createMaterialTopTabNavigator(
       activeTintColor: THEME_COLOR,
       inactiveTintColor: '#999'
     },
-    navigationOptions: ({navigation}) => ({
-      tabBarLabel: ({tintColor}) => {
-        const { routeName } = navigation.state
-        let label
-        switch (routeName) {
-          case 'ConnectionRequest':
-            label = '好友申请'
-            break
-          case 'ProjectNews':
-            label = '项目动态'
-            break
-          case 'SystemMessages':
-            label = '系统消息'
-            break
-          case 'InnerMessages':
-            label = '站内信'
-        }
-        return <Text style={[styles.tabLabel, { color: tintColor }]}>{label}</Text>
     navigationOptions: ({ navigation }) => ({
       tabBarLabel: ({ tintColor }) => {
         const { routeName } = navigation.state
@@ -119,7 +145,6 @@ const MessageStack = createMaterialTopTabNavigator(
           label = '我承接的'
         }
         return <Text style={[{ color: tintColor }, styles.tabLabel]}>{label}</Text>
->>>>>>> dev
       }
     })
   }
@@ -127,21 +152,28 @@ const MessageStack = createMaterialTopTabNavigator(
 
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
-<<<<<<< HEAD
-  Contacts: { screen: ContactsMgntScreen },
+  TalentDetail: { screen: TalentDetailScreen },
+  ProjectDetail: { screen: ProjectDetailScreen },
+  ContactsMgnt: { screen: ContactsMgntScreen },
   Messages: {
     screen: MessageStack,
     navigationOptions: ({navigation}) => ({
       title: '消息中心',
-=======
-  TalentDetail: { screen: TalentDetailScreen },
-  ProjectDetail: { screen: ProjectDetailScreen },
-  ContactsMgnt: { screen: ContactsMgntScreen },
+      headerStyle: {
+        backgroundColor: '#8d9caa'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        flex: 1,
+        textAlign: 'center'
+      },
+      headerRight: <View />
+    })
+  },
   ProjectMgnt: {
     screen: ProjectMgntStack,
     navigationOptions: ({ navigation }) => ({
       title: '项目管理',
->>>>>>> dev
       headerStyle: {
         backgroundColor: '#8d9caa'
       },
