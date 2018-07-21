@@ -29,19 +29,16 @@ import MyScreen from 'src/views/my/MyScreen'
 import LoginScreen from 'src/views/login/LoginScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // messages
-import MessagesScreen from 'src/views/messages/MessagesScreen'
-import ConnectionRequestScreen from 'src/views/messages/components/ConnectionRequestScreen'
-import InnerMessagesScreen from 'src/views/messages/components/InnerMessagesScreen'
-import ProjectNewsScreen from 'src/views/messages/components/ProjectNewsScreen'
-import SystemMessagesScreen from 'src/views/messages/components/SystemMessagesScreen'
+import ConnectionRequestScreen from 'src/views/messages/FriendRequestScreen'
+import InnerMessagesScreen from 'src/views/messages/InternalMessagesScreen'
+import ProjectNewsScreen from 'src/views/messages/ProjectNewsScreen'
+import SystemMessagesScreen from 'src/views/messages/SystemMessagesScreen'
 // register
 import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
 import RegisterAccountScreen from 'src/views/register/RegisterAccountScreen'
 import RegisterPasswordScreen from 'src/views/register/RegisterPasswordScreen'
 import RegisterEmailScreen from 'src/views/register/RegisterEmailScreen'
 import RegisterCompleteScreen from 'src/views/register/RegisterCompleteScreen'
-
-
 
 const navOptions = ({ navigation }) => {
   let tabBarVisible = true
@@ -71,21 +68,24 @@ const MessageStack = createMaterialTopTabNavigator(
     ConnectionRequest: { screen: ConnectionRequestScreen },
     ProjectNews: { screen: ProjectNewsScreen },
     SystemMessages: { screen: SystemMessagesScreen },
-    InnerMessages: { screen: InnerMessagesScreen },
+    InnerMessages: { screen: InnerMessagesScreen }
   },
   {
+    initialRouteName: 'ConnectionRequest',
+    backBehavior: 'none',
     tabBarOptions: {
       style: {
+        paddingVertical: px2dp(10),
         backgroundColor: '#fff'
       },
-      activeTintColor: THEME_COLOR,
-      inactiveTintColor: '#999',
+      labelStyle: {
+        fontSize: px2sp(28)
+      },
       indicatorStyle: {
-        height: 5,
-        width: 50,
-        marginLeft: 20,
         backgroundColor: THEME_COLOR
-      }
+      },
+      activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#999'
     },
     navigationOptions: ({navigation}) => ({
       tabBarLabel: ({tintColor}) => {
@@ -104,7 +104,7 @@ const MessageStack = createMaterialTopTabNavigator(
           case 'InnerMessages':
             label = '站内信'
         }
-        return <Text style={[styles.topTabLabel, { color: tintColor }]}>{label}</Text>
+        return <Text style={[styles.tabLabel, { color: tintColor }]}>{label}</Text>
       }
     })
   }
@@ -113,7 +113,21 @@ const MessageStack = createMaterialTopTabNavigator(
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
   Contacts: { screen: ContactsMgntScreen },
-  Messages: { screen: MessagesScreen }
+  Messages: {
+    screen: MessageStack,
+    navigationOptions: ({navigation}) => ({
+      title: '消息中心',
+      headerStyle: {
+        backgroundColor: '#8d9caa'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        flex: 1,
+        textAlign: 'center'
+      },
+      headerRight: <View />
+    })
+  }
 })
 
 MyStack.navigationOptions = navOptions
@@ -220,23 +234,9 @@ export default class AppRoot extends React.Component {
   }
 }
 
-export class MessageStackNavigator extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <MessageStack />
-      </View>
-    )
-  }
-}
-
 const styles = StyleSheet.create({
   tabLabel: {
     textAlign: 'center',
     marginBottom: 3
-  },
-  topTabLabel: {
-    marginVertical: px2dp(20),
-    fontSize: px2sp(32)
   }
 })

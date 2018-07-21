@@ -8,8 +8,7 @@ export default class TalentItem extends React.Component {
   handleApprovePress = () => {}
 
   render() {
-    const { status } = this.props
-    const { btnText } = this.props
+    const { passed, btnText } = this.props
     return (
       <View style={styles.itemContainer}>
         <View>
@@ -28,7 +27,7 @@ export default class TalentItem extends React.Component {
           </View>
         </View>
         <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={this.handleApprovePress} style={status === 1 ? [styles.btn, styles.approvedBtn] : [styles.btn, styles.approveBtn]}>
+          <TouchableOpacity onPress={this.handleApprovePress} style={passed === true ? [styles.btn, styles.approvedBtn] : [styles.btn, styles.approveBtn]}>
             <Text style={styles.approveText}>{btnText}</Text>
           </TouchableOpacity>
         </View>

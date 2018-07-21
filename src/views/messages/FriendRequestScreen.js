@@ -4,18 +4,17 @@ import { withNavigation } from 'react-navigation'
 import { connect } from 'react-redux'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
-import RequestItem from './items/RequestItem'
+import RequestItem from './components/RequestItem'
 import { px2dp } from 'src/utils/device'
 
 @connect()
 @withNavigation
-export default class ConnectionRequestScreen extends React.Component {
-
+export default class FriendRequestScreen extends React.Component {
   render() {
     return (
       <View style={styles.conatiner}>
-        <RequestItem status={1} btnText={"已通过"} />
-        <RequestItem status={0} btnText={"通过"}/>
+        <RequestItem passed={true} btnText={'已通过'} />
+        <RequestItem passed={false} btnText={'通过'}/>
       </View>
     )
   }

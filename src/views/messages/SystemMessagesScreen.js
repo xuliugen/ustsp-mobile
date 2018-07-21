@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 @connect()
 @withNavigation
 export default class SystemMessagesScreen extends React.Component {
-
   render() {
     return (
       <View>
