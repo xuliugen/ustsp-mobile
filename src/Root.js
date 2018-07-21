@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, AsyncStorage } from 'react-native'
 import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { THEME_COLOR } from 'src/styles/common'
-import { MessageBarManager, MessageBar } from 'react-native-message-bar'
+import { px2sp, px2dp } from 'src/utils/device'
 import { dispatchAuthData, getUserInfo } from 'src/actions'
 import { connect } from 'react-redux'
 import { px2dp, px2sp } from 'src/utils/device'
@@ -18,6 +18,8 @@ import PatentSearchScreen from 'src/views/search/PatentSearchScreen'
 import TalentDetailScreen from 'src/views/talent/TalentDetailScreen'
 // project
 import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
+import PublishedProjectsScreen from 'src/views/project/PublishedProjectsScreen.js'
+import UndertakenProjectsScreen from 'src/views/project/UndertakenProjectsScreen.js'
 // patent
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
@@ -25,6 +27,7 @@ import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
+import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
@@ -58,6 +61,7 @@ const HomeStack = createStackNavigator({
   NewsSearch: { screen: NewsSearchScreen },
   PalentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
+  TalentDetail: { screen: TalentDetailScreen },
   NewsDetail: { screen: NewsDetailScreen }
 })
 
@@ -71,7 +75,7 @@ const MessageStack = createMaterialTopTabNavigator(
     InnerMessages: { screen: InnerMessagesScreen }
   },
   {
-    initialRouteName: 'ConnectionRequest',
+    initialRouteName: 'PublishedProjects',
     backBehavior: 'none',
     tabBarOptions: {
       style: {
@@ -105,6 +109,17 @@ const MessageStack = createMaterialTopTabNavigator(
             label = '站内信'
         }
         return <Text style={[styles.tabLabel, { color: tintColor }]}>{label}</Text>
+    navigationOptions: ({ navigation }) => ({
+      tabBarLabel: ({ tintColor }) => {
+        const { routeName } = navigation.state
+        let label
+        if (routeName === 'PublishedProjects') {
+          label = '我发布的'
+        } else if (routeName === 'UndertakenProjects') {
+          label = '我承接的'
+        }
+        return <Text style={[{ color: tintColor }, styles.tabLabel]}>{label}</Text>
+>>>>>>> dev
       }
     })
   }
@@ -112,11 +127,21 @@ const MessageStack = createMaterialTopTabNavigator(
 
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
+<<<<<<< HEAD
   Contacts: { screen: ContactsMgntScreen },
   Messages: {
     screen: MessageStack,
     navigationOptions: ({navigation}) => ({
       title: '消息中心',
+=======
+  TalentDetail: { screen: TalentDetailScreen },
+  ProjectDetail: { screen: ProjectDetailScreen },
+  ContactsMgnt: { screen: ContactsMgntScreen },
+  ProjectMgnt: {
+    screen: ProjectMgntStack,
+    navigationOptions: ({ navigation }) => ({
+      title: '项目管理',
+>>>>>>> dev
       headerStyle: {
         backgroundColor: '#8d9caa'
       },
@@ -139,10 +164,6 @@ const LoginStack = createStackNavigator({
   Register3: { screen: RegisterPasswordScreen },
   Register4: { screen: RegisterEmailScreen },
   RegisterComplete: { screen: RegisterCompleteScreen }
-})
-
-const TalentDetailStack = createStackNavigator({
-  TalentDetail: { screen: TalentDetailScreen }
 })
 
 const AppStack = createBottomTabNavigator(
@@ -191,8 +212,7 @@ const AppStack = createBottomTabNavigator(
 const AppNavigator = createStackNavigator(
   {
     App: AppStack,
-    Login: LoginStack,
-    TalentDetail: TalentDetailStack
+    Login: LoginStack
   },
   {
     initialRouteName: 'App',

@@ -5,6 +5,7 @@ import patent from './pantent'
 import talent from './talent'
 import news from './news'
 import search from './search'
+import register from './register'
 
 export default combineReducers({
   auth,
@@ -12,5 +13,6 @@ export default combineReducers({
   patent,
   talent,
   news,
-  search
+  search,
+  register
 })

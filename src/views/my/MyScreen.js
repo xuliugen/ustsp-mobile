@@ -43,10 +43,14 @@ export default class MyScreen extends React.Component {
   handleMenuPress = (title) => {
     switch (title) {
       case 'resume':
+      case 'company-profile':
         this.props.navigation.navigate('TalentDetail', {
           userId: this.props.userId,
           userType: this.props.userType
         })
+        break
+      case 'project':
+        this.props.navigation.navigate('ProjectMgnt')
         break
       default:
         Alert.alert(title)
