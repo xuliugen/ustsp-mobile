@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 @connect()
 @withNavigation
-export default class ProjectNewsScreen extends React.Component {
+export default class ProjectMessagesScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>

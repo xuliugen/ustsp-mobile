@@ -4,7 +4,6 @@ import { px2dp, px2sp } from 'src/utils/device'
 import {THEME_COLOR} from 'src/styles/common'
 
 export default class TalentItem extends React.Component {
-
   handleApprovePress = () => {}
 
   render() {

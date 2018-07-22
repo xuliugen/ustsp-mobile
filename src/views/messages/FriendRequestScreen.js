@@ -13,8 +13,8 @@ export default class FriendRequestScreen extends React.Component {
   render() {
     return (
       <View style={styles.conatiner}>
-        <RequestItem passed={true} btnText={'已通过'} />
-        <RequestItem passed={false} btnText={'通过'}/>
+        <RequestItem passed btnText={'已通过'} />
+        <RequestItem passed={false} btnText={'通过'} />
       </View>
     )
   }

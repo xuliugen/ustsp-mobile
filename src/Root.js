@@ -30,10 +30,10 @@ import MyScreen from 'src/views/my/MyScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
-//messages
+// messages
 import FriendRequestScreen from 'src/views/messages/FriendRequestScreen'
-import InnerMessagesScreen from 'src/views/messages/InternalMessagesScreen'
-import ProjectNewsScreen from 'src/views/messages/ProjectNewsScreen'
+import InternalMessagesScreen from 'src/views/messages/InternalMessagesScreen'
+import ProjectMessagesScreen from 'src/views/messages/ProjectMessagesScreen'
 import SystemMessagesScreen from 'src/views/messages/SystemMessagesScreen'
 // register
 import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
@@ -69,9 +69,9 @@ HomeStack.navigationOptions = navOptions
 const MessageStack = createMaterialTopTabNavigator(
   {
     FriendRequestScreen: { screen: FriendRequestScreen },
-    ProjectNews: { screen: ProjectNewsScreen },
+    ProjectNews: { screen: ProjectMessagesScreen },
     SystemMessages: { screen: SystemMessagesScreen },
-    InnerMessages: { screen: InnerMessagesScreen }
+    InnerMessages: { screen: InternalMessagesScreen }
   },
   {
     initialRouteName: 'FriendRequestScreen',
