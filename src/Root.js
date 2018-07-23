@@ -76,6 +76,7 @@ const MessageStack = createMaterialTopTabNavigator(
   {
     initialRouteName: 'FriendRequestScreen',
     backBehavior: 'none',
+    swipeEnabled: false,
     tabBarOptions: {
       style: {
         paddingVertical: px2dp(10),
