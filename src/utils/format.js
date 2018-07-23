@@ -63,3 +63,19 @@ export function projectStatusNum2Str(status) {
       return ''
   }
 }
+
+// 目前系统消息只有这四种
+export function setSystemMsgDetail(type) {
+  switch (type) {
+    case 1:
+      return '项目审核通过'
+    case 2:
+      return '项目审核未通过'
+    case 3:
+      return '专利审核通过'
+    case 4:
+      return '专利审核未通过'
+    default:
+      return ''
+  }
+}
