@@ -11,3 +11,12 @@ export function fetchMsgByType(userId, queryType, page, rows) {
     }
   })
 }
+
+// 设置消息已读
+export function fetchOneMessage(msgId) {
+  return axios.get('/message/query/one', {
+    params: {
+      msgId
+    }
+  })
+}
