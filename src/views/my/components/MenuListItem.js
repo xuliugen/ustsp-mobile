@@ -17,7 +17,7 @@ const mapStateToProps = state => {
 export default class MenuListItem extends React.Component {
   handlePress = () => {
     if (this.props.pass) {
-      this.props.navigation.navigate(this.props.item.to)
+      this.props.item.to && this.props.navigation.navigate(this.props.item.to)
     } else if (!this.props.isLogin) {
       this.props.navigation.navigate('Login')
     } else {
