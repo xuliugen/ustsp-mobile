@@ -1,36 +1,92 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import { px2dp, px2sp } from 'src/utils/device'
-import {THEME_COLOR} from 'src/styles/common'
+// https://github.com/dancormier/react-native-swipeout
+import Swipeout from 'react-native-swipeout'
 
-export default class TalentItem extends React.Component {
-  handleApprovePress = () => {}
+import { px2dp, px2sp } from 'src/utils/device'
+import { THEME_COLOR } from 'src/styles/common'
+import { parseUserType } from 'src/utils/format'
+import { approveAddFirend, rejectAddFirend } from 'src/ajax/contacts'
+
+import MessageBar from 'src/components/common/MessageBar'
+
+export default class FriendRequestItem extends React.Component {
+  handleApproveBtnPress = async () => {
+    const { receiverId, senderId, id } = this.props.msg
+    await approveAddFirend(receiverId, senderId, id)
+    MessageBar.show({
+      message: '添加成功'
+    })
+    this.props.refreshList()
+  }
+
+  handleRejectBtnPress = async () => {
+    const { receiverId, senderId, id } = this.props.msg
+    await rejectAddFirend(receiverId, senderId, id)
+    MessageBar.show({
+      message: '已拒绝'
+    })
+    this.props.refreshList()
+  }
+
+  _renderBtn() {
+    let text
+    switch (this.props.msg.status) {
+      case 1: case 2:
+        text = '通过'
+        break
+      case 3:
+        text = '已同意'
+        break
+      case 4:
+        text = '已拒绝'
+        break
+      default:
+        text = ''
+    }
+    return (
+      <TouchableOpacity
+        onPress={this.handleApproveBtnPress}
+        style={this.props.msg.status !== 2 ? [styles.btn, styles.approvedBtn] : [styles.btn, styles.approveBtn]}>
+        <Text style={styles.approveText}>{text}</Text>
+      </TouchableOpacity>
+    )
+  }
 
   render() {
-    const { passed, btnText } = this.props
+    const { msg } = this.props
+    // status 1已读 2未读 3同意 4拒绝
+    const swipeoutBtns = msg.status === 2 ? [
+      {
+        text: '不通过',
+        backgroundColor: '#fa2024',
+        color: '#fff',
+        onPress: this.handleRejectBtnPress
+      }
+    ] : null
     return (
-      <View style={styles.itemContainer}>
-        <View>
-          <Image source={require('src/img/avatar1.png')} style={styles.avatar} />
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.infoTop}>
-            <Text style={styles.name}>贾治国</Text>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>教授</Text>
+      <Swipeout autoClose right={swipeoutBtns}>
+        <View style={styles.itemContainer}>
+          <View>
+            <Image source={{ uri: msg.senderAvatar }} style={styles.avatar} />
+          </View>
+          <View style={styles.infoContainer}>
+            <View style={styles.infoTop}>
+              <Text style={styles.name}>{msg.senderName}</Text>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>{parseUserType(msg.senderType)}</Text>
+              </View>
+              {/* <Image source={require('src/img/certificate.png')} style={styles.certificate} /> */}
             </View>
-            <Image source={require('src/img/certificate.png')} style={styles.certificate} />
+            <View style={styles.applyInfoContainer}>
+              <Text style={styles.applyInfo}>请求加您为好友</Text>
+            </View>
           </View>
-          <View style={styles.applyInfoContainer}>
-            <Text style={styles.applyInfo}>请求加您为好友</Text>
+          <View style={styles.btnContainer}>
+            {this._renderBtn()}
           </View>
         </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={this.handleApprovePress} style={passed === true ? [styles.btn, styles.approvedBtn] : [styles.btn, styles.approveBtn]}>
-            <Text style={styles.approveText}>{btnText}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </Swipeout>
     )
   }
 }
