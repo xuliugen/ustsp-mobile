@@ -80,9 +80,9 @@ export default class MyScreenHeader extends React.Component {
       <View style={styles.container}>
         <ImageBackground source={require('./img/background.png')} style={styles.bgImg}>
           <View style={styles.wrapper}>
-            <TouchableOpacity onPress={this.handleSettingPress} style={styles.settingContainer} >
+            {/* <TouchableOpacity onPress={this.handleSettingPress} style={styles.settingContainer} >
               <Image source={require('./img/ico_setting.png')} style={styles.settingIcon} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={styles.infoContainer} >
               <View style={styles.avatarContainer} >
                 {this.renderAvatar(isLogin)}
