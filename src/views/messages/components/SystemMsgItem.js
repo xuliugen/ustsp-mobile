@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import { px2dp, px2sp } from 'src/utils/device'
-import { parseTime, setMsgDetail } from 'src/utils/format'
+import { parseTime, setSystemMsgDetail } from 'src/utils/format'
 import { THEME_COLOR } from 'src/styles/common'
 import { fetchOneMessage } from 'src/ajax/message'
 
@@ -38,7 +38,7 @@ export default class SystemMsgItem extends React.Component {
               <Text style={styles.sender} >UppFind管理员</Text>
               <Text style={styles.time} >{parseTime(msg.createTime, 'YYYY-MM-DD HH:mm')}</Text>
             </View>
-            <Text style={[styles.bottomLine, msg.status === 2 && styles.unread]} >{msg.messageContent}{setMsgDetail(msg.messageType)}</Text>
+            <Text style={[styles.bottomLine, msg.status === 2 && styles.unread]} >{msg.messageContent}{setSystemMsgDetail(msg.messageType)}</Text>
           </View>
         </View>
       </TouchableOpacity>
