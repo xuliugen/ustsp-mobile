@@ -10,6 +10,10 @@
     },
     "android": {
       "package": "com.uppfind.ustsp"
+    },
+    "splash": {
+      "image": "./src/img/splash.png",
+      "backgroundColor": "#fff"
     }
   }
 }
