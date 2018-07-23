@@ -17,7 +17,15 @@ export function checkIsFriendApi(ownerId, partyId) {
   })
 }
 
-// first 发起者 second 接受者
+// 发送好友请求
 export function sendAddFirend(ownerId, partyId) {
   return axios.post(`/message/add/friend?ownerId=${ownerId}&partyId=${partyId}`)
+}
+// 同意加好友
+export function approveAddFirend(ownerId, partyId, msgId) {
+  return axios.post(`/connection/add/friend?ownerId=${ownerId}&partyId=${partyId}&msgId=${msgId}`)
+}
+// 拒绝加好友
+export function rejectAddFirend(ownerId, partyId, msgId) {
+  return axios.post(`/message/reject/friend?ownerId=${ownerId}&partyId=${partyId}&msgId=${msgId}`)
 }
