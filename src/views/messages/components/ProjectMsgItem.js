@@ -1,29 +1,52 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity
+} from 'react-native'
+import { withNavigation } from 'react-navigation'
 
 import { px2sp, px2dp } from 'src/utils/device'
 import { parseTime } from 'src/utils/format'
+import { THEME_COLOR } from 'src/styles/common'
+import { fetchOneMessage } from 'src/ajax/msg'
 
+@withNavigation
 export default class ProjectMsgItem extends React.Component {
+  onContainerPress = () => {
+    const { msg } = this.props
+    if (msg.status === 2) {
+      fetchOneMessage(msg.id)
+      this.props.refreshList()
+    }
+    this.props.navigation.navigate('ProjectDetail', {
+      projectId: msg.relateId
+    })
+  }
+
   render() {
     const { msg } = this.props
     return (
-      <View style={styles.itemContainer}>
-        <View>
-          <Image source={{ uri: msg.senderAvatar }} style={styles.newsPhoto} />
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.title}>
-            <View style={{width: px2dp(350)}}>
-              <Text style={styles.projectName}>{msg.senderName}</Text>
-            </View>
-            <Text style={styles.contentText}>{parseTime(msg.createTime)}</Text>
-          </View>
+      <TouchableOpacity onPress={this.onContainerPress}>
+        <View style={styles.itemContainer}>
           <View>
-            <Text style={styles.contentText}>项目有了新进度，请注意查看</Text>
+            <Image source={{ uri: msg.senderAvatar }} style={styles.newsPhoto} />
+          </View>
+          <View style={styles.infoContainer}>
+            <View style={styles.title}>
+              <View style={{ width: px2dp(350) }}>
+                <Text style={styles.projectName}>{msg.messageContent}</Text>
+              </View>
+              <Text style={styles.contentText}>{parseTime(msg.createTime)}</Text>
+            </View>
+            <View>
+              <Text style={msg.status === 2 ? styles.contentTextRead : styles.contentText}>项目有了新进度，请注意查看</Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
@@ -60,5 +83,9 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: px2sp(28),
     color: '#999'
+  },
+  contentTextRead: {
+    fontSize: px2sp(28),
+    color: THEME_COLOR
   }
 })

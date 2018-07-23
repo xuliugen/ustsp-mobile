@@ -52,7 +52,7 @@ export default class ProjectMessagesScreen extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={this.state.msg}
-          renderItem={({ item }) => <ProjectMsgItem msg={item} />}
+          renderItem={({ item }) => <ProjectMsgItem msg={item} refreshList={this.fetchMessage.bind(this)} />}
           keyExtractor={(item) => item.id}
           onEndReach={this.onEndReach()}
         />
