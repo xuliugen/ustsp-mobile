@@ -1,20 +1,23 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import { px2sp, px2dp } from 'src/utils/device'
 
-export default class NewsItem extends React.Component {
+import { px2sp, px2dp } from 'src/utils/device'
+import { parseTime } from 'src/utils/format'
+
+export default class ProjectMsgItem extends React.Component {
   render() {
+    const { msg } = this.props
     return (
       <View style={styles.itemContainer}>
         <View>
-          <Image source={require('src/img/avatar1.png')} style={styles.newsPhoto} />
+          <Image source={{ uri: msg.senderAvatar }} style={styles.newsPhoto} />
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.title}>
             <View style={{width: px2dp(350)}}>
-              <Text style={styles.projectName}>贾志国</Text>
+              <Text style={styles.projectName}>{msg.senderName}</Text>
             </View>
-            <Text style={styles.contentText}>2018-06-26</Text>
+            <Text style={styles.contentText}>{parseTime(msg.createTime)}</Text>
           </View>
           <View>
             <Text style={styles.contentText}>项目有了新进度，请注意查看</Text>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp } from 'src/utils/device'
 import { fetchMsgByType } from 'src/ajax/msg'
+
 import SystemMsgItem from './components/SystemMsgItem'
 
 const mapStateToProps = state => {
