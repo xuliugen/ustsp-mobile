@@ -4,13 +4,16 @@ import { withNavigation } from 'react-navigation'
 import { px2dp, px2sp } from 'src/utils/device'
 import { parseTime, setSystemMsgDetail } from 'src/utils/format'
 import { THEME_COLOR } from 'src/styles/common'
-import { fetchOneMessage } from 'src/ajax/message'
+import { fetchOneMessage } from 'src/ajax/msg'
 
 @withNavigation
 export default class SystemMsgItem extends React.Component {
-  handleReadPress = () => {
+  handleReadPress = async () => {
     const { msg } = this.props
-    if (msg.status === 2) fetchOneMessage(msg.id)
+    if (msg.status === 2) {
+      await fetchOneMessage(msg.id)
+      this.props.refreshList()
+    }
     switch (msg.messageType) {
       case 1: case 2:
         this.props.navigation.navigate('ProjectDetail', {

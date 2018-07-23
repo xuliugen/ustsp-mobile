@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { px2dp } from 'src/utils/device'
-import { fetchMessages } from 'src/ajax/message'
+import { fetchMsgByType } from 'src/ajax/msg'
 import SystemMsgItem from './components/SystemMsgItem'
 
 const mapStateToProps = state => {
@@ -26,14 +26,14 @@ export default class SystemMessagesScreen extends React.Component {
     this.fetchMessage()
   }
 
-  async fetchMessage() {
+  async fetchMessage(curPage = 1) {
     try {
-      const { data } = await fetchMessages(this.props.userId, 'system', this.state.curPage, this.state.pageSize)
-      this.setState(prev => ({
+      const { data } = await fetchMsgByType(this.props.userId, 1, curPage, this.state.pageSize)
+      this.setState({
         msg: data.data,
-        curPage: prev.curPage + 1,
+        curPage: curPage + 1,
         total: data.totalNum
-      }))
+      })
     } catch (error) {
       console.log(error)
     }
@@ -42,7 +42,7 @@ export default class SystemMessagesScreen extends React.Component {
   onEndReach() {
     const { curPage, pageSize, totalNum } = this.state
     if (curPage <= Math.ceil(totalNum / pageSize)) {
-      this.fetchMessage()
+      this.fetchMessage(curPage)
     }
   }
 
@@ -51,7 +51,7 @@ export default class SystemMessagesScreen extends React.Component {
       <View style={styles.container} >
         <FlatList
           data={this.state.msg}
-          renderItem={({ item }) => <SystemMsgItem msg={item} />}
+          renderItem={({ item }) => <SystemMsgItem msg={item} refreshList={this.fetchMessage.bind(this)} />}
           keyExtractor={(item) => item.id}
           onEndReach={this.onEndReach()}
         />
