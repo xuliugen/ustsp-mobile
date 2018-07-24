@@ -4,7 +4,7 @@ import HTMLView from 'react-native-htmlview'
 import { connect } from 'react-redux'
 
 import HeaderTitle from './components/HeaderTitle'
-import HeaderRightShare from './components/HeaderRightShare'
+// import HeaderRightShare from './components/HeaderRightShare'
 
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
@@ -19,7 +19,8 @@ const mapStateToProps = state => ({
 export default class NewsDetailScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderTitle />,
-    headerRight: <HeaderRightShare />,
+    // headerRight: <HeaderRightShare />,
+    headerRight: <View />,
     headerStyle: {
       backgroundColor: '#8d9caa'
     },

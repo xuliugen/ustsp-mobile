@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, ImageBackground } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import { Feather, Entypo } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 
 import { STATUS_BAR_HEIGHT, px2dp, px2sp } from 'src/utils/device'
@@ -28,7 +28,8 @@ export default class PatentDetailHeader extends React.Component {
           <View style={styles.pageHeader}>
             <Feather name="arrow-left" size={18} style={styles.goback} onPress={this.handleGoBackPress} />
             <Text style={styles.headerTitle}>专利详情</Text>
-            <Entypo name="share" size={18} style={styles.share} onPress={this.handleSharePress} />
+            {/* <Entypo name="share" size={18} style={styles.share} onPress={this.handleSharePress} /> */}
+            <View />
           </View>
           <View style={styles.titleWrapper}>
             <View style={styles.title}>

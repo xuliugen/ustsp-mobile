@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
-import { Feather, Entypo } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
 import { connect } from 'react-redux'
 
@@ -32,7 +32,7 @@ export default class ProjectDetailHeader extends React.Component {
             </TouchableOpacity>
             <Text style={styles.headerTitle}>项目详情</Text>
             <TouchableOpacity style={styles.headerIconContainer} onPress={this.handleSharePress}>
-              <Entypo name="share" size={18} style={styles.share} />
+              {/* <Entypo name="share" size={18} style={styles.share} /> */}
             </TouchableOpacity>
           </View>
           <View style={styles.projectHeader}>

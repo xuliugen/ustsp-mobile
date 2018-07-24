@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { StyleSheet, View, ScrollView, Text } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
@@ -84,7 +84,7 @@ export default class ProjectDetailScreen extends React.Component {
           <PublisherWithNav project={project} talentNav={talentNav} />
         </ScrollView>
 
-        <View style={styles.bottomBlock}>
+        {/* <View style={styles.bottomBlock}>
           <TouchableOpacity onPress={() => alert('star')} style={[styles.bottomBtn, styles.bottomBtnStar]} activeOpacity={1}>
             <Text style={styles.bottomBtnStarText}>
               <FontAwesome name="star-o" /> 关注
@@ -95,7 +95,7 @@ export default class ProjectDetailScreen extends React.Component {
               <MaterialIcons name="group-add" /> 报名
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     )
   }
