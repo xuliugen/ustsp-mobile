@@ -27,6 +27,7 @@ import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
+import AboutScreen from 'src/views/my/AboutScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
@@ -58,7 +59,7 @@ const HomeStack = createStackNavigator({
   TalentSearch: { screen: TalentSearchScreen },
   PatentSearch: { screen: PatentSearchScreen },
   NewsSearch: { screen: NewsSearchScreen },
-  PalentDetail: { screen: PatentDetailScreen },
+  PatentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   TalentDetail: { screen: TalentDetailScreen },
   NewsDetail: { screen: NewsDetailScreen }
@@ -153,6 +154,7 @@ const ProjectMgntStack = createMaterialTopTabNavigator(
 
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
+  About: { screen: AboutScreen },
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   ContactsMgnt: { screen: ContactsMgntScreen },
