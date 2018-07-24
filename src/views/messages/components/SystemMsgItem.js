@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation'
+
 import { px2dp, px2sp } from 'src/utils/device'
 import { parseTime, setSystemMsgDetail } from 'src/utils/format'
 import { THEME_COLOR } from 'src/styles/common'
