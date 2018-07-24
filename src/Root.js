@@ -58,7 +58,7 @@ const HomeStack = createStackNavigator({
   TalentSearch: { screen: TalentSearchScreen },
   PatentSearch: { screen: PatentSearchScreen },
   NewsSearch: { screen: NewsSearchScreen },
-  PalentDetail: { screen: PatentDetailScreen },
+  PatentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   TalentDetail: { screen: TalentDetailScreen },
   NewsDetail: { screen: NewsDetailScreen }
