@@ -6,14 +6,24 @@
     "slug": "ustsp-mobile",
     "sdkVersion": "27.0.0",
     "ios": {
-      "bundleIdentifier": "com.uppfind.ustsp"
+      "bundleIdentifier": "com.uppfind.ustsp",
+      "publishBundlePath": "ios/uppfind/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/uppfind/Supporting/shell-app-manifest.json"
     },
     "android": {
-      "package": "com.uppfind.ustsp"
+      "package": "com.uppfind.ustsp",
+      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
     },
     "splash": {
       "image": "./src/img/splash.png",
       "backgroundColor": "#fff"
-    }
+    },
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.5.10-sdk27.0.0-7e6dd135-e649-48e2-ab7c-e76521ce6259.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.5.3-sdk27.0.0-408c8d77-8d1f-4784-b7b4-93826250663a.tar.gz"
+    },
+    "scheme": "exp585c1de1069f46d3b8c6b8316222b0f5"
   }
 }

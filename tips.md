@@ -22,3 +22,12 @@ var styles = StyleSheet.create({
 2. Reset packager cache - rm -fr $TMPDIR/react-* or node_modules/react-native/packager/packager.sh --reset-cache
 3. Clear watchman watches - watchman watch-del-all
 
+# Android Studio: “Please select Android SDK”
+> https://stackoverflow.com/questions/34353220/android-studio-please-select-android-sdk
+
+# Detached iOS (ExpoKit) build fails with FBNativeAd error
+> https://github.com/expo/expo/issues/1868
+
+1. Change your Podfile so that your ExpoKit tag points to ios/2.6.5 instead of 2.6.4.
+2. pod install
+3. Try building again
