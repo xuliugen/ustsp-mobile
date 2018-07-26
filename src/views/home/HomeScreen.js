@@ -34,13 +34,13 @@ export default class Home extends React.Component {
         <Swiper style={styles.swiper} height={px2dp(400)} dotColor="#ddd" activeDotColor={THEME_COLOR}
           autoplay autoplayTimeout={2}>
           <View style={styles.slide}>
-            <ImageBackground source={require('../../img/banner1.png')} style={styles.banner} />
+            <ImageBackground source={require('src/img/banner1.png')} style={styles.banner} />
           </View>
           <View style={styles.slide}>
-            <ImageBackground source={require('../../img/banner2.jpg')} style={styles.banner} />
+            <ImageBackground source={require('src/img/banner2.jpg')} style={styles.banner} />
           </View>
           <View style={styles.slide}>
-            <ImageBackground source={require('../../img/banner3.jpg')} style={styles.banner} />
+            <ImageBackground source={require('src/img/banner3.jpg')} style={styles.banner} />
           </View>
         </Swiper>
         <View style={styles.searchContainer}>

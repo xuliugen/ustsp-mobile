@@ -7,6 +7,7 @@ import { px2sp, px2dp } from 'src/utils/device'
 import { MessageBarManager, MessageBar } from 'react-native-message-bar'
 import { dispatchAuthData, getUserInfo } from 'src/actions'
 import { connect } from 'react-redux'
+import { Asset, AppLoading } from 'expo'
 
 // home
 import HomeScreen from 'src/views/home/HomeScreen'
@@ -93,8 +94,8 @@ const MessageStack = createMaterialTopTabNavigator(
       inactiveTintColor: '#999'
     },
     navigationOptions: ({ navigation }) => ({
-      tabBarLabel: ({tintColor}) => {
-        const {routeName} = navigation.state
+      tabBarLabel: ({ tintColor }) => {
+        const { routeName } = navigation.state
         let label
         switch (routeName) {
           case 'FriendRequestScreen':
@@ -109,7 +110,7 @@ const MessageStack = createMaterialTopTabNavigator(
           case 'InnerMessages':
             label = '站内信'
         }
-        return <Text style={[styles.tabLabel, {color: tintColor}]}>{label}</Text>
+        return <Text style={[styles.tabLabel, { color: tintColor }]}>{label}</Text>
       }
     })
   }
@@ -160,7 +161,7 @@ const MyStack = createStackNavigator({
   ContactsMgnt: { screen: ContactsMgntScreen },
   Messages: {
     screen: MessageStack,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       title: '消息中心',
       headerStyle: {
         backgroundColor: '#8d9caa'
@@ -259,6 +260,10 @@ const AppNavigator = createStackNavigator(
 
 @connect()
 export default class AppRoot extends React.Component {
+  state = {
+    isReady: false
+  }
+
   componentWillMount() {
     this.getAuthData()
   }
@@ -279,13 +284,45 @@ export default class AppRoot extends React.Component {
     }
   }
 
+  async _cacheResourcesAsync() {
+    const images = [
+      require('src/img/avatar1.png'),
+      require('src/img/banner1.png'),
+      require('src/img/banner2.jpg'),
+      require('src/img/banner3.jpg'),
+      require('src/img/ellipse.png'),
+      require('src/img/news.png'),
+      require('src/img/patent.png'),
+      require('src/img/project.png'),
+      require('src/img/splash.png'),
+      require('src/img/talent.png'),
+      require('src/img/uppfind.png'),
+      require('src/views/my/components/img/background.png')
+    ]
+
+    const cacheImages = images.map((image) => {
+      return Asset.fromModule(image).downloadAsync()
+    })
+    return Promise.all(cacheImages)
+  }
+
   render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <AppNavigator />
-        <MessageBar ref="alert" />
-      </View>
-    )
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._cacheResourcesAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      )
+    } else {
+      return (
+        <View style={{ flex: 1 }}>
+          <AppNavigator />
+          <MessageBar ref="alert" />
+        </View>
+      )
+    }
   }
 }
 
