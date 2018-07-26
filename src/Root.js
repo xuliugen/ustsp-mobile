@@ -297,7 +297,8 @@ export default class AppRoot extends React.Component {
       require('src/img/splash.png'),
       require('src/img/talent.png'),
       require('src/img/uppfind.png'),
-      require('src/views/my/components/img/background.png')
+      require('src/views/my/components/img/background.png'),
+      require('react-navigation/src/views/assets/back-icon.png')
     ]
 
     const cacheImages = images.map((image) => {
