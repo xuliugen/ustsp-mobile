@@ -15,6 +15,10 @@ repositories {
   maven { url 'https://maven.fabric.io/public' }
 }
 
+configurations.all {
+  exclude group: 'com.facebook.react', module: 'react-native'
+}
+
 android {
   compileSdkVersion 26
   buildToolsVersion '26.0.1'
@@ -98,6 +102,7 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
   compile 'com.android.support:multidex:1.0.1'
+  compile project(':ReactAndroid')
 
   // Our dependencies
   compile 'com.android.support:appcompat-v7:26.0.1'
@@ -159,12 +164,12 @@ dependencies {
   androidTestCompile 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'
 
 
-  
+
   compile('host.exp.exponent:expoview:27.0.0@aar') {
     transitive = true
   }
-  
-  
+
+
 }
 
 // This has to be down here for some reason
