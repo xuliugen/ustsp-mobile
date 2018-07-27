@@ -65,7 +65,7 @@ export default class HeaderTitleSearch extends React.Component {
           returnKeyType="search"
           style={styles.searchInput}
           onSubmitEditing={this.handleSubmit}
-          // defaultValue={this.props.searchIptVal}
+          value={this.props.searchIptVal}
           onChangeText={(text) => this.setSearchIptVal(text)}
           onFocus={this.handleIptFocus}
           onBlur={this.handleIptBlur} />

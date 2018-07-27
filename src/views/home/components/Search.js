@@ -54,7 +54,7 @@ export default class Search extends React.Component {
         <View style={styles.inputContainer}>
           <TextInput
             returnKeyType="search"
-            // value={this.props.searchIptVal}
+            value={this.props.searchIptVal}
             onChangeText={(text) => this.props.dispatch(setSearchCondition(text))}
             onSubmitEditing={this.handleSubmit}
             {...textIptProps}
