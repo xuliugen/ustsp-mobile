@@ -29,7 +29,15 @@ export function checkVerifyCode(code, phone) {
     flag: 1
   })
 }
-
+// 注册
 export function register(body) {
   return axios.post('/user/register', body)
+}
+// 从小程序认领教师数据
+export function claimTchInfo(email) {
+  return axios.get(`https://weixin.uppfind.com/university-assistant-server/teacher/fetch?email=${email}&type=1`)
+}
+// 教师确认认领
+export function confirmClaimTch(userId, email) {
+  return axios.post(`/teacher/valid-claim?userId=${userId}&email=${email}`)
 }

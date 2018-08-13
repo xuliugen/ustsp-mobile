@@ -13,8 +13,8 @@ import TextInput from 'src/components/common/TextInput'
 
 import { px2dp, px2sp } from 'src/utils/device'
 import { THEME_COLOR } from 'src/styles/common'
-import { setRegisterEmail } from 'src/actions'
-import { register } from 'src/ajax/auth'
+import { setRegisterEmail, setRegisterClaimData, setRegisterUserId } from 'src/actions'
+import { register, claimTchInfo } from 'src/ajax/auth'
 
 const mapStateToProps = state => ({
   userType: state.register.userType,
@@ -58,13 +58,34 @@ export default class RegisterEmailScreen extends React.Component {
       return
     }
     const { registerState } = this.props
-    await register({
+    const registerReq = {
       userType: registerState.userType,
       phone: registerState.phone,
       email: registerState.email,
       password: registerState.password
-    })
-    this.props.navigation.push('RegisterComplete')
+    }
+    if (registerState.userType !== 2) { // not teacher
+      await register(registerReq)
+      this.props.navigation.push('RegisterComplete')
+    } else {
+      const USA_ORIGIN = 'https://weixin.uppfind.com/university-assistant-server'
+      const [res1, res2] = await Promise.all([
+        claimTchInfo(registerState.email),
+        register(registerReq)
+      ])
+      if (res1.data.code === 200) { // 认领到了数据
+        const claimData = res1.data.data
+        claimData.icon = USA_ORIGIN + claimData.icon
+        this.props.dispatch(setRegisterClaimData(claimData))
+
+        const regRes = res2.data
+        this.props.dispatch(setRegisterUserId(regRes.user.id))
+
+        this.props.navigation.push('RegisterClaim')
+      } else {
+        this.props.navigation.push('RegisterComplete')
+      }
+    }
   }
 
   render() {
