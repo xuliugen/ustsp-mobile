@@ -42,6 +42,7 @@ import RegisterUserTypeScreen from 'src/views/register/RegisterUserTypeScreen'
 import RegisterAccountScreen from 'src/views/register/RegisterAccountScreen'
 import RegisterPasswordScreen from 'src/views/register/RegisterPasswordScreen'
 import RegisterEmailScreen from 'src/views/register/RegisterEmailScreen'
+import RegisterClaimScreen from 'src/views/register/RegisterClaimScreen'
 import RegisterCompleteScreen from 'src/views/register/RegisterCompleteScreen'
 
 const navOptions = ({ navigation }) => {
@@ -199,6 +200,7 @@ const LoginStack = createStackNavigator({
   Register2: { screen: RegisterAccountScreen },
   Register3: { screen: RegisterPasswordScreen },
   Register4: { screen: RegisterEmailScreen },
+  RegisterClaim: { screen: RegisterClaimScreen },
   RegisterComplete: { screen: RegisterCompleteScreen }
 })
 
