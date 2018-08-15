@@ -154,6 +154,7 @@ export default class RegisterAccountScreen extends React.Component {
               value={this.props.phone}
               onChangeText={this.onPhoneIptChange}
               onBlur={this.onPhoneIptBlur}
+              editable={!this.state.codeChecked}
             />
             {this.renderCodeBlock()}
           </View>

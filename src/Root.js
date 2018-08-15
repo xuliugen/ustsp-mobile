@@ -262,6 +262,11 @@ const AppNavigator = createStackNavigator(
 
 @connect()
 export default class AppRoot extends React.Component {
+  constructor(props) {
+    super(props)
+    this.alert = React.createRef()
+  }
+
   state = {
     isReady: false
   }
@@ -270,7 +275,7 @@ export default class AppRoot extends React.Component {
     this.getAuthData()
   }
   componentDidMount() {
-    MessageBarManager.registerMessageBar(this.refs.alert)
+    MessageBarManager.registerMessageBar(this.alert.current)
   }
   componentWillUnmount() {
     MessageBarManager.unregisterMessageBar()
@@ -310,22 +315,17 @@ export default class AppRoot extends React.Component {
   }
 
   render() {
-    if (!this.state.isReady) {
-      return (
-        <AppLoading
-          startAsync={this._cacheResourcesAsync}
-          onFinish={() => this.setState({ isReady: true })}
-          onError={console.warn}
-        />
-      )
-    } else {
-      return (
-        <View style={{ flex: 1 }}>
-          <AppNavigator />
-          <MessageBar ref="alert" />
-        </View>
-      )
-    }
+    return (
+      <View style={{ flex: 1 }}>
+        {this.state.isReady ? <AppNavigator />
+          : <AppLoading
+            startAsync={this._cacheResourcesAsync}
+            onFinish={() => this.setState({ isReady: true })}
+            onError={console.warn}
+          />}
+        <MessageBar ref={this.alert} />
+      </View>
+    )
   }
 }
 
