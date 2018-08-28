@@ -31,3 +31,6 @@ var styles = StyleSheet.create({
 1. Change your Podfile so that your ExpoKit tag points to ios/2.6.5 instead of 2.6.4.
 2. pod install
 3. Try building again
+
+# build ios app
+don't run app in the development mode (close expo xde and yarn start) to avoid the TextInput bug in ios
