@@ -41,6 +41,10 @@ project.xcworkspace
 # `pod install` in .travis.yml
 #
 Pods/
+\.DS_Store
+ios/uppfind/Supporting/EXBuildConstants\.json
+ios/uppfind/Supporting/EXBuildConstants\.plist
+ios/uppfind/Supporting/EXBuildConstants\.plist\.bak
 
 # Android/IntelliJ
 #
