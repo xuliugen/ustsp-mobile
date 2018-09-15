@@ -19,7 +19,10 @@ export default class TrendsScreen extends React.Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.contentContainer}>
           <Text style={styles.title}>* 标题</Text>
-          <Text style={{ fontSize: px2sp(30), color: '#333', marginTop: px2dp(22) }}>填入的标题</Text>
+          <TextInput
+            style={{ fontSize: px2sp(30), color: '#333', marginTop: px2dp(22) }}
+            placeholder="填写标题"
+          />
           <View style={styles.divider} />
           <Text style={[styles.title, { marginTop: px2dp(29) }]}>* 内容</Text>
           <TextInput

@@ -24,9 +24,6 @@ const items = [{
 }]
 @withNavigation
 export default class PublishScreen extends React.Component {
-  state = {
-    visible: true
-  }
 
   setPublishItemOnClick(name) {
     let onClickLisenter
@@ -63,7 +60,7 @@ export default class PublishScreen extends React.Component {
 
   render() {
     return (
-      this.state.visible ? <View>
+      <View>
         <View style={styles.container}>
           <Text style={styles.descriptionTx}>选择您要发布的内容</Text>
           <View style={{
@@ -76,12 +73,12 @@ export default class PublishScreen extends React.Component {
           }}>
             {this.renderPublishItems()}
           </View>
-          <TouchableHighlight onPress={() => { this.setState({visible: false}) }}
+          <TouchableHighlight onPress={() => { this.props.navigation.goBack(null) }}
             underlayColor="#E1F6FF">
             <Image source={require('src/img/publishClose.png')} style={styles.closeIcon} />
           </TouchableHighlight>
         </View>
-      </View> : null
+      </View>
     )
   }
 }
