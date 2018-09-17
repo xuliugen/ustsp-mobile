@@ -8,10 +8,33 @@ import {
 } from 'react-native'
 
 import { px2dp, px2sp } from 'src/utils/device'
+import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 
-export default class TrendsScreen extends React.Component {
+let _this = null
+export default class NewsPublishScreen extends React.Component {
+  static navigationOptions= ({ navigation }) => ({
+    title: '发布新项目',
+    headerStyle: HEADER_STYLE.headerStyle,
+    headerTintColor: HEADER_STYLE.headerTintColor,
+    headerTitleStyle: HEADER_STYLE.headerTitleStyle,
+    headerRight: <Text
+      style={HEADER_STYLE.headerRightStyle}
+      onPress={() => _this.publishContent()}>
+      发布</Text>
+  })
+
   state = {
-    curGroup: 'my-friends'
+    contentCount: 0
+  }
+
+  componentDidMount() {
+    _this = this
+  }
+
+  publishContent = () => {
+    this.props.navigation.navigate('PublishSuccess', {
+      'type': 'news'
+    })
   }
 
   render() {
@@ -28,11 +51,12 @@ export default class TrendsScreen extends React.Component {
           <TextInput
             style={{ marginTop: px2dp(21) }}
             placeholder="填写动态内容哦"
+            onChangeText={(text) => this.setState({contentCount: text.length})}
           />
           <View
             style={{flexDirection: 'row', position: 'absolute', top: '70%', left: px2dp(29)}}>
-            <Text style={{ color: '#3793e3' }}>102</Text>
-            <Text> / 104</Text>
+            <Text style={{ color: '#3793e3' }}>{this.state.contentCount}</Text>
+            <Text> / 400</Text>
           </View>
         </View>
       </KeyboardAvoidingView>

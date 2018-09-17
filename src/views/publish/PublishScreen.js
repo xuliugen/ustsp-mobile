@@ -24,12 +24,11 @@ const items = [{
 }]
 @withNavigation
 export default class PublishScreen extends React.Component {
-
   setPublishItemOnClick(name) {
     let onClickLisenter
     if (name === '项目') {
       onClickLisenter = () => {
-        alert('项目')
+        this.props.navigation.navigate('ProjectPublish')
       }
     } else if (name === '成果') {
       onClickLisenter = () => {
@@ -37,7 +36,7 @@ export default class PublishScreen extends React.Component {
       }
     } else if (name === '动态') {
       onClickLisenter = () => {
-        this.props.navigation.navigate('Trends')
+        this.props.navigation.navigate('NewsPublish')
       }
     }
     return onClickLisenter
@@ -60,24 +59,27 @@ export default class PublishScreen extends React.Component {
 
   render() {
     return (
-      <View>
-        <View style={styles.container}>
-          <Text style={styles.descriptionTx}>选择您要发布的内容</Text>
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingLeft: px2dp(125),
-            paddingRight: px2dp(125),
-            marginTop: px2dp(178),
-            width: '100%'
-          }}>
-            {this.renderPublishItems()}
-          </View>
-          <TouchableHighlight onPress={() => { this.props.navigation.goBack(null) }}
-            underlayColor="#E1F6FF">
-            <Image source={require('src/img/publishClose.png')} style={styles.closeIcon} />
-          </TouchableHighlight>
+      <View style={styles.container}>
+        <Text style={styles.descriptionTx}>选择您要发布的内容</Text>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingLeft: px2dp(125),
+          paddingRight: px2dp(125),
+          marginTop: px2dp(178),
+          width: '100%'
+        }}>
+          {this.renderPublishItems()}
         </View>
+        <TouchableHighlight
+          onPress={() => { this.props.navigation.goBack(null) }}
+          underlayColor="#E1F6FF"
+          style={{
+            position: 'absolute',
+            top: '90%'
+          }}>
+          <Image source={require('src/img/publishClose.png')} style={styles.closeIcon} />
+        </TouchableHighlight>
       </View>
     )
   }
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     width: px2dp(40),
-    height: px2dp(40),
-    marginTop: px2dp(430)
+    height: px2dp(40)
   }
 })

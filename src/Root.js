@@ -32,7 +32,9 @@ import AboutScreen from 'src/views/my/AboutScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen'
 // publish
 import PublishScreen from 'src/views/publish/PublishScreen'
-import TrendsScreen from 'src/views/publish/TrendsScreen'
+import NewsPublishScreen from 'src/views/publish/news/NewsPublishScreen'
+import PublishSuccessScreen from 'src/views/publish/PublishSuccessScreen'
+import ProjectPublishScreen from 'src/views/publish/project/ProjectPublishScreen'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
 // messages
@@ -208,22 +210,27 @@ const LoginStack = createStackNavigator({
 })
 
 const PublishStack = createStackNavigator({
-  PublishPreview: { screen: PublishScreen },
-  Trends: {
-    screen: TrendsScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: '发布新动态',
-      headerStyle: {
-        backgroundColor: '#8d9caa'
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        flex: 1,
-        textAlign: 'center'
-      },
-      headerRight: <View />
-    }) }
+  PublishPreview: {
+    screen: PublishScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  NewsPublish: { screen: NewsPublishScreen },
+  ProjectPublish: {screen: ProjectPublishScreen},
+  PublishSuccess: {
+    screen: PublishSuccessScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
 })
+
+PublishStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarVisible: false
+  }
+}
 
 const AppStack = createBottomTabNavigator(
   {
