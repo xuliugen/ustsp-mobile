@@ -8,9 +8,10 @@ import {
   TouchableWithoutFeedback
 } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
+import { Ionicons } from '@expo/vector-icons'
 
 export default class PublishSuccessScreen extends React.Component {
-  isShowLookingProject(type) {
+  renderNavigateToDetailBtn(type) {
     let content
     if (type === 'project') {
       content = '查看该项目'
@@ -24,8 +25,7 @@ export default class PublishSuccessScreen extends React.Component {
     return content != null ? <TouchableWithoutFeedback
       onPress={() => { }}
       underlayColor="#E1F6FF">
-      <View style={[styles.border,
-        { marginTop: px2dp(27), backgroundColor: '#3091E6', borderColor: 'transparent' }]} >
+      <View style={[styles.border, styles.navigateToDetailBtn]} >
         <Text style={{ color: '#fff', fontSize: px2sp(32) }}>{content}</Text>
       </View>
     </TouchableWithoutFeedback> : null
@@ -42,20 +42,23 @@ export default class PublishSuccessScreen extends React.Component {
         <TouchableHighlight onPress={this.backToHome}
           style={styles.closeIcon}
           underlayColor="#E1F6FF">
-          <Image
+          <Ionicons
+            name={'ios-close'}
+            color={'#8d9ca7'}
+            size={'40'}
             source={require('src/img/publishClose.png')}
-            style={{width: px2dp(25), height: px2dp(25), marginTop: px2dp(140), marginLeft: px2dp(38)}} />
+            style={{marginTop: px2dp(140), marginLeft: px2dp(38)}} />
         </TouchableHighlight>
         <Image source={require('src/img/publishSuccess.png')} style={styles.successIcon} />
         <Text style={styles.descriptionTx}>内容发布成功</Text>
         <Text style={{color: '#8f9ba7', fontSize: px2sp(30), marginTop: px2dp(266)}}>您现在可以继续</Text>
-        <TouchableHighlight
+        {/* <TouchableHighlight
           onPress={() => { }}
           style={[styles.border, { marginTop: px2dp(40), borderColor: '#2b7dd6' }]}
           underlayColor="#E1F6FF">
           <Text style={{color: '#3091e6', fontSize: px2sp(32)}}>分享给别人</Text>
-        </TouchableHighlight>
-        {this.isShowLookingProject(this.props.navigation.getParam('type', 'null'))}
+        </TouchableHighlight> */}
+        {this.renderNavigateToDetailBtn(this.props.navigation.getParam('type', 'null'))}
       </View>
     )
   }
@@ -89,5 +92,10 @@ const styles = StyleSheet.create({
     borderWidth: px2dp(2),
     borderStyle: 'solid',
     borderRadius: px2dp(10)
+  },
+  navigateToDetailBtn: {
+    marginTop: px2dp(27),
+    backgroundColor: '#3091E6',
+    borderColor: 'transparent'
   }
 })

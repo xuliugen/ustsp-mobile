@@ -209,8 +209,8 @@ const LoginStack = createStackNavigator({
   RegisterComplete: { screen: RegisterCompleteScreen }
 })
 
-const PublishStack = createStackNavigator({
-  PublishPreview: {
+const PublishTabStack = createStackNavigator({
+  PublishModal: {
     screen: PublishScreen,
     navigationOptions: {
       header: null
@@ -223,10 +223,11 @@ const PublishStack = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  }
+  },
+  NewsDetail: { screen: NewsDetailScreen }
 })
 
-PublishStack.navigationOptions = ({ navigation }) => {
+PublishTabStack.navigationOptions = ({ navigation }) => {
   return {
     tabBarVisible: false
   }
@@ -235,7 +236,7 @@ PublishStack.navigationOptions = ({ navigation }) => {
 const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeStack },
-    Publish: { screen: PublishStack },
+    Publish: { screen: PublishTabStack },
     My: { screen: MyStack }
   },
   {
@@ -252,17 +253,7 @@ const AppStack = createBottomTabNavigator(
           iconName = `ios-add${focused ? '' : '-outline'}`
           iconSize = 48
           return <View
-            style={{
-              // position: 'relative',
-              // top: px2dp(-18),
-              // flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: px2dp(36),
-              width: px2dp(98),
-              height: px2dp(98),
-              backgroundColor: '#3091e6'
-            }}
+            style={styles.publishBt}
           >
             <Ionicons name={iconName} size={iconSize} color={'#fff'} />
           </View>
@@ -352,6 +343,9 @@ export default class AppRoot extends React.Component {
       require('src/img/splash.png'),
       require('src/img/talent.png'),
       require('src/img/uppfind.png'),
+      require('src/img/newsIcon.png'),
+      require('src/img/resultIcon.png'),
+      require('src/img/projectIcon.png'),
       require('src/views/my/components/img/background.png'),
       require('react-navigation/src/views/assets/back-icon.png')
     ]
@@ -381,5 +375,16 @@ const styles = StyleSheet.create({
   tabLabel: {
     textAlign: 'center',
     marginBottom: 3
+  },
+  publishBt: {
+    // position: 'relative',
+    // top: px2dp(-18),
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: px2dp(36),
+    width: px2dp(98),
+    height: px2dp(98),
+    backgroundColor: '#3091e6'
   }
 })

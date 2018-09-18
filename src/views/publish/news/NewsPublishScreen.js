@@ -13,7 +13,7 @@ import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 let _this = null
 export default class NewsPublishScreen extends React.Component {
   static navigationOptions= ({ navigation }) => ({
-    title: '发布新项目',
+    title: '发布新动态',
     headerStyle: HEADER_STYLE.headerStyle,
     headerTintColor: HEADER_STYLE.headerTintColor,
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,

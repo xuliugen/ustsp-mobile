@@ -109,18 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#EBF0F5'
   },
-  contentContainer: {
-    height: '100%',
-    marginTop: px2dp(30),
-    paddingLeft: px2dp(29),
-    paddingRight: px2dp(15),
-    paddingTop: px2dp(30),
-    backgroundColor: '#fff'
-  },
-  title: {
-    fontSize: px2sp(28),
-    color: '#8f9ba7'
-  },
   divider: {
     height: px2dp(1),
     borderTopWidth: px2dp(1),

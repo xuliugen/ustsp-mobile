@@ -19,34 +19,34 @@ const items = [{
   name: '成果'
 },
 {
-  icon: require('src/img/trendsIcon.png'),
+  icon: require('src/img/newsIcon.png'),
   name: '动态'
 }]
 @withNavigation
 export default class PublishScreen extends React.Component {
-  setPublishItemOnClick(name) {
-    let onClickLisenter
-    if (name === '项目') {
-      onClickLisenter = () => {
-        this.props.navigation.navigate('ProjectPublish')
-      }
-    } else if (name === '成果') {
-      onClickLisenter = () => {
-        alert('成果')
-      }
-    } else if (name === '动态') {
-      onClickLisenter = () => {
-        this.props.navigation.navigate('NewsPublish')
-      }
+  onItemPress = (name) => {
+    const key = this.mapNavigateKeyByName(name)
+    if (key != null) {
+      this.props.navigation.navigate(key)
     }
-    return onClickLisenter
+  }
+
+  mapNavigateKeyByName(name) {
+    switch (name) {
+      case '项目' :
+        return 'ProjectPublish'
+      case '动态' :
+        return 'NewsPublish'
+      case '成果' :
+        break
+    }
   }
 
   renderPublishItems() {
     return items.map((item, idx) => (
       <TouchableWithoutFeedback
         key={idx}
-        onPress={this.setPublishItemOnClick(item.name)}
+        onPress={this.onItemPress.bind(this, item.name)}
       >
         <View style={
           {alignItems: 'center'}}>
@@ -61,14 +61,7 @@ export default class PublishScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.descriptionTx}>选择您要发布的内容</Text>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingLeft: px2dp(125),
-          paddingRight: px2dp(125),
-          marginTop: px2dp(178),
-          width: '100%'
-        }}>
+        <View style={styles.items}>
           {this.renderPublishItems()}
         </View>
         <TouchableHighlight
@@ -87,6 +80,7 @@ export default class PublishScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
     height: '100%',
@@ -96,6 +90,14 @@ const styles = StyleSheet.create({
     fontSize: px2sp(36),
     color: '#8f9ba7',
     marginTop: px2dp(360)
+  },
+  items: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: px2dp(125),
+    paddingRight: px2dp(125),
+    marginTop: px2dp(178),
+    width: '100%'
   },
   closeIcon: {
     width: px2dp(40),
