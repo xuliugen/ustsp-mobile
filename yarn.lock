@@ -6416,6 +6416,10 @@ react-native-message-bar@^2.0.10:
   version "2.0.10"
   resolved "https://registry.npmjs.org/react-native-message-bar/-/react-native-message-bar-2.0.10.tgz#34632bdf2cbfe0f51ae4f1e9a91c42b4394a11c2"
 
+react-native-picker@^4.3.7:
+  version "4.3.7"
+  resolved "http://registry.npm.taobao.org/react-native-picker/download/react-native-picker-4.3.7.tgz#9842e8c62ff0d8b676e9514d9f9172413c0518a8"
+
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npmjs.org/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"

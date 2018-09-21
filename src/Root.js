@@ -35,6 +35,7 @@ import PublishScreen from 'src/views/publish/PublishScreen'
 import NewsPublishScreen from 'src/views/publish/news/NewsPublishScreen'
 import PublishSuccessScreen from 'src/views/publish/PublishSuccessScreen'
 import ProjectPublishScreen from 'src/views/publish/project/ProjectPublishScreen'
+import ProjectContentSettingScreen from 'src/views/publish/project/ProjectContentSettingScreen'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
 // messages
@@ -218,6 +219,7 @@ const PublishTabStack = createStackNavigator({
   },
   NewsPublish: { screen: NewsPublishScreen },
   ProjectPublish: {screen: ProjectPublishScreen},
+  ProjectContentSetting: {screen: ProjectContentSettingScreen},
   PublishSuccess: {
     screen: PublishSuccessScreen,
     navigationOptions: {

@@ -5,7 +5,7 @@ import {
   Image,
   View,
   TouchableHighlight,
-  TouchableWithoutFeedback
+  TouchableOpacity
 } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
 import { Ionicons } from '@expo/vector-icons'
@@ -20,15 +20,35 @@ export default class PublishSuccessScreen extends React.Component {
     } else if (type === 'result') {
       content = '查看该成果'
     } else {
-      content = null
+      content = '返回首页'
     }
-    return content != null ? <TouchableWithoutFeedback
-      onPress={() => { }}
+    return <TouchableOpacity
+      onPress={this.navigateToDetailPage}
       underlayColor="#E1F6FF">
       <View style={[styles.border, styles.navigateToDetailBtn]} >
         <Text style={{ color: '#fff', fontSize: px2sp(32) }}>{content}</Text>
       </View>
-    </TouchableWithoutFeedback> : null
+    </TouchableOpacity>
+  }
+
+  navigateToDetailPage = () => {
+    let type = this.props.navigation.getParam('type', null)
+    let data = this.props.navigation.getParam('data', null)
+    let page
+    if (type === 'project') {
+      page = ''
+    } else if (type === 'news') {
+      page = 'NewsDetail'
+    } else if (type === 'result') {
+      page = ''
+    } else {
+      page = null
+    }
+    if (page != null) {
+      this.props.navigation.navigate(page, data)
+    } else {
+      this.backToHome()
+    }
   }
 
   backToHome = () => {
@@ -45,8 +65,7 @@ export default class PublishSuccessScreen extends React.Component {
           <Ionicons
             name={'ios-close'}
             color={'#8d9ca7'}
-            size={'40'}
-            source={require('src/img/publishClose.png')}
+            size={40}
             style={{marginTop: px2dp(140), marginLeft: px2dp(38)}} />
         </TouchableHighlight>
         <Image source={require('src/img/publishSuccess.png')} style={styles.successIcon} />
@@ -58,7 +77,7 @@ export default class PublishSuccessScreen extends React.Component {
           underlayColor="#E1F6FF">
           <Text style={{color: '#3091e6', fontSize: px2sp(32)}}>分享给别人</Text>
         </TouchableHighlight> */}
-        {this.renderNavigateToDetailBtn(this.props.navigation.getParam('type', 'null'))}
+        {this.renderNavigateToDetailBtn(this.props.navigation.getParam('type', null))}
       </View>
     )
   }

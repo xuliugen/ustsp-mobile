@@ -11,3 +11,7 @@ export function fetchNewsDetailApi(id) {
 export function searchNews(req) {
   return axios.post('/search/dynamics/detail', req)
 }
+
+export function publishNews(req) {
+  return axios.post('/dynamics/publish', req)
+}

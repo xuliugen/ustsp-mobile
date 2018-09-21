@@ -39,6 +39,8 @@ export default class PublishScreen extends React.Component {
         return 'NewsPublish'
       case '成果' :
         break
+      default :
+        return 'PublishModal'
     }
   }
 

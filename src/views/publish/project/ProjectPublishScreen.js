@@ -8,60 +8,117 @@ import {
 
 import { px2dp, px2sp } from 'src/utils/device'
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
-import ListItem from 'src/views/publish/common/components/ListItem'
+import ProjectPropertyItem from 'src/views/publish/project/components/ProjectPropertyItem'
 
 let _this = null
+const SLECT_DATE = 'select_date'
+const SLECT_VALUE = 'select_value'
+const INPUT_SHORT_TEXT = 'input_short_text'
+const INPUT_LONG_TEXT = 'input_long_text'
+
+const map = new Map()
 const items = [
   { data: [{
     name: '标题',
-    isMust: true
+    params: 'title',
+    isMust: true,
+    value: null,
+    type: INPUT_SHORT_TEXT
   },
   {
     name: '类型',
-    isMust: true
+    isMust: true,
+    params: 'type',
+    value: null,
+    type: SLECT_VALUE
   },
   {
     name: '学科',
-    isMust: true
+    isMust: true,
+    params: 'subject',
+    value: null,
+    type: SLECT_VALUE
   },
   {
-    name: '专业',
-    isMust: true
+    name: '预设金额',
+    isMust: true,
+    params: 'money',
+    value: null,
+    type: INPUT_SHORT_TEXT
   }]
   },
   { data: [{
     name: '开始时间',
-    isMust: false
+    params: 'startTime',
+    value: null,
+    isMust: false,
+    type: SLECT_DATE
   },
   {
     name: '结束时间',
-    isMust: false
+    params: 'endTime',
+    isMust: false,
+    value: null,
+    type: SLECT_DATE
   },
   {
     name: '报名截止',
-    isMust: true
+    params: 'deadline',
+    isMust: true,
+    value: null,
+    type: SLECT_DATE
   }] },
   { data: [{
-    name: '所在地',
-    isMust: true
+    name: '省份',
+    params: 'province',
+    isMust: true,
+    value: null,
+    type: SLECT_VALUE
+  },
+  {
+    name: '城市',
+    params: 'city',
+    isMust: true,
+    value: null,
+    type: SLECT_VALUE
   },
   {
     name: '联系方式',
-    isMust: true
+    params: 'contactWay',
+    isMust: true,
+    value: null,
+    type: SLECT_VALUE
   }]
   },
   { data: [{
-    name: '技能要求',
-    isMust: false
+    name: '对接倾向',
+    isMust: false,
+    params: 'toOriented',
+    value: null,
+    type: SLECT_VALUE
   },
   {
-    name: '对接倾向',
-    isMust: false
+    name: '技能要求',
+    params: 'projectSkillList',
+    isMust: false,
+    value: null,
+    type: SLECT_VALUE
+  },
+  {
+    name: '需求描述',
+    params: 'projectIntroduction',
+    isMust: false,
+    value: null,
+    type: INPUT_LONG_TEXT
   }]}
 ]
 
 export default class ProjectPublishScreen extends React.Component {
-  static navigationOptions= ({ navigation }) => ({
+  setPropertyValueCallback = (item) => {
+    map.set(item.params, item.value)
+  }
+
+  static navigationOptions = () => ({
     title: '发布新项目',
     headerStyle: HEADER_STYLE.headerStyle,
     headerTintColor: HEADER_STYLE.headerTintColor,
@@ -92,8 +149,12 @@ export default class ProjectPublishScreen extends React.Component {
             marginTop: px2dp(28),
             marginLeft: px2dp(30)}}>* 为必填选项</Text>
         <SectionList
-          renderItem={({ item, index }) => <ListItem name={item.name} isMust={item.isMust} key={index} />}
-          renderSectionHeader={({ section: { title } }) => (
+          renderItem={({ item, index }) =>
+            <ProjectPropertyItem
+              propertyValueCallback={this.setPropertyValueCallback}
+              item={item}
+              key={index} />}
+          renderSectionHeader={() => (
             <View style={{ height: px2dp(30) }} />
           )}
           sections={items}
@@ -108,11 +169,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EBF0F5'
-  },
-  divider: {
-    height: px2dp(1),
-    borderTopWidth: px2dp(1),
-    borderTopColor: '#ddd',
-    marginTop: px2dp(28)
   }
 })
