@@ -9,6 +9,7 @@ import {
 import { px2dp, px2sp } from 'src/utils/device'
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 import ProjectPropertyItem from 'src/views/publish/project/components/ProjectPropertyItem'
+import { MessageBarManager, MessageBar } from 'react-native-message-bar'
 
 let _this = null
 const SLECT_DATE = 'select_date'
@@ -19,7 +20,7 @@ const INPUT_LONG_TEXT = 'input_long_text'
 const map = new Map()
 const items = [
   { data: [{
-    name: '标题',
+    name: '名称',
     params: 'title',
     isMust: true,
     value: null,
@@ -51,13 +52,13 @@ const items = [
     name: '开始时间',
     params: 'startTime',
     value: null,
-    isMust: false,
+    isMust: true,
     type: SLECT_DATE
   },
   {
     name: '结束时间',
     params: 'endTime',
-    isMust: false,
+    isMust: true,
     value: null,
     type: SLECT_DATE
   },
@@ -118,6 +119,19 @@ export default class ProjectPublishScreen extends React.Component {
     map.set(item.params, item.value)
   }
 
+  constructor(props) {
+    super(props)
+    this.alert = React.createRef()
+  }
+
+  componentDidMount() {
+    _this = this
+    MessageBarManager.registerMessageBar(this.alert.current)
+  }
+  componentWillUnmount() {
+    MessageBarManager.unregisterMessageBar()
+  }
+
   static navigationOptions = () => ({
     title: '发布新项目',
     headerStyle: HEADER_STYLE.headerStyle,
@@ -129,16 +143,41 @@ export default class ProjectPublishScreen extends React.Component {
       发布</Text>
   })
 
-  componentDidMount() {
-    _this = this
+  publishContent = () => {
+    if (map.get('title') === undefined) {
+    //   this.showMessageBar('请填写项目名称')
+    // } else if (map.get('type') === undefined) {
+    //   this.showMessageBar('请填写项目类型')
+    // } else if (map.get('subject') === undefined) {
+    //   this.showMessageBar('请选择项目行业')
+    // } else if (map.get('money') === undefined) {
+    //   this.showMessageBar('请填写预设金额')
+    // } else if (map.get('deadline') !== undefined) {
+    //   // this.showMessageBar('请选择报名截止时间')
+    // } else if (map.get('startTime') !== undefined) {
+    //   // this.showMessageBar('请选择项目开始时间')
+    // } else if (map.get('endTime') !== undefined) {
+    //   // this.showMessageBar('请选择项目结束时间')
+    // } else if (map.get('province') !== undefined) {
+    //   this.showMessageBar('请选择省份名称')
+    // } else if (map.get('city') !== undefined) {
+    //   this.showMessageBar('请选择城市名称')
+    // } else if (map.get('contactWay') !== undefined) {
+    //   this.showMessageBar('请选择联系方式')
+    } else {
+      this.props.navigation.navigate('ProjectPreview', {
+        values: map
+      })
+    }
   }
 
-  publishContent = () => {
-    this.props.navigation.navigate('ProjectPreview', {
-      'type': 'project'
+  showMessageBar(message) {
+    MessageBarManager.showAlert({
+      title: '系统提示',
+      message: message,
+      alertType: 'info'
     })
   }
-
   render() {
     return (
       <View style={styles.container}>
@@ -160,6 +199,7 @@ export default class ProjectPublishScreen extends React.Component {
           sections={items}
           keyExtractor={(item, index) => item + index}
         />
+        <MessageBar ref={this.alert} />
       </View>
     )
   }

@@ -4,7 +4,11 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
 import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
-import {Picker} from 'react-native-picker'
+// import Picker from 'react-native-picker'
+
+/**
+ * @todo 时间城市选择器 Picker
+ */
 
 class ProjectPropertyItem extends React.Component {
   state = {

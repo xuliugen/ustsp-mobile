@@ -1,6 +1,7 @@
 import React from 'react'
 import {
-  Text
+  Text,
+  View
 } from 'react-native'
 
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
@@ -25,14 +26,23 @@ export default class ProjectContentSettingScreen extends React.Component {
     headerStyle: HEADER_STYLE.headerStyle,
     headerTintColor: HEADER_STYLE.headerTintColor,
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,
-    headerRight: <Text
-      style={HEADER_STYLE.headerRightStyle}
-      onPress={() => _this.saveValue()}>
-      保存</Text>
+    headerRight: navigation.getParam('headerRightView')
   })
 
+  renderHeaderRightView() {
+    let item = _this.props.navigation.getParam('item', null)
+    if (item.type === 'input_short_text' || item.type === 'input_long_text') {
+      return <Text
+        style={HEADER_STYLE.headerRightStyle}
+        onPress={() => _this.saveValue()}>
+      保存</Text>
+    } else {
+      return <View />
+    }
+  }
   componentDidMount() {
     _this = this
+    this.props.navigation.setParams({ headerRightView: this.renderHeaderRightView() })
   }
 
   onRef = (ref) => {
