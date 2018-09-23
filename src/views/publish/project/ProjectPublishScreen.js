@@ -9,13 +9,13 @@ import {
 import { px2dp, px2sp } from 'src/utils/device'
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 import ProjectPropertyItem from 'src/views/publish/project/components/ProjectPropertyItem'
-import { MessageBarManager, MessageBar } from 'react-native-message-bar'
+import MessageBar from 'src/components/common/MessageBar'
 
-let _this = null
-const SLECT_DATE = 'select_date'
-const SLECT_VALUE = 'select_value'
+const SELECT_DATE = 'select_date'
+const SELECT_VALUE = 'select_value'
 const INPUT_SHORT_TEXT = 'input_short_text'
 const INPUT_LONG_TEXT = 'input_long_text'
+const SELECT_MULTI_VALUE = 'select_multi_value'
 
 const map = new Map()
 const items = [
@@ -31,14 +31,14 @@ const items = [
     isMust: true,
     params: 'type',
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_VALUE
   },
   {
     name: '学科',
     isMust: true,
     params: 'subject',
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_VALUE
   },
   {
     name: '预设金额',
@@ -53,42 +53,42 @@ const items = [
     params: 'startTime',
     value: null,
     isMust: true,
-    type: SLECT_DATE
+    type: SELECT_DATE
   },
   {
     name: '结束时间',
     params: 'endTime',
     isMust: true,
     value: null,
-    type: SLECT_DATE
+    type: SELECT_DATE
   },
   {
     name: '报名截止',
     params: 'deadline',
     isMust: true,
     value: null,
-    type: SLECT_DATE
+    type: SELECT_DATE
   }] },
   { data: [{
     name: '省份',
     params: 'province',
     isMust: true,
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_VALUE
   },
   {
     name: '城市',
     params: 'city',
     isMust: true,
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_VALUE
   },
   {
     name: '联系方式',
     params: 'contactWay',
     isMust: true,
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_VALUE
   }]
   },
   { data: [{
@@ -96,14 +96,14 @@ const items = [
     isMust: false,
     params: 'toOriented',
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_VALUE
   },
   {
     name: '技能要求',
     params: 'projectSkillList',
     isMust: false,
     value: null,
-    type: SLECT_VALUE
+    type: SELECT_MULTI_VALUE
   },
   {
     name: '需求描述',
@@ -119,27 +119,18 @@ export default class ProjectPublishScreen extends React.Component {
     map.set(item.params, item.value)
   }
 
-  constructor(props) {
-    super(props)
-    this.alert = React.createRef()
-  }
-
   componentDidMount() {
-    _this = this
-    MessageBarManager.registerMessageBar(this.alert.current)
-  }
-  componentWillUnmount() {
-    MessageBarManager.unregisterMessageBar()
+    this.props.navigation.setParams({ publishContent: this.publishContent })
   }
 
-  static navigationOptions = () => ({
+  static navigationOptions = ({ navigation }) => ({
     title: '发布新项目',
     headerStyle: HEADER_STYLE.headerStyle,
     headerTintColor: HEADER_STYLE.headerTintColor,
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,
     headerRight: <Text
       style={HEADER_STYLE.headerRightStyle}
-      onPress={() => _this.publishContent()}>
+      onPress={() => navigation.state.params.publishContent()}>
       发布</Text>
   })
 
@@ -172,21 +163,16 @@ export default class ProjectPublishScreen extends React.Component {
   }
 
   showMessageBar(message) {
-    MessageBarManager.showAlert({
-      title: '系统提示',
+    MessageBar.show({
       message: message,
-      alertType: 'info'
+      type: 'info'
     })
   }
   render() {
     return (
       <View style={styles.container}>
         <Text
-          style={{
-            fontSize: px2sp(28),
-            color: '#8f9ba7',
-            marginTop: px2dp(28),
-            marginLeft: px2dp(30)}}>* 为必填选项</Text>
+          style={styles.title}>* 为必填选项</Text>
         <SectionList
           renderItem={({ item, index }) =>
             <ProjectPropertyItem
@@ -199,7 +185,6 @@ export default class ProjectPublishScreen extends React.Component {
           sections={items}
           keyExtractor={(item, index) => item + index}
         />
-        <MessageBar ref={this.alert} />
       </View>
     )
   }
@@ -209,5 +194,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EBF0F5'
+  },
+  title: {
+    fontSize: px2sp(28),
+    color: '#8f9ba7',
+    marginTop: px2dp(28),
+    marginLeft: px2dp(30)
   }
 })

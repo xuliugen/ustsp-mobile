@@ -18,19 +18,26 @@ const mapStateToProps = state => ({
  * @todo download file, hint: https://stackoverflow.com/questions/44546199/how-to-download-a-file-with-react-native
  */
 
-let _this = null
 @connect(mapStateToProps)
 export default class ProjectPreviewScreen extends React.Component {
-  static navigationOptions = () => ({
+  static navigationOptions = ({ navigation }) => ({
     title: '预览',
     headerStyle: HEADER_STYLE.headerStyle,
     headerTintColor: HEADER_STYLE.headerTintColor,
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,
     headerRight: <Text
       style={HEADER_STYLE.headerRightStyle}
-      onPress={() => _this.publishContent()}>
+      onPress={() => navigation.state.params.publishProject()}>
       发布</Text>
   })
+
+  componentDidMount() {
+    this.props.navigation.setParams({ publishProject: this.publishProject })
+  }
+
+  publishProject() {
+    alert('发布')
+  }
 
   render() {
     let values = this.props.navigation.getParam('values', new Map())
@@ -39,14 +46,14 @@ export default class ProjectPreviewScreen extends React.Component {
         <ScrollView style={{height: '100%'}}>
           <View style={styles.header}>
             <View>
-              <Text style={{fontSize: px2sp(36), color: '#333'}}>{values.get('title')}</Text>
-              <Text style={{fontSize: px2sp(26), color: '#8f9ba7', marginTop: px2dp(20)}}>报名截止于 {values.get('deadline')}</Text>
+              <Text style={styles.title}>{values.get('title')}</Text>
+              <Text style={styles.deadline}>报名截止于 {values.get('deadline')}</Text>
             </View>
             <View style={{alignItems: 'flex-end', marginTop: px2dp(10)}}>
-              <Text style={{fontSize: px2sp(26), color: '#8f9ba7'}}>预设金额</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'flex-end', marginTop: px2dp(16) }}>
-                <Text style={{fontSize: px2sp(26), color: '#8f9ba7', marginBottom: px2dp(3)}}>¥</Text>
-                <Text style={{fontSize: px2sp(36), color: '#3793e3'}}>{values.get('money')}</Text>
+              <Text style={styles.moneyTx}>预设金额</Text>
+              <View style={styles.moneyContanier}>
+                <Text style={styles.moneySign}>¥</Text>
+                <Text style={styles.money}>{values.get('money')}</Text>
               </View>
             </View>
           </View>
@@ -64,13 +71,13 @@ export default class ProjectPreviewScreen extends React.Component {
 
           <View style={[styles.skillBlock, styles.block]}>
             <Text style={[styles.label, styles.skillBlockLabel]}>技能要求</Text>
-            {/* <View style={styles.skillContainer}>
-              {values.get('projectSkillList').map(({ skill }, idx) => (
+            <View style={styles.skillContainer}>
+              { values.get('projectSkillList') !== undefined ? values.get('projectSkillList').map((skill, idx) => (
                 <View key={idx} style={styles.skillItem}>
                   <Text style={styles.skillText}>{skill}</Text>
                 </View>
-              ))}
-            </View> */}
+              )) : <Text >未填写</Text>}
+            </View>
           </View>
 
           <View style={[styles.fileBlock, styles.block]}>
@@ -257,5 +264,32 @@ const styles = StyleSheet.create({
   },
   fileGoIcon: {
     color: '#999'
+  },
+  title: {
+    fontSize: px2sp(36),
+    color: '#333'
+  },
+  deadline: {
+    fontSize: px2sp(26),
+    color: '#8f9ba7',
+    marginTop: px2dp(20)
+  },
+  moneyTx: {
+    fontSize: px2sp(26),
+    color: '#8f9ba7'
+  },
+  moneySign: {
+    fontSize: px2sp(26),
+    color: '#8f9ba7',
+    marginBottom: px2dp(3)
+  },
+  money: {
+    fontSize: px2sp(36),
+    color: '#3793e3'
+  },
+  moneyContanier: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    marginTop: px2dp(16)
   }
 })

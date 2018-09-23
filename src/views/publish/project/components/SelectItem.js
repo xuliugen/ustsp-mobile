@@ -16,9 +16,7 @@ class SelectItem extends React.Component {
   render() {
     return (
       <TouchableOpacity style={styles.container} onPress={this.onItemPress}>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center'}}>
+        <View style={styles.valueContainer}>
           <Text style={styles.name}>{this.props.value}</Text>
         </View>
       </TouchableOpacity>
@@ -51,5 +49,9 @@ const styles = StyleSheet.create({
   },
   rightArrow: {
     marginRight: px2dp(-20)
+  },
+  valueContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })

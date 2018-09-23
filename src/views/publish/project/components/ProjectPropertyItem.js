@@ -12,7 +12,7 @@ import { withNavigation } from 'react-navigation'
 
 class ProjectPropertyItem extends React.Component {
   state = {
-    value: this.props.item.value
+    value: this.props.item.value !== null ? this.props.item.value : ''
   }
 
   onItemPress = () => {
@@ -56,24 +56,15 @@ class ProjectPropertyItem extends React.Component {
   };
 
   render() {
-    let value = this.state.value
-    if (value === null) {
-      value = ''
-    }
+    let valueStr = this.state.value.toString()
     return (
       <TouchableOpacity style={styles.container} onPress={this.onItemPress}>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center'}}>
-          {this.props.item.isMust ? <Text style={{color: '#8f9ba7', paddingTop: px2dp(10)}}>*</Text> : null}
+        <View style={styles.propertyNameContainer}>
+          {this.props.item.isMust ? <Text style={styles.mustSign}>*</Text> : null}
           <Text style={styles.name}>{this.props.item.name != null ? this.props.item.name : ''}</Text>
         </View>
-        <View style={{
-          position: 'absolute',
-          right: '5%',
-          flexDirection: 'row',
-          alignItems: 'center'}}>
-          <Text style={styles.content}>{value.length > 10 ? value.substr(0, 10) + '...' : value }</Text>
+        <View style={styles.valueContainer}>
+          <Text style={styles.content}>{valueStr.length > 10 ? valueStr.substr(0, 10) + '...' : valueStr }</Text>
           <EvilIcons
             name={'chevron-right'}
             color={'#8d9ca7'}
@@ -119,5 +110,19 @@ const styles = StyleSheet.create({
   },
   rightArrow: {
     marginRight: px2dp(-20)
+  },
+  valueContainer: {
+    position: 'absolute',
+    right: '5%',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  mustSign: {
+    color: '#8f9ba7',
+    paddingTop: px2dp(10)
+  },
+  propertyNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })

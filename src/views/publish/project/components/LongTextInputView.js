@@ -34,7 +34,7 @@ class LongTextInputView extends React.Component {
             onChangeText={(text) => this.setState({value: text})}
           >{this.state.value}</TextInput>
           <View
-            style={{flexDirection: 'row', position: 'absolute', top: '70%', left: px2dp(29)}}>
+            style={styles.textSizeContainer}>
             <Text style={{ color: '#3793e3' }}>{this.state.value === null ? 0 : this.state.value.length}</Text>
             <Text> / 400</Text>
           </View>
@@ -68,5 +68,11 @@ const styles = StyleSheet.create({
     color: '#8f9ba7',
     marginTop: px2dp(28),
     marginLeft: px2dp(30)
+  },
+  textSizeContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: '70%',
+    left: px2dp(29)
   }
 })

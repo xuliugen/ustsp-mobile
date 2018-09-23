@@ -10,9 +10,8 @@ import { px2dp, px2sp } from 'src/utils/device'
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 import { publishNews } from 'src/ajax/news'
 import { connect } from 'react-redux'
-import { MessageBarManager, MessageBar } from 'react-native-message-bar'
+import MessageBar from 'src/components/common/MessageBar'
 
-let _this = null
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
@@ -29,43 +28,32 @@ export default class NewsPublishScreen extends React.Component {
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,
     headerRight: <Text
       style={HEADER_STYLE.headerRightStyle}
-      onPress={() => _this.publishContent()}>
+      onPress={() => navigation.state.params.publishContent()}>
       发布</Text>
   })
-
-  constructor(props) {
-    super(props)
-    this.alert = React.createRef()
-  }
-
-  componentDidMount() {
-    _this = this
-    MessageBarManager.registerMessageBar(this.alert.current)
-  }
-  componentWillUnmount() {
-    MessageBarManager.unregisterMessageBar()
-  }
 
   state = {
     title: null,
     content: null
   }
 
+  componentDidMount() {
+    this.props.navigation.setParams({ publishContent: this.publishContent })
+  }
+
   publishContent = async () => {
     const { user } = this.props
     if (this.state.title === null || this.state.title.length === 0) {
-      MessageBarManager.showAlert({
-        title: '温馨提示',
+      MessageBar.show({
         message: '请输入要发布的动态标题！',
-        alertType: 'info'
+        type: 'info'
       })
       return
     }
     if (this.state.content === null || this.state.title.content === 0) {
-      MessageBarManager.showAlert({
-        title: '温馨提示',
+      MessageBar.show({
         message: '请输入要发布的动态内容！',
-        alertType: 'info'
+        type: 'info'
       })
       return
     }
@@ -112,7 +100,6 @@ export default class NewsPublishScreen extends React.Component {
             <Text> / 400</Text>
           </View>
         </View>
-        <MessageBar ref={this.alert} />
       </KeyboardAvoidingView>
     )
   }

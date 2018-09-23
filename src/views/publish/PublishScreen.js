@@ -37,8 +37,8 @@ export default class PublishScreen extends React.Component {
         return 'ProjectPublish'
       case '动态' :
         return 'NewsPublish'
-      case '成果' :
-        break
+      // case '成果' :
+      //   break
       default :
         return 'PublishModal'
     }
@@ -52,8 +52,8 @@ export default class PublishScreen extends React.Component {
       >
         <View style={
           {alignItems: 'center'}}>
-          <Image source={item.icon} style={{width: px2dp(100), height: px2dp(100)}} />
-          <Text style={{color: '#666', fontSize: px2sp(30), marginTop: px2dp(41)}}>{item.name}</Text>
+          <Image source={item.icon} style={styles.icon} />
+          <Text style={styles.name}>{item.name}</Text>
         </View>
       </TouchableWithoutFeedback>
     ))
@@ -100,6 +100,14 @@ const styles = StyleSheet.create({
     paddingRight: px2dp(125),
     marginTop: px2dp(178),
     width: '100%'
+  },
+  icon: {
+    width: px2dp(100), height: px2dp(100)
+  },
+  name: {
+    color: '#666',
+    fontSize: px2sp(30),
+    marginTop: px2dp(41)
   },
   closeIcon: {
     width: px2dp(40),
