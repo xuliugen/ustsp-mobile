@@ -9,19 +9,28 @@ import {
 } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
 import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
+import { checkIfLogin } from 'src/selectors'
 
 const items = [{
   icon: require('src/img/projectIcon.png'),
   name: '项目'
 },
-{
-  icon: require('src/img/resultIcon.png'),
-  name: '成果'
-},
+// {
+//   icon: require('src/img/resultIcon.png'),
+//   name: '成果'
+// },
 {
   icon: require('src/img/newsIcon.png'),
   name: '动态'
 }]
+const mapStateToProps = state => {
+  return {
+    isLogin: checkIfLogin(state)
+  }
+}
+
+@connect(mapStateToProps)
 @withNavigation
 export default class PublishScreen extends React.Component {
   onItemPress = (name) => {
@@ -31,6 +40,17 @@ export default class PublishScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.navigation.addListener(
+      'didFocus',
+      checkIsLogin => {
+        if (!this.props.isLogin) {
+          this.props.navigation.goBack(null)
+          this.props.navigation.navigate('Login')
+        }
+      }
+    )
+  }
   mapNavigateKeyByName(name) {
     switch (name) {
       case '项目' :
