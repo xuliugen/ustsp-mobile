@@ -8,9 +8,10 @@ import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 import SelectView from 'src/views/publish/project/components/SelectView'
 import ShortTextInputView from './components/ShortTextInputView'
 import LongTextInputView from './components/LongTextInputView'
-import { subject, province, city, skill, projectType } from 'src/constants/dataset'
+import { subject, skill, projectType } from 'src/constants/dataset'
 import { connect } from 'react-redux'
 import SelectMultiView from './components/SelectMultiView'
+import CitySelectView from './components/CitySelectView'
 
 const mapStateToProps = state => {
   return {
@@ -61,22 +62,16 @@ export default class ProjectContentSettingScreen extends React.Component {
     let items = { data: [] }
     switch (item.params) {
       case 'type':
-        items.data = projectType
+        items.data = projectType.map((item, idx) => ({ value: item }))
         break
       case 'subject':
-        items.data = subject
-        break
-      case 'province':
-        items = province
-        break
-      case 'city':
-        items = city
+        items.data = subject.map((item, idx) => ({ value: item }))
         break
       case 'contactWay':
         items = this.showContactWay(user)
         break
       case 'toOriented':
-        items.data = ['不限', '学生', '老师']
+        items.data = [{ value: '不限' }, { value: '学生' }, { value: '老师' }]
         break
       case 'projectSkillList':
         items.data = skill
@@ -86,15 +81,15 @@ export default class ProjectContentSettingScreen extends React.Component {
   }
 
   showContactWay(user) {
-    let items
+    let items = { data: [] }
     if (user.email != null) {
-      items.data.push('邮箱: ' + user.email)
+      items.data.push({ value: '邮箱: ' + user.email })
     }
     if (user.phone != null) {
-      items.data.push('手机: ' + user.phone)
+      items.data.push({ value: '手机: ' + user.phone })
     }
     if (user.qq != null) {
-      items.data.push('QQ: ' + user.qq)
+      items.data.push({ value: 'QQ: ' + user.qq })
     }
     if (user.weChat != null) {
       items.data.push('微信: ' + user.weChat)
@@ -103,8 +98,12 @@ export default class ProjectContentSettingScreen extends React.Component {
   }
 
   renderView(item) {
-    if (item.type === 'select_date') {
-    } else if (item.type === 'select_value') {
+    if (item.type === 'select_value') {
+      if (item.params === 'location') {
+        return (
+          <CitySelectView />
+        )
+      }
       return (
         <SelectView items={this.setSelectDatas(item)} />
       )

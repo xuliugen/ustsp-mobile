@@ -5478,7 +5478,7 @@ moment@2.x.x, moment@^2.10.6:
   version "2.22.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
 
-moment@^2.22.2:
+moment@^2.18.1, moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.npmjs.org/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
@@ -6415,10 +6415,6 @@ react-native-maps@0.21.0:
 react-native-message-bar@^2.0.10:
   version "2.0.10"
   resolved "https://registry.npmjs.org/react-native-message-bar/-/react-native-message-bar-2.0.10.tgz#34632bdf2cbfe0f51ae4f1e9a91c42b4394a11c2"
-
-react-native-picker@^4.3.7:
-  version "4.3.7"
-  resolved "http://registry.npm.taobao.org/react-native-picker/download/react-native-picker-4.3.7.tgz#9842e8c62ff0d8b676e9514d9f9172413c0518a8"
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"

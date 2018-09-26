@@ -4,20 +4,21 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
 import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
-// import Picker from 'react-native-picker'
+import TimeSelectView from 'src/views/publish/project/components/TimeSelectView'
 
 /**
- * @todo 时间城市选择器 Picker
+ * @todo 时间选择器 Picker
  */
 
 class ProjectPropertyItem extends React.Component {
   state = {
-    value: this.props.item.value !== null ? this.props.item.value : ''
+    value: this.props.item.value !== null ? this.props.item.value : '',
+    showCalendar: false
   }
 
   onItemPress = () => {
-    if (this.props.item.type === 'SLECT_DATE') {
-      this.picker.toggle()
+    if (this.props.item.type === 'select_date') {
+      this.setState({ showCalendar: true })
     } else {
       this.props.navigation.navigate('ProjectContentSetting', {
         callback: (item) => {
@@ -28,32 +29,6 @@ class ProjectPropertyItem extends React.Component {
       })
     }
   }
-
-  createDateData = () => {
-    let date = {}
-    for (let i = 1950; i < 2050; i++) {
-      let month = {}
-      for (let j = 1; j < 13; j++) {
-        let day = []
-        if (j === 2) {
-          for (let k = 1; k < 29; k++) {
-            day.push(k + '日')
-          }
-        } else if (j in {1: 1, 3: 1, 5: 1, 7: 1, 8: 1, 10: 1, 12: 1}) {
-          for (let k = 1; k < 32; k++) {
-            day.push(k + '日')
-          }
-        } else {
-          for (let k = 1; k < 31; k++) {
-            day.push(k + '日')
-          }
-        }
-        month[j + '月'] = day
-      }
-      date[i + '年'] = month
-    }
-    return date
-  };
 
   render() {
     let valueStr = this.state.value.toString()
@@ -71,15 +46,7 @@ class ProjectPropertyItem extends React.Component {
             size={30}
             style={styles.rightArrow} />
         </View>
-        {/* <Picker
-          ref={(picker) => { this.picker = picker }}
-          style={{ height: 320 }}
-          showDuration={300}
-          pickerData={this.createDateData()}
-          selectedValue={['2015年', '12月', '12日']}
-          onPickerDone={(pickedValue) => {
-          }}
-        /> */}
+        <TimeSelectView showCalendar={this.state.showCalendar} />
       </TouchableOpacity>
     )
   }

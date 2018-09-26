@@ -11,6 +11,14 @@ import SelectItem from 'src/views/publish/project/components/SelectItem'
 import { withNavigation } from 'react-navigation'
 
 class SelectView extends React.Component {
+  saveSelectValue(selectValueItem) {
+    let item = this.props.navigation.getParam('item', null)
+    item.value = selectValueItem.value
+    let callback = this.props.navigation.getParam('callback', null)
+    callback(item)
+    this.props.navigation.pop()
+  }
+
   render() {
     let item = this.props.navigation.getParam('item', null)
     return (
@@ -18,7 +26,7 @@ class SelectView extends React.Component {
         <Text
           style={styles.title}>{'选择' + item.name}</Text>
         <SectionList
-          renderItem={({ item, index }) => <SelectItem value={item} key={index} />}
+          renderItem={({ item, index }) => <SelectItem item={item} key={index} callback={this.saveSelectValue.bind(this)} />}
           renderSectionHeader={({ section: { title } }) => (
             <View style={{ height: px2dp(30) }} />
           )}

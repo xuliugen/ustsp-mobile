@@ -5,19 +5,16 @@ import { px2sp, px2dp } from 'src/utils/device'
 import { withNavigation } from 'react-navigation'
 
 class SelectItem extends React.Component {
-  onItemPress = () => {
-    let item = this.props.navigation.getParam('item', null)
-    let callback = this.props.navigation.getParam('callback', null)
-    item.value = this.props.value
+  onItemPress = (item) => {
+    let callback = this.props.callback
     callback(item)
-    this.props.navigation.pop()
   }
 
   render() {
     return (
-      <TouchableOpacity style={styles.container} onPress={this.onItemPress}>
+      <TouchableOpacity style={styles.container} onPress={this.onItemPress.bind(this, this.props.item)}>
         <View style={styles.valueContainer}>
-          <Text style={styles.name}>{this.props.value}</Text>
+          <Text style={styles.name}>{this.props.item.value}</Text>
         </View>
       </TouchableOpacity>
     )

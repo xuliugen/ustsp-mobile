@@ -70,15 +70,12 @@ const items = [
     type: SELECT_DATE
   }] },
   { data: [{
-    name: '省份',
-    params: 'province',
-    isMust: true,
-    value: null,
-    type: SELECT_VALUE
-  },
-  {
-    name: '城市',
-    params: 'city',
+    name: '所在地',
+    params: 'location',
+    cityParams: 'city',
+    provinceParams: 'province',
+    provinceValue: null,
+    cityValue: null,
     isMust: true,
     value: null,
     type: SELECT_VALUE
@@ -116,7 +113,12 @@ const items = [
 
 export default class ProjectPublishScreen extends React.Component {
   setPropertyValueCallback = (item) => {
-    map.set(item.params, item.value)
+    if (item.params === 'location') {
+      map.set(item.cityParams, item.cityValue)
+      map.set(item.provinceParams, item.provinceValue)
+    } else {
+      map.set(item.params, item.value)
+    }
   }
 
   componentDidMount() {
