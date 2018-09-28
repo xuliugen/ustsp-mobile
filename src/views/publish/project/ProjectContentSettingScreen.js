@@ -12,7 +12,7 @@ import { subject, skill, projectType } from 'src/constants/dataset'
 import { connect } from 'react-redux'
 import SelectMultiView from './components/SelectMultiView'
 import CitySelectView from './components/CitySelectView'
-
+import { setSelectOneItemAdapter, setSelectMultiItemAdapter } from './components/SelectDataAdapter'
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
@@ -62,19 +62,19 @@ export default class ProjectContentSettingScreen extends React.Component {
     let items = { data: [] }
     switch (item.params) {
       case 'type':
-        items.data = projectType.map((item, idx) => ({ value: item }))
+        items = setSelectOneItemAdapter({srcData: projectType})
         break
       case 'subject':
-        items.data = subject.map((item, idx) => ({ value: item }))
+        items = setSelectOneItemAdapter({srcData: subject})
         break
       case 'contactWay':
         items = this.showContactWay(user)
         break
       case 'toOriented':
-        items.data = [{ value: '不限' }, { value: '学生' }, { value: '老师' }]
+        items = setSelectOneItemAdapter({srcData: ['不限', '学生', '老师']})
         break
       case 'projectSkillList':
-        items.data = skill
+        items = setSelectMultiItemAdapter({srcData: skill})
         break
     }
     return items
@@ -82,18 +82,20 @@ export default class ProjectContentSettingScreen extends React.Component {
 
   showContactWay(user) {
     let items = { data: [] }
+    let srcData = []
     if (user.email != null) {
-      items.data.push({ value: '邮箱: ' + user.email })
+      srcData.push('邮箱: ' + user.email)
     }
     if (user.phone != null) {
-      items.data.push({ value: '手机: ' + user.phone })
+      srcData.push('手机: ' + user.phone)
     }
     if (user.qq != null) {
-      items.data.push({ value: 'QQ: ' + user.qq })
+      srcData.push('QQ: ' + user.qq)
     }
     if (user.weChat != null) {
-      items.data.push('微信: ' + user.weChat)
+      srcData.push('微信: ' + user.weChat)
     }
+    items = setSelectOneItemAdapter({srcData: srcData})
     return items
   }
 

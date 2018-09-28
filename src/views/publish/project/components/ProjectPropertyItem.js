@@ -6,9 +6,6 @@ import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import moment from 'moment'
-/**
- * @todo 时间选择器 Picker
- */
 
 class ProjectPropertyItem extends React.Component {
   state = {
@@ -30,12 +27,12 @@ class ProjectPropertyItem extends React.Component {
     }
   }
 
-  _showDateTimePicker = () => this.setState({ showCalendar: true })
+  showDateTimePicker = () => this.setState({ showCalendar: true })
 
-  _hideDateTimePicker = () => this.setState({ showCalendar: false })
+  hideDateTimePicker = () => this.setState({ showCalendar: false })
 
-  _handleDatePicked = (date) => {
-    this._hideDateTimePicker()
+  handleDatePicked = (date) => {
+    this.hideDateTimePicker()
     this.setState({value: moment(date).format('YYYY-MM-DD')})
     let item = this.props.item
     item.value = moment(date).unix() * 1000
@@ -63,8 +60,8 @@ class ProjectPropertyItem extends React.Component {
           cancelTextIOS={'取消'}
           confirmTextIOS={'确定'}
           titleIOS={'选择日期'}
-          onConfirm={this._handleDatePicked}
-          onCancel={this._hideDateTimePicker}
+          onConfirm={this.handleDatePicked}
+          onCancel={this.hideDateTimePicker}
         />
       </TouchableOpacity>
     )

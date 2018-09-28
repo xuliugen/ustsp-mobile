@@ -138,25 +138,25 @@ export default class ProjectPublishScreen extends React.Component {
 
   publishContent = () => {
     if (map.get('title') === undefined) {
-    //   this.showMessageBar('请填写项目名称')
-    // } else if (map.get('type') === undefined) {
-    //   this.showMessageBar('请填写项目类型')
-    // } else if (map.get('subject') === undefined) {
-    //   this.showMessageBar('请选择项目行业')
-    // } else if (map.get('money') === undefined) {
-    //   this.showMessageBar('请填写预设金额')
-    // } else if (map.get('deadline') !== undefined) {
-    //   // this.showMessageBar('请选择报名截止时间')
-    // } else if (map.get('startTime') !== undefined) {
-    //   // this.showMessageBar('请选择项目开始时间')
-    // } else if (map.get('endTime') !== undefined) {
-    //   // this.showMessageBar('请选择项目结束时间')
-    // } else if (map.get('province') !== undefined) {
-    //   this.showMessageBar('请选择省份名称')
-    // } else if (map.get('city') !== undefined) {
-    //   this.showMessageBar('请选择城市名称')
-    // } else if (map.get('contactWay') !== undefined) {
-    //   this.showMessageBar('请选择联系方式')
+      this.showMessageBar('请填写项目名称')
+    } else if (map.get('type') === undefined) {
+      this.showMessageBar('请填写项目类型')
+    } else if (map.get('subject') === undefined) {
+      this.showMessageBar('请选择项目行业')
+    } else if (map.get('money') === undefined) {
+      this.showMessageBar('请填写预设金额')
+    } else if (map.get('deadline') !== undefined) {
+      this.showMessageBar('请选择报名截止时间')
+    } else if (map.get('startTime') !== undefined) {
+      this.showMessageBar('请选择项目开始时间')
+    } else if (map.get('endTime') !== undefined) {
+      this.showMessageBar('请选择项目结束时间')
+    } else if (map.get('province') !== undefined) {
+      this.showMessageBar('请选择所在地')
+    } else if (map.get('city') !== undefined) {
+      this.showMessageBar('请选择所在地')
+    } else if (map.get('contactWay') !== undefined) {
+      this.showMessageBar('请选择联系方式')
     } else {
       this.props.navigation.navigate('ProjectPreview', {
         values: map
