@@ -36,7 +36,7 @@ export default class PublishSuccessScreen extends React.Component {
     let data = this.props.navigation.getParam('data', null)
     let page
     if (type === 'project') {
-      page = ''
+      page = 'ProjectDetail'
     } else if (type === 'news') {
       page = 'NewsDetail'
     } else if (type === 'result') {

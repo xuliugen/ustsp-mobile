@@ -19,6 +19,11 @@ function searchProjects(req) {
   return axios.post('/search/project/detail', req)
 }
 
+// 甲方发项目
+function pubishDemand(body) {
+  return axios.post('/project/publish', body)
+}
+
 // 甲方获取已发布项目
 function getPublishedDemand(userId, page, rows, status) {
   const params = { userId, page, rows }
@@ -39,6 +44,7 @@ export {
   fetchHomeScreenProjects,
   fetchProjectDetailApi,
   searchProjects,
+  pubishDemand,
   getPublishedDemand,
   getUndertakenDemand
 }

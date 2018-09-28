@@ -2,17 +2,20 @@ import React from 'react'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { parseTime } from 'src/utils/format'
-
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 import DetailLine from 'src/components/common/DetailLine'
+import MessageBar from 'src/components/common/MessageBar'
+import { pubishDemand } from 'src/ajax/project'
 
-const mapStateToProps = state => ({
-  project: state.project.detail
-})
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    userInfo: state.auth.userInfo
+  }
+}
 
 /**
  * @todo download file, hint: https://stackoverflow.com/questions/44546199/how-to-download-a-file-with-react-native
@@ -27,7 +30,7 @@ export default class ProjectPreviewScreen extends React.Component {
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,
     headerRight: <Text
       style={HEADER_STYLE.headerRightStyle}
-      onPress={() => navigation.state.params.publishProject()}>
+      onPress={() => { navigation.state.params.publishProject() }} >
       发布</Text>
   })
 
@@ -35,8 +38,46 @@ export default class ProjectPreviewScreen extends React.Component {
     this.props.navigation.setParams({ publishProject: this.publishProject })
   }
 
-  publishProject() {
-    alert('发布')
+  publishProject = async () => {
+    let values = this.props.navigation.getParam('values', new Map())
+    const { user } = this.props
+    const regData = {
+      projectSkillList: values.get('projectSkillList') && values.get('projectSkillList').map(i => ({ skill: i })),
+      projectResearchInfo: {
+        projectName: values.get('title'),
+        type: values.get('type'),
+        subject: values.get('subject'),
+        major: null,
+        startTime: values.get('startTime'),
+        endTime: values.get('endTime'),
+        deadline: values.get('deadline'),
+        contactWay: values.get('contactWay'),
+        province: values.get('province'),
+        city: values.get('city'),
+        // uploadfileUrl: values.uploadfileUrl,
+        // uploadfileName: this.state.uploadfileName,
+        money: Number(values.get('money')),
+        toOriented: values.get('toOriented'),
+        projectIntroduction: values.get('projectIntroduction'),
+        ownerId: user.id,
+        status: 0
+      }
+    }
+    try {
+      let res = await pubishDemand(regData)
+      if (res != null && res.data != null) {
+        this.props.navigation.navigate('PublishSuccess', {
+          'type': 'project',
+          'data': {'projectId': res.data}
+        })
+      }
+    } catch (err) {
+      MessageBar.show({
+        message: '发布需求失败，请重试！',
+        type: 'error'
+      })
+      console.log(err)
+    }
   }
 
   render() {

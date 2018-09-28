@@ -59,20 +59,27 @@ export default class NewsPublishScreen extends React.Component {
     }
     let content = this.state.content
     let abstract = content.substr(0, 50)
-    let res = await publishNews({
-      userId: user.id,
-      title: this.state.title,
-      abstracts: abstract,
-      dynamics: content,
-      username: user.realName ? user.realName : user.phone,
-      userType: user.userType,
-      avatar: user.avatar,
-      location: user.location
-    })
-    if (res != null && res.data != null) {
-      this.props.navigation.navigate('PublishSuccess', {
-        'type': 'news',
-        'data': {'newsId': res.data.dynamicsId}
+    try {
+      let res = await publishNews({
+        userId: user.id,
+        title: this.state.title,
+        abstracts: abstract,
+        dynamics: content,
+        username: user.realName ? user.realName : user.phone,
+        userType: user.userType,
+        avatar: user.avatar,
+        location: user.location
+      })
+      if (res != null && res.data != null) {
+        this.props.navigation.navigate('PublishSuccess', {
+          'type': 'news',
+          'data': {'newsId': res.data.dynamicsId}
+        })
+      }
+    } catch (err) {
+      MessageBar.show({
+        message: '发布动态失败，请重试！',
+        type: 'error'
       })
     }
   }
