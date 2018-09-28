@@ -60,8 +60,7 @@ export default class ProjectPreviewScreen extends React.Component {
           <View style={styles.detailBlock}>
             <DetailLine leftLabel={'需求类型'} leftText={values.get('type')} rightLabel={'需求学科'} rightText={values.get('subject')} />
             <DetailLine leftLabel={'对接倾向'} leftText={values.get('toOriented')} rightLabel={'联系方式'} rightText={values.get('contactWay')} />
-            {/* <DetailLine leftLabel={'开始时间'} leftText={parseTime(map.get('type'))} rightLabel={'结束时间'} rightText={parseTime(map.get('type'))} /> */}
-            <DetailLine leftLabel={'开始时间'} leftText={'asdf'} rightLabel={'结束时间'} rightText={'asdfasdf'} />
+            <DetailLine leftLabel={'开始时间'} leftText={parseTime(values.get('startTime'))} rightLabel={'结束时间'} rightText={parseTime(values.get('endTime'))} />
           </View>
 
           <View style={[styles.descBlock, styles.block]}>
@@ -91,22 +90,7 @@ export default class ProjectPreviewScreen extends React.Component {
               </View>
             </View>
           </View>
-
-          {/* <PublisherWithNav project={project} talentNav={talentNav} /> */}
         </ScrollView>
-
-        {/* <View style={styles.bottomBlock}>
-          <TouchableOpacity onPress={() => alert('star')} style={[styles.bottomBtn, styles.bottomBtnStar]} activeOpacity={1}>
-            <Text style={styles.bottomBtnStarText}>
-              <FontAwesome name="star-o" /> 关注
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert('apply')} style={[styles.bottomBtn, styles.bottomBtnApply]} activeOpacity={1}>
-            <Text style={styles.bottomBtnApplyText}>
-              <MaterialIcons name="group-add" /> 报名
-            </Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
     )
   }

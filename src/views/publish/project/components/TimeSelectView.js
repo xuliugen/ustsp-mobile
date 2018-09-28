@@ -1,73 +1,34 @@
 import React from 'react'
 import {
-  StyleSheet,
   View
 } from 'react-native'
-import moment from 'moment'
-import { withNavigation } from 'react-navigation'
-import Calendar from 'react-native-calendar-select'
+// import moment from 'moment'
+// import { withNavigation } from 'react-navigation'
+import DateTimePicker from 'react-native-modal-datetime-picker'
 
-class TimeSelectView extends React.Component {
+export default class DateTimePickerTester extends React.Component {
   state = {
-    startDate: moment(),
-    endDate: null
+    isDateTimePickerVisible: this.props.showCalendar
   }
 
-  confirmDate({startDate, endDate, startMoment, endMoment}) {
-    this.setState({
-      startDate,
-      endDate
-    })
-  }
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true })
 
-  openCalendar() {
-    this.calendar && this.calendar.open()
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false })
+
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date)
+    this._hideDateTimePicker()
   }
 
   render() {
-    let customI18n = {
-      'w': ['', '一', '二', '三', '四', '五', '六', '七'],
-      'weekday': ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-      'text': {
-        'start': '起始时间',
-        'end': '结束时间',
-        'date': '请选择',
-        'save': '确认',
-        'clear': '重新选择'
-      },
-      'date': 'YY.MM.DD' // date format
-    }
-    // optional property, too.
-    let color = {
-      subColor: '#f0f0f0'
-    }
-    if (this.props.showCalendar) {
-      this.openCalendar()
-    }
     return (
-      <View style={styles.container}>
-        <Calendar
-          i18n="zh"
-          ref={(calendar) => { this.calendar = calendar }}
-          customI18n={customI18n}
-          color={color}
-          format="YYYYMM"
-          minDate={moment(moment().subtract(1, 'y')).format('YYYYMMDD')}
-          maxDate={moment(moment().add(5, 'y')).format('YYYYMMDD')}
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
-          onConfirm={this.confirmDate.bind(this)}
+      <View style={{ flex: 1 }}>
+        <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
         />
       </View>
     )
   }
 }
-
-export default withNavigation(TimeSelectView)
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#EBF0F5'
-  }
-})

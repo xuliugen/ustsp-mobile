@@ -4,8 +4,8 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
 import { EvilIcons } from '@expo/vector-icons'
 import { withNavigation } from 'react-navigation'
-import TimeSelectView from 'src/views/publish/project/components/TimeSelectView'
-
+import DateTimePicker from 'react-native-modal-datetime-picker'
+import moment from 'moment'
 /**
  * @todo 时间选择器 Picker
  */
@@ -30,6 +30,18 @@ class ProjectPropertyItem extends React.Component {
     }
   }
 
+  _showDateTimePicker = () => this.setState({ showCalendar: true })
+
+  _hideDateTimePicker = () => this.setState({ showCalendar: false })
+
+  _handleDatePicked = (date) => {
+    this._hideDateTimePicker()
+    this.setState({value: moment(date).format('YYYY-MM-DD')})
+    let item = this.props.item
+    item.value = moment(date).unix() * 1000
+    this.props.propertyValueCallback(item)
+  }
+
   render() {
     let valueStr = this.state.value.toString()
     return (
@@ -46,7 +58,14 @@ class ProjectPropertyItem extends React.Component {
             size={30}
             style={styles.rightArrow} />
         </View>
-        <TimeSelectView showCalendar={this.state.showCalendar} />
+        <DateTimePicker
+          isVisible={this.state.showCalendar}
+          cancelTextIOS={'取消'}
+          confirmTextIOS={'确定'}
+          titleIOS={'选择日期'}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+        />
       </TouchableOpacity>
     )
   }
