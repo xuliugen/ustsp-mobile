@@ -145,17 +145,17 @@ export default class ProjectPublishScreen extends React.Component {
       this.showMessageBar('请选择项目行业')
     } else if (map.get('money') === undefined) {
       this.showMessageBar('请填写预设金额')
-    } else if (map.get('deadline') !== undefined) {
+    } else if (map.get('deadline') === undefined) {
       this.showMessageBar('请选择报名截止时间')
-    } else if (map.get('startTime') !== undefined) {
+    } else if (map.get('startTime') === undefined) {
       this.showMessageBar('请选择项目开始时间')
-    } else if (map.get('endTime') !== undefined) {
+    } else if (map.get('endTime') === undefined) {
       this.showMessageBar('请选择项目结束时间')
-    } else if (map.get('province') !== undefined) {
+    } else if (map.get('province') === undefined) {
       this.showMessageBar('请选择所在地')
-    } else if (map.get('city') !== undefined) {
+    } else if (map.get('city') === undefined) {
       this.showMessageBar('请选择所在地')
-    } else if (map.get('contactWay') !== undefined) {
+    } else if (map.get('contactWay') === undefined) {
       this.showMessageBar('请选择联系方式')
     } else {
       this.props.navigation.navigate('ProjectPreview', {
