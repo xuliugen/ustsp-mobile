@@ -13,7 +13,7 @@ import CitySelectView from './components/CitySelectView'
 
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 import { subject, skill, projectType } from 'src/constants/dataset'
-import { setSelectOneItemAdapter, setSelectMultiItemAdapter } from './components/SelectDataAdapter'
+import { setSelectOneItemAdapter, setSelectMultiItemAdapter } from './components/selectDataAdapter'
 
 const mapStateToProps = state => {
   return {
