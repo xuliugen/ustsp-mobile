@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 
 import { px2dp, px2sp } from 'src/utils/device'
-import SelectItem from 'src/views/publish/project/components/SelectItem'
+import SelectItem from './SelectItem'
 
 import { withNavigation } from 'react-navigation'
 import { EvilIcons } from '@expo/vector-icons'
@@ -69,7 +69,10 @@ class CitySelectView extends React.Component {
         <Text
           style={styles.title}>{'选择' + item.name}</Text>
         <SectionList
-          renderItem={({ item, index, section }) => <SelectItem item={item} key={index} callback={this.saveSelectLocationValue.bind(this)} />}
+          renderItem={
+            ({ item, index }) =>
+              <SelectItem item={item} key={index} callback={this.saveSelectLocationValue.bind(this)} />
+          }
           renderSectionHeader={({ section }) => (
             <TouchableOpacity style={styles.sectionHeader} onPress={this.onItemHeaderPress.bind(this, section)}>
               <View>
@@ -92,6 +95,7 @@ class CitySelectView extends React.Component {
 }
 
 export default withNavigation(CitySelectView)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -2,13 +2,15 @@ import React from 'react'
 import { StyleSheet, View, ScrollView, Text } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
+
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { parseTime } from 'src/utils/format'
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
+import { pubishDemand } from 'src/ajax/project'
+
 import DetailLine from 'src/components/common/DetailLine'
 import MessageBar from 'src/components/common/MessageBar'
-import { pubishDemand } from 'src/ajax/project'
 
 const mapStateToProps = state => {
   return {
@@ -20,7 +22,6 @@ const mapStateToProps = state => {
 /**
  * @todo download file, hint: https://stackoverflow.com/questions/44546199/how-to-download-a-file-with-react-native
  */
-
 @connect(mapStateToProps)
 export default class ProjectPreviewScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

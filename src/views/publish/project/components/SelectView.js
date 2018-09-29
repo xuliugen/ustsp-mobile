@@ -5,10 +5,10 @@ import {
   Text,
   SectionList
 } from 'react-native'
+import { withNavigation } from 'react-navigation'
 
 import { px2dp, px2sp } from 'src/utils/device'
-import SelectItem from 'src/views/publish/project/components/SelectItem'
-import { withNavigation } from 'react-navigation'
+import SelectItem from './SelectItem'
 
 class SelectView extends React.Component {
   saveSelectValue(selectValueItem) {
@@ -39,6 +39,7 @@ class SelectView extends React.Component {
 }
 
 export default withNavigation(SelectView)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

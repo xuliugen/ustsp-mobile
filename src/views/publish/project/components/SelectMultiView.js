@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, SectionList } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
@@ -73,6 +72,7 @@ class SelectMultiView extends React.Component {
     )
   }
 }
+
 export default withNavigation(SelectMultiView)
 
 const styles = StyleSheet.create({
