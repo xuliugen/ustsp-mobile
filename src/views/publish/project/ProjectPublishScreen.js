@@ -185,6 +185,10 @@ export default class ProjectPublishScreen extends React.Component {
     })
   }
 
+  getProjectPropertyValue = (key) => {
+    return map.get(key)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -198,6 +202,7 @@ export default class ProjectPublishScreen extends React.Component {
           renderItem={({ item, index }) =>
             <ProjectPropertyItem
               propertyValueCallback={this.setPropertyValueCallback}
+              getProjectPropertyValue={this.getProjectPropertyValue}
               item={item}
               key={index}
             />

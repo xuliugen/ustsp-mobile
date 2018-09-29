@@ -9,12 +9,14 @@ import moment from 'moment'
 class ProjectPropertyItem extends React.Component {
   state = {
     value: this.props.item.value !== null ? this.props.item.value : '',
-    showCalendar: false
+    showCalendar: false,
+    minimumDate: undefined,
+    maximumDate: undefined
   }
 
   onItemPress = () => {
     if (this.props.item.type === 'select_date') {
-      this.setState({ showCalendar: true })
+      this.showDateTimePicker()
     } else {
       this.props.navigation.navigate('ProjectContentSetting', {
         callback: (item) => {
@@ -26,7 +28,24 @@ class ProjectPropertyItem extends React.Component {
     }
   }
 
-  showDateTimePicker = () => this.setState({ showCalendar: true })
+  showDateTimePicker = () => {
+    let item = this.props.item
+    if (item.params === 'startTime') {
+      let minimumDate = this.props.getProjectPropertyValue('deadline')
+      let maximumDate = this.props.getProjectPropertyValue('endTime')
+      this.setState({
+        minimumDate: moment(minimumDate).toDate(),
+        maximumDate: moment(maximumDate).toDate()
+      })
+    } else if (item.params === 'endTime') {
+      let date = this.props.getProjectPropertyValue('startTime')
+      this.setState({ minimumDate: moment(date).toDate() })
+    } else if (item.params === 'deadline') {
+      let date = this.props.getProjectPropertyValue('startTime')
+      this.setState({ maximumDate: moment(date).toDate() })
+    }
+    this.setState({showCalendar: true})
+  }
 
   hideDateTimePicker = () => this.setState({ showCalendar: false })
 
@@ -59,6 +78,8 @@ class ProjectPropertyItem extends React.Component {
           cancelTextIOS={'取消'}
           confirmTextIOS={'确定'}
           titleIOS={'选择日期'}
+          minimumDate={this.state.minimumDate}
+          maximumDate={this.state.maximumDate}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
