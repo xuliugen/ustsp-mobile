@@ -3,16 +3,18 @@ import {
   Text,
   View
 } from 'react-native'
+import { connect } from 'react-redux'
 
-import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
-import SelectView from 'src/views/publish/project/components/SelectView'
+import SelectView from './components/SelectView'
 import ShortTextInputView from './components/ShortTextInputView'
 import LongTextInputView from './components/LongTextInputView'
-import { subject, skill, projectType } from 'src/constants/dataset'
-import { connect } from 'react-redux'
 import SelectMultiView from './components/SelectMultiView'
 import CitySelectView from './components/CitySelectView'
-import { setSelectOneItemAdapter, setSelectMultiItemAdapter } from './components/SelectDataAdapter'
+
+import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
+import { subject, skill, projectType } from 'src/constants/dataset'
+import { setSelectOneItemAdapter, setSelectMultiItemAdapter } from './components/selectDataAdapter'
+
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
@@ -41,6 +43,7 @@ export default class ProjectContentSettingScreen extends React.Component {
       return <View />
     }
   }
+
   componentDidMount() {
     this.props.navigation.setParams({ headerRightView: this.renderHeaderRightView() })
   }
@@ -123,6 +126,7 @@ export default class ProjectContentSettingScreen extends React.Component {
       )
     }
   }
+
   render() {
     let item = this.props.navigation.getParam('item', null)
     return (

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
@@ -20,6 +19,7 @@ class SelectItem extends React.Component {
     )
   }
 }
+
 export default withNavigation(SelectItem)
 
 const styles = StyleSheet.create({

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { px2sp, px2dp } from 'src/utils/device'
@@ -69,6 +68,7 @@ class ProjectPropertyItem extends React.Component {
 }
 
 export default withNavigation(ProjectPropertyItem)
+
 const styles = StyleSheet.create({
   container: {
     paddingLeft: px2dp(30),

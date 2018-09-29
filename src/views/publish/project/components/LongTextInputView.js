@@ -6,14 +6,14 @@ import {
   TextInput,
   KeyboardAvoidingView
 } from 'react-native'
-
-import { px2dp, px2sp } from 'src/utils/device'
 import { withNavigation } from 'react-navigation'
+import { px2dp, px2sp } from 'src/utils/device'
 
 class LongTextInputView extends React.Component {
   state = {
     value: this.props.value
   }
+
   componentDidMount() {
     this.props.onRef(this)
   }
@@ -21,6 +21,7 @@ class LongTextInputView extends React.Component {
   getValue = () => {
     return this.state.value
   }
+
   render() {
     let item = this.props.navigation.getParam('item', null)
     return (
@@ -45,6 +46,7 @@ class LongTextInputView extends React.Component {
 }
 
 export default withNavigation(LongTextInputView)
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#EBF0F5'

@@ -5,14 +5,15 @@ import {
   Text,
   TextInput
 } from 'react-native'
+import { withNavigation } from 'react-navigation'
 
 import { px2dp, px2sp } from 'src/utils/device'
-import { withNavigation } from 'react-navigation'
 
 class ShortTextInputView extends React.Component {
   state = {
     value: this.props.value
   }
+
   componentDidMount() {
     this.props.onRef(this)
   }
@@ -38,6 +39,7 @@ class ShortTextInputView extends React.Component {
     }
     return prop
   }
+
   render() {
     let item = this.props.navigation.getParam('item', null)
     let textInputProp = this.dealWithInputTextProp(item.params)
