@@ -29,7 +29,14 @@ import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
 import AboutScreen from 'src/views/my/AboutScreen'
-import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen.js'
+import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen'
+// publish
+import PublishScreen from 'src/views/publish/PublishScreen'
+import NewsPublishScreen from 'src/views/publish/news/NewsPublishScreen'
+import PublishSuccessScreen from 'src/views/publish/PublishSuccessScreen'
+import ProjectPublishScreen from 'src/views/publish/project/ProjectPublishScreen'
+import ProjectContentSettingScreen from 'src/views/publish/project/ProjectContentSettingScreen'
+import ProjectPreviewScreen from 'src/views/publish/project/ProjectPreviewScreen'
 // login
 import LoginScreen from 'src/views/login/LoginScreen'
 // messages
@@ -204,9 +211,36 @@ const LoginStack = createStackNavigator({
   RegisterComplete: { screen: RegisterCompleteScreen }
 })
 
+const PublishTabStack = createStackNavigator({
+  PublishModal: {
+    screen: PublishScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  NewsPublish: { screen: NewsPublishScreen },
+  ProjectPublish: {screen: ProjectPublishScreen},
+  ProjectContentSetting: {screen: ProjectContentSettingScreen},
+  PublishSuccess: {
+    screen: PublishSuccessScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  NewsDetail: { screen: NewsDetailScreen },
+  ProjectPreview: { screen: ProjectPreviewScreen }
+})
+
+PublishTabStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarVisible: false
+  }
+}
+
 const AppStack = createBottomTabNavigator(
   {
     Home: { screen: HomeStack },
+    Publish: { screen: PublishTabStack },
     My: { screen: MyStack }
   },
   {
@@ -214,15 +248,24 @@ const AppStack = createBottomTabNavigator(
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state
         let iconName
+        let iconSize = 25
         if (routeName === 'Home') {
           iconName = `ios-home${focused ? '' : '-outline'}`
         } else if (routeName === 'My') {
           iconName = `ios-options${focused ? '' : '-outline'}`
+        } else if (routeName === 'Publish') {
+          iconName = `ios-add${focused ? '' : '-outline'}`
+          iconSize = 48
+          return <View
+            style={styles.publishBt}
+          >
+            <Ionicons name={iconName} size={iconSize} color={'#fff'} />
+          </View>
         }
 
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Ionicons name={iconName} size={25} color={tintColor} />
+        return <Ionicons name={iconName} size={iconSize} color={tintColor} />
       },
       tabBarLabel: ({ tintColor }) => {
         const { routeName } = navigation.state
@@ -304,6 +347,9 @@ export default class AppRoot extends React.Component {
       require('src/img/splash.png'),
       require('src/img/talent.png'),
       require('src/img/uppfind.png'),
+      require('src/img/newsIcon.png'),
+      require('src/img/resultIcon.png'),
+      require('src/img/projectIcon.png'),
       require('src/views/my/components/img/background.png'),
       require('react-navigation/src/views/assets/back-icon.png')
     ]
@@ -333,5 +379,16 @@ const styles = StyleSheet.create({
   tabLabel: {
     textAlign: 'center',
     marginBottom: 3
+  },
+  publishBt: {
+    // position: 'relative',
+    // top: px2dp(-18),
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: px2dp(36),
+    width: px2dp(98),
+    height: px2dp(98),
+    backgroundColor: '#3091e6'
   }
 })
