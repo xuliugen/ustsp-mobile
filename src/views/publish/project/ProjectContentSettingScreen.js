@@ -74,7 +74,7 @@ export default class ProjectContentSettingScreen extends React.Component {
         items = setSelectOneItemAdapter({srcData: ['不限', '学生', '老师']})
         break
       case 'projectSkillList':
-        items = setSelectMultiItemAdapter({srcData: skill})
+        items = setSelectMultiItemAdapter(skill)
         break
     }
     return items
