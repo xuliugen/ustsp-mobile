@@ -15,10 +15,6 @@ repositories {
   maven { url 'https://maven.fabric.io/public' }
 }
 
-configurations.all {
-  exclude group: 'com.facebook.react', module: 'react-native'
-}
-
 android {
   compileSdkVersion 26
   buildToolsVersion '26.0.1'
@@ -102,7 +98,6 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
   compile 'com.android.support:multidex:1.0.1'
-  compile project(':ReactAndroid')
 
   // Our dependencies
   compile 'com.android.support:appcompat-v7:26.0.1'
