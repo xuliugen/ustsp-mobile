@@ -19,7 +19,7 @@ import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
 import PublishedProjectsScreen from 'src/views/project/PublishedProjectsScreen.js'
 import UndertakenProjectsScreen from 'src/views/project/UndertakenProjectsScreen.js'
 // 报名项目成功
-// import ProjectEnrollScreen from 'src/views/project/ProjectEnrollScreen'
+import ProjectEnrollScreen from 'src/views/project/ProjectEnrollScreen'
 // patent
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
@@ -27,7 +27,7 @@ import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
-import AboutScreen from 'src/views/my/AboutScreen'
+// import AboutScreen from 'src/views/my/AboutScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen'
 // publish
 import PublishScreen from 'src/views/publish/PublishScreen'
@@ -162,7 +162,7 @@ const ProjectMgntStack = createMaterialTopTabNavigator(
 
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
-  About: { screen: AboutScreen },
+  About: { screen: ProjectEnrollScreen },
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   ContactsMgnt: { screen: ContactsMgntScreen },
