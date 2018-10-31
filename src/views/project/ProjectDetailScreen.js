@@ -11,10 +11,13 @@ import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
 import talentNavDecorator from 'src/components/common/talentNavDecorator'
 import ProjectPublisher from './components/ProjectPublisher'
 import ProjectDetailHeader from './components/ProjectDetailHeader'
+import ProjectDetailBottom from './components/ProjectDetailBottom'
 import DetailLine from 'src/components/common/DetailLine'
 
 const mapStateToProps = state => ({
-  project: state.project.detail
+  project: state.project.detail,
+  user: state.auth.user,
+  userInfo: state.auth.userInfo
 })
 
 const PublisherWithNav = talentNavDecorator(ProjectPublisher)
@@ -39,11 +42,18 @@ export default class ProjectDetailScreen extends React.Component {
   }
 
   render() {
-    const { project } = this.props
+    const { project, user } = this.props
     const talentNav = {
       id: project.ownerId,
       type: project.ownerType
     }
+    const projectInfo = {
+      id: project.id,
+      ownerId: project.ownerId,
+      status: project.status,
+      dockingStatus: project.dockingStatus
+    }
+
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -83,6 +93,7 @@ export default class ProjectDetailScreen extends React.Component {
 
           <PublisherWithNav project={project} talentNav={talentNav} />
         </ScrollView>
+        <ProjectDetailBottom project={projectInfo} userInfo={user} />
 
         {/* <View style={styles.bottomBlock}>
           <TouchableOpacity onPress={() => alert('star')} style={[styles.bottomBtn, styles.bottomBtnStar]} activeOpacity={1}>

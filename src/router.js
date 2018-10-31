@@ -27,7 +27,7 @@ import NewsSearchScreen from 'src/views/search/NewsSearchScreen'
 import NewsDetailScreen from 'src/views/news/NewsDetailScreen'
 // my
 import MyScreen from 'src/views/my/MyScreen'
-// import AboutScreen from 'src/views/my/AboutScreen'
+import AboutScreen from 'src/views/my/AboutScreen'
 import ContactsMgntScreen from 'src/views/contacts/ContactsMgntScreen'
 // publish
 import PublishScreen from 'src/views/publish/PublishScreen'
@@ -70,7 +70,8 @@ const HomeStack = createStackNavigator({
   PatentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   TalentDetail: { screen: TalentDetailScreen },
-  NewsDetail: { screen: NewsDetailScreen }
+  NewsDetail: { screen: NewsDetailScreen },
+  ProjectEnroll: { screen: ProjectEnrollScreen }
 })
 
 HomeStack.navigationOptions = navOptions
@@ -162,7 +163,7 @@ const ProjectMgntStack = createMaterialTopTabNavigator(
 
 const MyStack = createStackNavigator({
   My: { screen: MyScreen },
-  About: { screen: ProjectEnrollScreen },
+  About: { screen: AboutScreen },
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   ContactsMgnt: { screen: ContactsMgntScreen },
