@@ -18,6 +18,8 @@ import TalentDetailScreen from 'src/views/talent/TalentDetailScreen'
 import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
 import PublishedProjectsScreen from 'src/views/project/PublishedProjectsScreen.js'
 import UndertakenProjectsScreen from 'src/views/project/UndertakenProjectsScreen.js'
+// 报名项目成功
+import ProjectEnrollScreen from 'src/views/project/ProjectEnrollScreen'
 // patent
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
@@ -68,7 +70,8 @@ const HomeStack = createStackNavigator({
   PatentDetail: { screen: PatentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   TalentDetail: { screen: TalentDetailScreen },
-  NewsDetail: { screen: NewsDetailScreen }
+  NewsDetail: { screen: NewsDetailScreen },
+  ProjectEnroll: { screen: ProjectEnrollScreen }
 })
 
 HomeStack.navigationOptions = navOptions

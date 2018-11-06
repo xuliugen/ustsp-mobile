@@ -40,11 +40,17 @@ function getUndertakenDemand(userId, page, rows, status) {
   })
 }
 
+// 乙方项目报名
+function signUpInfo(body) {
+  return axios.post('/project/docking', body)
+}
+
 export {
   fetchHomeScreenProjects,
   fetchProjectDetailApi,
   searchProjects,
   pubishDemand,
   getPublishedDemand,
-  getUndertakenDemand
+  getUndertakenDemand,
+  signUpInfo
 }
