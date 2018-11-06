@@ -51,9 +51,9 @@ export default class ProjectDetailScreen extends React.Component {
       id: project.id,
       ownerId: project.ownerId,
       status: project.status,
-      dockingStatus: project.dockingStatus
+      dockingStatus: project.dockingStatus,
+      name: project.projectName
     }
-
     return (
       <View style={styles.container}>
         <ScrollView>

@@ -21,7 +21,7 @@ export default class ProjectEnrollScreen extends React.Component {
         </TouchableOpacity>
         <Image source={require('src/img/publishSuccess.png')} style={styles.successimage} />
         <Text style={styles.successinfo}>您已成功报名项目</Text>
-        <Text style={styles.projectname}>'项目名称'</Text>
+        <Text style={styles.projectname}>{ this.props.navigation.state.params.projectName }</Text>
       </View>
     )
   }

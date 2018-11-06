@@ -92,7 +92,8 @@ export default class ProjectDetailBotom extends React.Component {
         date: new Date().getTime()
       }
       await signUpInfo(projectJoin)
-      this.props.navigation.navigate('ProjectEnroll')
+      this.setState({ btnActive: false, msg: '已报名' })
+      this.props.navigation.navigate('ProjectEnroll', { projectName: this.props.project.name })
     } catch (e) {
       console.log(e)
     }
