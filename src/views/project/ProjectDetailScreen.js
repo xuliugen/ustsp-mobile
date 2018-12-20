@@ -37,6 +37,10 @@ export default class ProjectDetailScreen extends React.Component {
   }
 
   componentWillUnmount() {
+    if (this.props.navigation.state.params.store) {
+      return
+      // 从 我发布的项目 跳转至 项目详情 时暂不执行清理
+    }
     const { dispatch } = this.props
     dispatch(clearProjectDetail())
   }

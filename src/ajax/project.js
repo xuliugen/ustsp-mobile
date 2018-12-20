@@ -45,6 +45,20 @@ function signUpInfo(body) {
   return axios.post('/project/docking', body)
 }
 
+// 甲方获取项目的报名人
+function getDemandApplicants(userId, projectId) {
+  return axios.get(`/project/query/applicants?userId=${userId}&projectId=${projectId}`)
+}
+
+// 变更项目状态
+function changeDemandStatus(body) {
+  return axios.post(`project/status`, body)
+}
+
+// 获取项目详情
+function getDemanOrderDetail(projectId) {
+  return axios.get(`/project/query/project-detail?projectId=${projectId}`)
+}
 export {
   fetchHomeScreenProjects,
   fetchProjectDetailApi,
@@ -52,5 +66,8 @@ export {
   pubishDemand,
   getPublishedDemand,
   getUndertakenDemand,
-  signUpInfo
+  signUpInfo,
+  getDemandApplicants,
+  changeDemandStatus,
+  getDemanOrderDetail
 }

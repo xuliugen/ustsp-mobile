@@ -6,9 +6,9 @@ import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { getPublishedDemand } from 'src/ajax/project'
 
 import PublishedProjectItem from './components/PublishedProjectItem'
-import projectNavDecorator from 'src/components/common/projectNavDecorator'
+import publishedProjectNavDecorator from 'src/components/common/publishedProjectNavDecorator'
 
-const ProjectItemWithNav = projectNavDecorator(PublishedProjectItem)
+const ProjectItemWithNav = publishedProjectNavDecorator(PublishedProjectItem)
 
 const mapStateToProps = state => {
   return {
@@ -31,6 +31,27 @@ export default class PublishedProjectsScreen extends React.Component {
 
   componentDidMount() {
     this.fetchPublishedProjects()
+    this.willFocus = this.props.navigation.addListener(
+      'willFocus',
+      () => {
+        this.updateInfo()
+      }
+    )
+  }
+
+  // 刷新PublishedprojectItem信息
+  async updateInfo() {
+    if (this.state.curPage > 1) {
+      try {
+        const { data } = await getPublishedDemand(this.props.userId, 1, this.state.pageSize)
+        this.setState(({
+          projects: data.data,
+          curPage: 2
+        }))
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 
   async fetchPublishedProjects() {

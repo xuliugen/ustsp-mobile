@@ -18,6 +18,8 @@ import TalentDetailScreen from 'src/views/talent/TalentDetailScreen'
 import ProjectDetailScreen from 'src/views/project/ProjectDetailScreen'
 import PublishedProjectsScreen from 'src/views/project/PublishedProjectsScreen.js'
 import UndertakenProjectsScreen from 'src/views/project/UndertakenProjectsScreen.js'
+import PublishedProjectDetailScreen from 'src/views/project/PublishedProjectDetailScreen.js'
+import ProjectApplicantsScreen from 'src/views/project/ProjectApplicantsScreen.js'
 // 报名项目成功
 import ProjectEnrollScreen from 'src/views/project/ProjectEnrollScreen'
 // patent
@@ -167,6 +169,8 @@ const MyStack = createStackNavigator({
   TalentDetail: { screen: TalentDetailScreen },
   ProjectDetail: { screen: ProjectDetailScreen },
   ContactsMgnt: { screen: ContactsMgntScreen },
+  PublishedProjectDetail: { screen: PublishedProjectDetailScreen },
+  ProjectApplicants: {screen: ProjectApplicantsScreen},
   Messages: {
     screen: MessageStack,
     navigationOptions: ({ navigation }) => ({
