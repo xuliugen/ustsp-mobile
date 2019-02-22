@@ -6,9 +6,9 @@ import { APP_BACKGROUD_COLOR } from 'src/styles/common'
 import { getUndertakenDemand } from 'src/ajax/project'
 
 import UndertakenProjectItem from './components/UndertakenProjectItem'
-import projectNavDecorator from 'src/components/common/projectNavDecorator'
+import undertakenProjectNavDecorator from 'src/components/common/undertakenProjectNavDecorator'
 
-const ProjectItemWithNav = projectNavDecorator(UndertakenProjectItem)
+const ProjectItemWithNav = undertakenProjectNavDecorator(UndertakenProjectItem)
 
 const mapStateToProps = state => {
   return {

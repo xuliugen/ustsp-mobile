@@ -54,7 +54,7 @@ export default class PartyBInfo extends React.Component {
     return (
       <View style={styles.personContainer}>
         <View style={styles.personInfo}>
-          <TouchableOpacity style={styles.basicInfo} onPress={this.handleClick}>
+          <TouchableOpacity style={styles.basicInfo}>
             <Text style={styles.name}>{this.props.partyB.partyName} | {type}</Text>
             <Text style={styles.location}>{this.props.partyB.partyLocation}</Text>
           </TouchableOpacity>

@@ -1,31 +1,25 @@
 import React from 'react'
-import { Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { px2dp, px2sp, SCREEN_WIDTH } from 'src/utils/device'
 
-export default class CancleApplyBtn extends React.Component {
-  handlePressCancle = () => {
-    Alert.alert('提示',
-      '确定撤销此项目的报名请求？\n撤销后项目将进入中断', [
-        {
-          text: '取消'
-        }, {
-          text: '确定'
-        }
-      ])
-  }
+export default class CancleBottomBtn extends React.Component {
   render() {
     return (
-      <TouchableOpacity style={styles.cancleBtn} onPress={this.handlePressCancle}>
-        <Text style={styles.cancleEnroll}>取消报名</Text>
+      <TouchableOpacity style={styles.container} onPress={this.props.handleClickFunc}>
+        <View style={styles.cancleBtn}>
+          <Text style={styles.cancleEnroll}>{this.props.lable}</Text>
+        </View>
       </TouchableOpacity>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  cancleBtn: {
+  container: {
     position: 'absolute',
-    bottom: px2dp(0),
+    bottom: 0
+  },
+  cancleBtn: {
     alignItems: 'center',
     width: SCREEN_WIDTH - px2dp(60),
     borderRadius: px2dp(10),
