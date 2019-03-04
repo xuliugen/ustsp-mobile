@@ -7,10 +7,10 @@ export default class TwoOptionBtn extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.btnItemA} onPress={this.props.handlePressStop}>
-          <Text style={styles.lableA}>中断项目</Text>
+          <Text style={styles.lableA}>{this.props.labelA}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnItemB} onPress={this.props.handlePressCheck}>
-          <Text style={styles.lableB}>发起验收</Text>
+          <Text style={styles.lableB}>{this.props.labelB}</Text>
         </TouchableOpacity>
       </View>
     )

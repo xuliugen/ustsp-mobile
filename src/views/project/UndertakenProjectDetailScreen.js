@@ -6,12 +6,12 @@ import { Feather } from '@expo/vector-icons'
 import { HEADER_STYLE } from 'src/views/publish/common/style/HeaderStyle'
 
 import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
-import { projectStatusNum2Str } from 'src/utils/format'
 import { getDemanOrderDetail, changeDemandStatus } from 'src/ajax/project'
 
 import SignedRequest from './components/cards/signRequest/SignRequest'
 import UnderwayDetail from './components/cards/underwayDetail/UnderwayDeatil'
 import TwoOptionBtn from './components/TwoOptionBtn'
+import Steps from './components/cards/common/Steps'
 
 const mapStatetoProps = state => ({
   project: state.project.detail,
@@ -21,13 +21,9 @@ const mapStatetoProps = state => ({
 @connect(mapStatetoProps)
 export default class UndertakenProjectDetailScreen extends React.Component {
   state={
-    project: [], // 项目详情
-    owner: [], // 甲方信息
-    oppositeDetail: [], // 对方信息
-    underwayDetail: [], // 项目进行中信息
     changeStatusProps: [] // 项目变更参数
-
   }
+
   static navigationOptions = {
     title: '我报名的项目',
     headerStyle: HEADER_STYLE.headerStyle,
@@ -35,6 +31,7 @@ export default class UndertakenProjectDetailScreen extends React.Component {
     headerTitleStyle: HEADER_STYLE.headerTitleStyle,
     headerRight: <Text />
   }
+
   componentDidMount() {
     const { dispatch, navigation } = this.props
     dispatch(fetchProjectDetail(navigation.getParam('projectId')))
@@ -54,26 +51,8 @@ export default class UndertakenProjectDetailScreen extends React.Component {
   async fetchInfo(pid) {
     try {
       const {data} = await getDemanOrderDetail(pid)
-      if (data.projectDetail.status === 'toSign') {
-        this.setState({
-          project: data.projectDetail.projectJointDTO,
-          owner: data.projectDetail.owner
-        })
-      } else if (data.projectDetail.status === 'underway') {
-        const oppositeDetail = {
-          id: data.projectDetail.owner.ownerId,
-          name: data.projectDetail.owner.partyName,
-          type: data.projectDetail.owner.partyType,
-          contact: data.projectDetail.owner.partyContact,
-          avatar: data.projectDetail.owner.partyAvatar,
-          location: data.projectDetail.owner.partyLocation
-        }
-        const underwayDetail = {
-          applyDate: data.projectDetail.applyData,
-          signDate: data.projectDetail.projectJointDTO.date,
-          startDate: data.projectDetail.projectResearchInfo.startTime,
-          endDate: data.projectDetail.projectResearchInfo.endTime
-        }
+      const status = data.projectDetail.status
+      if ((status === 'underway') || (status === 'toEvaluate') || (status === 'toCheck')) {
         const changeStatusProps = {
           currentUserId: this.props.user.id,
           partyId: data.projectDetail.projectJointDTO.partyId,
@@ -81,8 +60,6 @@ export default class UndertakenProjectDetailScreen extends React.Component {
           projectId: data.projectDetail.projectJointDTO.projectId
         }
         this.setState({
-          oppositeDetail: oppositeDetail,
-          underwayDetail: underwayDetail,
           changeStatusProps: changeStatusProps
         })
       }
@@ -149,12 +126,18 @@ export default class UndertakenProjectDetailScreen extends React.Component {
     toCheck(4, "待验收"),
     toEvaluate(5, "评价"),
     finished(6, "完成"), */
+    const projectId = this.props.navigation.getParam('projectId')
     switch (this.props.project.status) {
       case 2:
-        return <SignedRequest project={this.state.project} user={this.props.user} owner={this.state.owner} />
+        return <SignedRequest projectId={projectId} />
       case 3:
-        return <UnderwayDetail oppositeDetail={this.state.oppositeDetail}
-          underwayDetail={this.state.underwayDetail} side={'partyA'} />
+        return <UnderwayDetail side={'partyA'} projectId={projectId} />
+      case 4:
+        return <UnderwayDetail side={'partyA'} projectId={projectId} />
+      case 5:
+        return <UnderwayDetail side={'partyA'} next={'toEvaluate'} projectId={projectId} />
+      case 6:
+        return <UnderwayDetail side={'partyA'} next={'finish'} projectId={projectId} />
       default: return null
     }
   }
@@ -162,7 +145,8 @@ export default class UndertakenProjectDetailScreen extends React.Component {
   renderBottomButton = () => {
     switch (this.props.project.status) {
       case 3:
-        return <TwoOptionBtn handlePressStop={this.handlePressStopProject} handlePressCheck={this.handlePressCheck} />
+        return <TwoOptionBtn handlePressStop={this.handlePressStopProject} handlePressCheck={this.handlePressCheck}
+          labelA={'中断项目'} labelB={'发起验收'} />
       default: return null
     }
   }
@@ -177,7 +161,9 @@ export default class UndertakenProjectDetailScreen extends React.Component {
             <TouchableOpacity style={styles.checkMoreContainer} onPress={this.handleCheckMore}>
               <Text style={styles.checkMore}>查看项目详情 <Feather style={styles.checkMore} name="chevron-right" /></Text>
             </TouchableOpacity>
-            <Text style={styles.status}>{projectStatusNum2Str(project.status)}</Text>
+          </View>
+          <View style={styles.step}>
+            <Steps position={this.props.project.status} />
           </View>
         </View>
         <ScrollView>
@@ -237,5 +223,9 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     marginBottom: px2dp(140)
+  },
+  step: {
+    marginRight: px2dp(30),
+    marginBottom: px2dp(30)
   }
 })

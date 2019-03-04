@@ -1,9 +1,31 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
 import { px2dp, px2sp } from 'src/utils/device'
 
 export default class OppositeDetail extends React.Component {
+  next = () => {
+    switch (this.props.next) {
+      case 'toEvaluate':
+        return <TouchableOpacity onPress={() => { this.handleClickNext('EvaluateOther') }}>
+          <Text style={styles.next}>评价 ></Text>
+        </TouchableOpacity>
+      case 'finish':
+        return <TouchableOpacity onPress={() => { this.handleClickNext('AllEvaluations') }}>
+          <Text style={styles.next}>查看互评 ></Text>
+        </TouchableOpacity>
+      default: return null
+    }
+  }
+
+  handleClickNext = (nav) => {
+    this.props.navigation.navigate(nav, {
+      side: this.props.side,
+      evaluations: this.props.evaluations,
+      projectId: this.props.projectId
+    })
+  }
+
   render() {
     const { oppositeDetail } = this.props
     let type = ''
@@ -25,6 +47,7 @@ export default class OppositeDetail extends React.Component {
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.titleLable}>{side}信息</Text>
+          { this.next() }
         </View>
         <View style={styles.detailContainer}>
           <View style={styles.personDetail}>
@@ -44,6 +67,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: px2dp(30),
     borderTopLeftRadius: px2dp(10),
     borderTopRightRadius: px2dp(10),
@@ -52,6 +77,10 @@ const styles = StyleSheet.create({
   titleLable: {
     fontSize: px2sp(32),
     color: '#666'
+  },
+  next: {
+    fontSize: px2sp(28),
+    color: '#8f9ba7'
   },
   detailContainer: {
     flexDirection: 'row',

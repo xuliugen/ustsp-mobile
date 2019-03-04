@@ -8,12 +8,13 @@ import { connect } from 'react-redux'
 import LatestApplicantsScreen from './components/cards/latestApplicants/LatestApplicantsScreen'
 import SignedApplicants from './components/cards/signedApplicants/SignedApplicants'
 import UnderwayDetail from './components/cards/underwayDetail/UnderwayDeatil'
+import Steps from './components/cards/common/Steps'
 
 import BottomBtn from './components/cards/common/BottomBtn'
+import TwoOptionBtn from './components/TwoOptionBtn'
 
 import { fetchProjectDetail, clearProjectDetail } from 'src/actions'
 import { getDemanOrderDetail, changeDemandStatus } from 'src/ajax/project'
-import { projectStatusNum2Str } from 'src/utils/format'
 
 const mapStatetoProps = state => ({
   project: state.project.detail,
@@ -23,12 +24,9 @@ const mapStatetoProps = state => ({
 @connect(mapStatetoProps)
 export default class PublishedProjectDetailScreen extends React.Component {
   state={
-    applicants: [], // 已报名
-    partyB: [], // 签单待确认乙方
-    oppositeDetail: [], // 项目乙方
-    underwayDetail: [], // 进行中项目信息
     changeStatusProps: [] // 变更项目状态需要的参数
   }
+
   static navigationOptions = {
     title: '我发布的项目',
     headerStyle: HEADER_STYLE.headerStyle,
@@ -55,27 +53,8 @@ export default class PublishedProjectDetailScreen extends React.Component {
   async fetchProjectInfo(pid) {
     try {
       const {data} = await getDemanOrderDetail(pid)
-      if (data.projectDetail.status === 'applying') {
-        this.setState({applicants: data.applicants.data})
-      } else if (data.projectDetail.status === 'toSign') {
-        const applyDate = {applyDate: data.projectDetail.applyData}
-        const partyB = {...data.projectDetail.projectJointDTO, ...applyDate}
-        this.setState({partyB: partyB})
-      } else if (data.projectDetail.status === 'underway') {
-        const oppositeDetail = {
-          id: data.projectDetail.projectJointDTO.partyId,
-          name: data.projectDetail.projectJointDTO.partyName,
-          type: data.projectDetail.projectJointDTO.partyType,
-          contact: data.projectDetail.projectJointDTO.partyContact,
-          avatar: data.projectDetail.projectJointDTO.partyAvatar,
-          location: data.projectDetail.projectJointDTO.partyLocation
-        }
-        const underwayDetail = {
-          applyDate: data.projectDetail.applyData,
-          signDate: data.projectDetail.projectJointDTO.date,
-          startDate: data.projectDetail.projectResearchInfo.startTime,
-          endDate: data.projectDetail.projectResearchInfo.endTime
-        }
+      const status = data.projectDetail.status
+      if ((status === 'underway') || (status === 'toEvaluate') || (status === 'toCheck')) {
         const changeStatusProps = {
           currentUserId: data.projectDetail.projectJointDTO.ownerId,
           partyId: data.projectDetail.projectJointDTO.partyId,
@@ -84,8 +63,6 @@ export default class PublishedProjectDetailScreen extends React.Component {
           status: 'underwayBreakA'
         }
         this.setState({
-          oppositeDetail: oppositeDetail,
-          underwayDetail: underwayDetail,
           changeStatusProps: changeStatusProps
         })
       }
@@ -121,15 +98,37 @@ export default class PublishedProjectDetailScreen extends React.Component {
         onPress: this.undateInfo
       }, {
         text: '确定',
-        onPress: this.changeProjectStatus
+        onPress: () => { this.changeProjectStatus(this.state.changeStatusProps) }
+      }
+    ])
+  }
+
+  // 确认验收
+  checkAcceptance = () => {
+    let changeStatusProps = this.state.changeStatusProps
+    changeStatusProps.status = 'toEvaluate'
+    this.changeProjectStatus(changeStatusProps)
+  }
+
+  // 驳回验收请求
+  checkReject = () => {
+    let changeStatusProps = this.state.changeStatusProps
+    changeStatusProps.status = 'checkRejectA'
+    Alert.alert('确定要驳回验收请求吗', '按cancel即可刷新状态', [
+      {
+        text: '取消',
+        onPress: this.undateInfo
+      }, {
+        text: '确定',
+        onPress: () => { this.changeProjectStatus(changeStatusProps) }
       }
     ])
   }
 
   // 变更项目状态，和底部按钮绑定
-  changeProjectStatus = async () => {
+  changeProjectStatus = async (prop) => {
     try {
-      await changeDemandStatus(this.state.changeStatusProps)
+      await changeDemandStatus(prop)
       this.updateInfo()
     } catch (error) {
       console.log(error)
@@ -150,14 +149,20 @@ export default class PublishedProjectDetailScreen extends React.Component {
     toCheck(4, "待验收"),
     toEvaluate(5, "评价"),
     finished(6, "完成"), */
+    const projectId = this.props.navigation.getParam('projectId')
     switch (this.props.project.status) {
       case 1:
-        return <LatestApplicantsScreen applicants={this.state.applicants} user={this.props.user} />
+        return <LatestApplicantsScreen projectId={projectId} />
       case 2:
-        return <SignedApplicants partyB={this.state.partyB} user={this.props.user} />
+        return <SignedApplicants projectId={projectId} />
       case 3:
-        return <UnderwayDetail oppositeDetail={this.state.oppositeDetail}
-          underwayDetail={this.state.underwayDetail} side={'partyB'} />
+        return <UnderwayDetail side={'partyB'} projectId={projectId} />
+      case 4:
+        return <UnderwayDetail side={'partyB'} projectId={projectId} />
+      case 5:
+        return <UnderwayDetail side={'partyB'} next={'toEvaluate'} projectId={projectId} />
+      case 6:
+        return <UnderwayDetail side={'partyB'} next={'finish'} projectId={projectId} />
       default: return null
     }
   }
@@ -168,6 +173,9 @@ export default class PublishedProjectDetailScreen extends React.Component {
         return <BottomBtn handleClickFunc={this.handlePressCancleApply} lable={'取消报名'} />
       case 3:
         return <BottomBtn handleClickFunc={this.handlePressStopProject} lable={'中断项目'} />
+      case 4:
+        return <TwoOptionBtn handlePressStop={this.checkAcceptance} handlePressCheck={this.checkReject}
+          labelA={'确认验收'} labelB={'驳回验收'} />
       default: return null
     }
   }
@@ -176,19 +184,20 @@ export default class PublishedProjectDetailScreen extends React.Component {
     const { project } = this.props
     return (
       <View style={styles.container}>
-
         <View style={styles.title}>
           <Text style={styles.projectName}>{project.projectName}</Text>
           <View style={styles.checkMoreWrapper}>
             <TouchableOpacity style={styles.checkMoreContainer} onPress={this.handleCheckMore}>
               <Text style={styles.checkMore}>查看项目详情 <Feather style={styles.checkMore} name="chevron-right" /></Text>
             </TouchableOpacity>
-            <Text style={styles.status}>{projectStatusNum2Str(project.status)}</Text>
+          </View>
+          <View style={styles.step}>
+            <Steps position={this.props.project.status} />
           </View>
         </View>
-        <ScrollView >
+        <ScrollView>
           <View style={styles.detailContainer}>
-            { this.renderCard()}
+            {this.renderCard()}
           </View>
         </ScrollView>
         { this.renderBottomButton() }
@@ -243,5 +252,9 @@ const styles = StyleSheet.create({
   },
   checkMore: {
     color: '#8f9ba7'
+  },
+  step: {
+    marginRight: px2dp(30),
+    marginBottom: px2dp(30)
   }
 })

@@ -5,29 +5,55 @@ import { connect } from 'react-redux'
 import { px2dp, px2sp } from 'src/utils/device'
 import { withNavigation } from 'react-navigation'
 
-import { changeDemandStatus } from 'src/ajax/project'
+import { changeDemandStatus, getDemanOrderDetail } from 'src/ajax/project'
 import { fetchProjectDetail } from 'src/actions'
 
-@connect()
+const mapStatetoProps = state => ({
+  user: state.auth.user
+})
+
 @withNavigation
+@connect(mapStatetoProps)
 export default class SignRequest extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      owner: [],
+      user: [],
+      project: []
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      const {data} = await getDemanOrderDetail(this.props.projectId)
+      this.setState({
+        project: data.projectDetail.projectJointDTO,
+        owner: data.projectDetail.owner,
+        user: this.props.user
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   handleClickOwner = () => {
     this.props.navigation.navigate('TalentDetail', {
-      userId: this.props.project.ownerId,
-      userType: this.props.project.ownerType
+      userId: this.state.owner.ownerId,
+      userType: this.state.owner.partyType
     })
   }
 
   handleComfirm = async () => {
     try {
       await changeDemandStatus({
-        currentUserId: this.props.user.id,
-        projectId: this.props.project.projectId,
-        ownerId: this.props.project.ownerId,
-        partyId: this.props.user.id,
+        currentUserId: this.state.user.id,
+        projectId: this.state.project.projectId,
+        ownerId: this.state.project.ownerId,
+        partyId: this.state.user.id,
         status: 'underway'
       })
-      this.props.dispatch(fetchProjectDetail(this.props.project.projectId))
+      this.props.dispatch(fetchProjectDetail(this.props.projectId))
     } catch (error) {
       console.log(error)
     }
@@ -45,21 +71,21 @@ export default class SignRequest extends React.Component {
   }
 
   updateInfo = () => {
-    this.props.dispatch(fetchProjectDetail(this.props.project.projectId))
+    this.props.dispatch(fetchProjectDetail(this.props.projectId))
   }
 
   rejectSign = async () => {
     try {
       await changeDemandStatus({
-        currentUserId: this.props.user.id,
-        projectId: this.props.project.projectId,
-        ownerId: this.props.project.ownerId,
-        partyId: this.props.user.id,
+        currentUserId: this.state.user.id,
+        projectId: this.state.project.projectId,
+        ownerId: this.state.project.ownerId,
+        partyId: this.state.user.id,
         status: 'signRejectB'
       })
-      this.props.dispatch(fetchProjectDetail(this.props.project.projectId))
+      this.props.dispatch(fetchProjectDetail(this.props.projectId))
       this.props.navigation.navigate('ProjectDetail', {
-        projectId: this.props.project.id,
+        projectId: this.state.project.id,
         store: true
       })
     } catch (error) {
@@ -68,8 +94,9 @@ export default class SignRequest extends React.Component {
   }
 
   render() {
-    const { owner } = this.props
-    let ownerName = owner.partyName.length > 4 ? owner.partyName.substr(0, 4) + '...' : owner.partyName
+    const { owner } = this.state
+    const nameString = String(owner.partyName)
+    let ownerName = nameString.length > 4 ? nameString.substr(0, 4) + '...' : nameString
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.cardContainer} onPress={this.handleClickOwner}>

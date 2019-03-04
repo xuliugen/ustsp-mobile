@@ -5,15 +5,68 @@ import { px2dp, px2sp } from 'src/utils/device'
 import talentNavDecorator from 'src/components/common/talentNavDecorator'
 import { parseTime } from 'src/utils/format'
 import OppositeDetail from '../common/OppositeDetail'
+import { connect } from 'react-redux'
+import { getDemanOrderDetail } from 'src/ajax/project'
+
+const mapStatetoProps = state => ({
+  project: state.project.detail
+})
 
 const TalentwithNav = talentNavDecorator(OppositeDetail)
+
+@connect(mapStatetoProps)
 export default class UnderwayDetail extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      underwayDetail: [],
+      oppositeDetail: []
+    }
+  }
+  async componentDidMount() {
+    try {
+      const { data } = await getDemanOrderDetail(this.props.projectId)
+      const underwayDetail = {
+        applyDate: data.projectDetail.applyData,
+        signDate: data.projectDetail.projectJointDTO.date,
+        startDate: data.projectDetail.projectResearchInfo.startTime,
+        endDate: data.projectDetail.projectResearchInfo.endTime
+      }
+
+      let oppositeDetail
+      if (this.props.side === 'partyB') {
+        // 乙方信息
+        oppositeDetail = {
+          id: data.projectDetail.projectJointDTO.partyId,
+          name: data.projectDetail.projectJointDTO.partyName,
+          type: data.projectDetail.projectJointDTO.partyType,
+          contact: data.projectDetail.projectJointDTO.partyContact,
+          avatar: data.projectDetail.projectJointDTO.partyAvatar,
+          location: data.projectDetail.projectJointDTO.partyLocation
+        }
+      } else {
+        // 甲方信息
+        oppositeDetail = {
+          id: data.projectDetail.owner.ownerId,
+          name: data.projectDetail.owner.partyName,
+          type: data.projectDetail.owner.partyType,
+          contact: data.projectDetail.owner.partyContact,
+          avatar: data.projectDetail.owner.partyAvatar,
+          location: data.projectDetail.owner.partyLocation
+        }
+      }
+      this.setState({underwayDetail: underwayDetail, oppositeDetail: oppositeDetail})
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   render() {
-    const { underwayDetail } = this.props
+    const { underwayDetail, oppositeDetail } = this.state
     return (
       <View style={styles.container}>
-        <TalentwithNav talentNav={{id: this.props.oppositeDetail.id, type: this.props.oppositeDetail.type}}
-          oppositeDetail={this.props.oppositeDetail} side={this.props.side} />
+        <TalentwithNav talentNav={{id: oppositeDetail.id, type: oppositeDetail.type}} projectId={this.props.projectId}
+          oppositeDetail={oppositeDetail} side={this.props.side} next={this.props.next} />
         <View style={styles.timeDetailContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>进度详情</Text>

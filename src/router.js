@@ -21,8 +21,9 @@ import UndertakenProjectsScreen from 'src/views/project/UndertakenProjectsScreen
 import PublishedProjectDetailScreen from 'src/views/project/PublishedProjectDetailScreen.js'
 import ProjectApplicantsScreen from 'src/views/project/ProjectApplicantsScreen.js'
 import UndertakenProjectDetailScreen from 'src/views/project/UndertakenProjectDetailScreen.js'
-// 报名项目成功
 import ProjectEnrollScreen from 'src/views/project/ProjectEnrollScreen'
+import EvaluateOtherScreen from 'src/views/project/EvaluateOtherScreen.js'
+import AllEvaluationsScreen from 'src/views/project/AllEvaluationsScreen.js'
 // patent
 import PatentDetailScreen from 'src/views/patent/PatentDetailScreen'
 // news
@@ -173,6 +174,8 @@ const MyStack = createStackNavigator({
   PublishedProjectDetail: { screen: PublishedProjectDetailScreen },
   ProjectApplicants: {screen: ProjectApplicantsScreen},
   UndertakenProjectDetail: { screen: UndertakenProjectDetailScreen },
+  EvaluateOther: { screen: EvaluateOtherScreen },
+  AllEvaluations: { screen: AllEvaluationsScreen },
   Messages: {
     screen: MessageStack,
     navigationOptions: ({ navigation }) => ({

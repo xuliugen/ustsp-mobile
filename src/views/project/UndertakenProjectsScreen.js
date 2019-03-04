@@ -31,6 +31,26 @@ export default class UndertakenProjectsScreen extends React.Component {
 
   componentDidMount() {
     this.fetchUndertakenProjects()
+    this.willFocus = this.props.navigation.addListener(
+      'willFocus',
+      () => {
+        this.updateInfo()
+      }
+    )
+  }
+
+  async updateInfo() {
+    if (this.state.curPage > 1) {
+      try {
+        const { data } = await getUndertakenDemand(this.props.userId, 1, this.state.pageSize)
+        this.setState(({
+          projects: data.data,
+          curPage: 2
+        }))
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 
   async fetchUndertakenProjects() {

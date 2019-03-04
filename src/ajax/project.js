@@ -59,6 +59,12 @@ function changeDemandStatus(body) {
 function getDemanOrderDetail(projectId) {
   return axios.get(`/project/query/project-detail?projectId=${projectId}`)
 }
+
+// 提交评价
+function submitEvaluation(body) {
+  return axios.post(`project/evaluate`, body)
+}
+
 export {
   fetchHomeScreenProjects,
   fetchProjectDetailApi,
@@ -69,5 +75,6 @@ export {
   signUpInfo,
   getDemandApplicants,
   changeDemandStatus,
-  getDemanOrderDetail
+  getDemanOrderDetail,
+  submitEvaluation
 }
