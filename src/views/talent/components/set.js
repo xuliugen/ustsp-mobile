@@ -29,11 +29,10 @@ export class FoldEntry extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isFold: true,
-      showExpand: false,
-      isPropsSet: false,
-      checkFlag: true // 在mounted时，onLayout被调用时进行一次高度比对，防止循环setState
+      isFold: false, // 先默认展开
+      showExpand: false
     }
+    this.checkIfFold = true // 进行高度对比时使用
   }
 
   handleFoldPress = () => {
@@ -43,26 +42,27 @@ export class FoldEntry extends React.Component {
   }
 
   onTextLayout = (event) => {
-    // 情况1: mounted 时第一次调用，props.text 不是从 redux 取的
-    if (this.props && this.props.text) {
-      this.setState({ isPropsSet: true })
-    }
-    // 情况2: mounted 时第一次调用，props.text 数据还未获取
-    if (!this.state.isPropsSet) {
-      this.setState({ isPropsSet: true })
+    // mounted 时数据未就位
+    if (!(this.props && this.props.text)) {
       return
     }
-    if (this.state.checkFlag) {
-      if (this.state.isFold) {
-        // 有 props.text 后，先获取折叠时 Text 的高度
-        this.foldHeight = event.nativeEvent.layout.height
-        // 展开，这里会改变 Text 高度，会触发 onTextLayout
-        this.setState({isFold: false})
-      } else {
+    // 跑两次，第一次获取展开高度并折叠，第二次获取折叠高度
+    // 判断是否折叠之后就不在跑下面的代码了
+    if (this.checkIfFold) {
+      if (!this.state.isFold) {
         // 获取展开的 Text 高度
         this.unfoldHeight = event.nativeEvent.layout.height
+        this.setState({ isFold: true })
+      } else {
+        // 获取折叠时 Text 的高度
+        this.foldHeight = event.nativeEvent.layout.height
+        // 展开，这里会改变 Text 高度，会触发 onTextLayout
         if (this.unfoldHeight > this.foldHeight) {
-          this.setState({isFold: true, showExpand: true, checkFlag: false})
+          this.setState({
+            isFold: true,
+            showExpand: true
+          })
+          this.checkIfFold = false
         }
       }
     }
