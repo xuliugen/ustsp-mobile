@@ -41,9 +41,9 @@ export default class AppRoot extends React.Component {
   async _cacheResourcesAsync() {
     const images = [
       require('src/img/avatar1.png'),
-      require('src/img/banner1.png'),
-      require('src/img/banner2.jpg'),
-      require('src/img/banner3.jpg'),
+      // require('src/img/banner1.png'),
+      // require('src/img/banner2.jpg'),
+      // require('src/img/banner3.jpg'),
       require('src/img/ellipse.png'),
       require('src/img/news.png'),
       require('src/img/patent.png'),

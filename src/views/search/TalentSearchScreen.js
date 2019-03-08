@@ -54,7 +54,7 @@ export default class TalentSearchScreen extends React.Component {
     this.state.dataSource = this.getUpdatedDataSource(props)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this._loadMoreContentAsync()
   }
   componentWillReceiveProps(nextProps) {
